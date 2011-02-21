@@ -1,6 +1,11 @@
 autoload -U compinit
 compinit
 
+# bash のように git 補完
+autoload -U bashcompinit
+bashcompinit
+source ~/.git-completion.bash
+
 ## プロンプトの設定
 autoload colors
 colors
