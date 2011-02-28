@@ -163,3 +163,7 @@ function wikipedia
 {
     ${TEXT_BROWSER} http://ja.wikipedia.org/wiki/`_space2p20 $@`
 }
+
+#  glob (*) での履歴のインクリメンタル検索をできるようにする
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^S' history-incremental-pattern-search-forward

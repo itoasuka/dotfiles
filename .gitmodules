@@ -4,3 +4,18 @@
 [submodule ".vim/bundle/neocomplcache.vim"]
 	path = .vim/bundle/neocomplcache.vim
 	url = https://github.com/Shougo/neocomplcache.git
+[submodule ".vim/bundle/vim-addon-sbt"]
+	path = .vim/bundle/vim-addon-sbt
+	url = https://github.com/MarcWeber/vim-addon-sbt.git
+[submodule ".vim/bundle/ensime"]
+	path = .vim/bundle/ensime
+	url = https://github.com/MarcWeber/ensime.git
+[submodule ".vim/bundle/vim-addon-manager"]
+	path = .vim/bundle/vim-addon-manager
+	url = https://github.com/MarcWeber/vim-addon-manager.git
+[submodule ".vim/bundle/vim-addon-mw-utils"]
+	path = .vim/bundle/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule ".vim/bundle/vim-addon-actions"]
+	path = .vim/bundle/vim-addon-actions
+	url = https://github.com/MarcWeber/vim-addon-actions.git
