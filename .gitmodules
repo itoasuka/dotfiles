@@ -19,3 +19,6 @@
 [submodule ".vim/bundle/vim-addon-actions"]
 	path = .vim/bundle/vim-addon-actions
 	url = https://github.com/MarcWeber/vim-addon-actions.git
+[submodule ".vim/bundle/nerdcommenter"]
+	path = .vim/bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
