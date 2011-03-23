@@ -1,6 +1,20 @@
 autoload -U compinit
 compinit
 
+# 環境依存ファイルがあれば読み込む
+if [ -r .profile ]; then
+  source .profile
+fi
+
+# ls の色付け設定
+if [ -r .dircolors ]; then
+  if [ -x `which gdircolors` ]; then
+    eval `gdircolors .dircolors`
+  else
+    eval `dircolors .dircolors`
+  fi
+fi
+
 # 履歴の設定
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
@@ -110,7 +124,11 @@ setopt share_history
 zstyle ':completion:*:default' menu select=1
 
 ## 補完候補の色づけ
-eval `dircolors`
+if [ -x "`which gdircolors`" ]; then
+  eval `gdircolors`
+else
+  eval `dircolors`
+fi
 export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
@@ -128,7 +146,12 @@ setopt correct
 
 ## エイリアス
 setopt complete_aliases
-alias ls="ls --color"
+if [ -x "`which gls`" ]; then
+  # gls が入っていればそのエイリアス
+  alias ls="gls --color"
+else
+  alias ls="ls --color"
+fi
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
