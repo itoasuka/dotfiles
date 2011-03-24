@@ -446,7 +446,7 @@ nmap ye ;let @"=expand("<cword>")<CR>
 vnoremap p <Esc>;let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 
 " Tabキーを空白に変換
-set expandtab
+" set expandtab
 
 " コンマの後に自動的にスペースを挿入
 inoremap , ,<Space>
@@ -484,7 +484,7 @@ nmap y0 y^
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
-autocmd BufWritePre * :%s/\t/  /ge
+" autocmd BufWritePre * :%s/\t/  /ge
 
 " 日時の自動入力
 inoremap <expr> ,df strftime('%Y/%m/%d %H:%M:%S')
