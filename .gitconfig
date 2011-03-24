@@ -1,0 +1,11 @@
+[user]
+	name = itoasuka
+	email = itoasuka@gmail.com
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	interactive = auto
+	grep = auto
+[core]
+	autocrlf = input
