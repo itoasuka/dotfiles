@@ -148,15 +148,16 @@ setopt correct
 setopt complete_aliases
 if [ -x "`which gls`" ]; then
   # gls が入っていればそのエイリアス
-  alias ls="gls --color"
+  alias ls="gls --color=auto"
 else
-  alias ls="ls --color"
+  alias ls="ls --color=auto"
 fi
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
+alias grep="grep --color=auto"
 
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash

@@ -174,7 +174,7 @@ function! InsertTabWrapper()
     return "\<c-x>\<c-o>"
   endif
 endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 
 "-------------------------------------------------------------------------------
