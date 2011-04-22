@@ -9,3 +9,4 @@
 	grep = auto
 [core]
 	autocrlf = input
+	excludesfile = /Users/itouasuka/.gitignore
