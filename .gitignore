@@ -2,6 +2,7 @@
 *.netrwhist
 m_*
 *~
+.vim/bundle
 
 ### Mac用 ###
 

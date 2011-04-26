@@ -1,3 +1,10 @@
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
+
+Bundle 'git://github.com/Shougo/neocomplcache.git'
+Bundle 'git://github.com/Shougo/vimshell.git'
+Bundle 'git://github.com/Shougo/vimproc.git'
+
 "-------------------------------------------------------------------------------
 " 基本設定 Basics
 "-------------------------------------------------------------------------------
@@ -17,6 +24,7 @@ set showcmd                      " コマンドをステータス行に表示
 set showmode                     " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
+set nocompatible
 
 " OSのクリップボードを使用する
 set clipboard+=unnamed
