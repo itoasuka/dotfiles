@@ -28,3 +28,6 @@
 [submodule ".vim/bundle/vimproc"]
 	path = .vim/bundle/vimproc
 	url = https://github.com/Shougo/vimproc.git
+[submodule ".vim/vundle.git"]
+	path = .vim/vundle.git
+	url = http://github.com/gmarik/vundle.git
