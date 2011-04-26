@@ -8,7 +8,7 @@ fi
 
 # ls の色付け設定
 if [ -r .dircolors ]; then
-  if [ -x `which gdircolors` ]; then
+  if [ -x `\which gdircolors` ]; then
     eval `gdircolors .dircolors`
   else
     eval `dircolors .dircolors`
@@ -124,7 +124,7 @@ setopt share_history
 zstyle ':completion:*:default' menu select=1
 
 ## 補完候補の色づけ
-if [ -x "`which gdircolors`" ]; then
+if [ -x "`\which gdircolors`" ]; then
   eval `gdircolors`
 else
   eval `dircolors`
@@ -146,7 +146,7 @@ setopt correct
 
 ## エイリアス
 setopt complete_aliases
-if [ -x "`which gls`" ]; then
+if [ -x "`\which gls`" ]; then
   # gls が入っていればそのエイリアス
   alias ls="gls --color=auto"
 else

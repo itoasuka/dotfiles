@@ -1,3 +1,6 @@
+set nocompatible
+filetype off
+
 set rtp+=~/.vim/vundle.git/
 call vundle#rc()
 
@@ -24,7 +27,6 @@ set showcmd                      " コマンドをステータス行に表示
 set showmode                     " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
-set nocompatible
 
 " OSのクリップボードを使用する
 set clipboard+=unnamed
@@ -42,13 +44,8 @@ imap <C-k>  <ESC>"*pa
 command! Ev edit $MYVIMRC
 command! Rv source $MYVIMRC
 
-" pathogenでftdetectなどをloadさせるために一度ファイルタイプ判定をoff
-filetype off
 syntax off
 filetype indent off
-" pathogen.vimによってbundle配下のpluginをpathに加える
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
 set helpfile=$VIMRUNTIME/doc/help.txt
 " ファイルタイプ判定をon
 filetype plugin on
