@@ -7,11 +7,22 @@ call vundle#rc()
 Bundle 'git://github.com/Shougo/neocomplcache.git'
 Bundle 'git://github.com/Shougo/vimshell.git'
 Bundle 'git://github.com/Shougo/vimproc.git'
+Bundle 'scala.vim'
 
 " ファイルタイプ判定をon
 filetype plugin on
 
+" マウスを使えるようにする
+set mouse=a
+set guioptions+=a
+set ttymouse=xterm2
 
+" OSのクリップボードを使用する
+set clipboard+=unnamed
+set clipboard=unnamed
+
+set nobackup                     " バックアップ取らない
+set noswapfile                   " スワップファイル作らない
 
 "-------------------------------------------------------------------------------
 " 表示関連
