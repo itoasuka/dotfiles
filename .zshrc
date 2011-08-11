@@ -8,7 +8,8 @@ fi
 
 # ls の色付け設定
 if [ -r .dircolors ]; then
-  if [ -x `\which gdircolors` ]; then
+  \which gdircolors > /dev/null
+  if [ $? = 0 ]; then
     eval `gdircolors .dircolors`
   else
     eval `dircolors .dircolors`
@@ -146,7 +147,8 @@ setopt correct
 
 ## エイリアス
 setopt complete_aliases
-if [ -x "`\which gls`" ]; then
+\which gls > /dev/null
+if [ $? = 0 ]; then
   # gls が入っていればそのエイリアス
   alias ls="gls --color=auto"
 else
