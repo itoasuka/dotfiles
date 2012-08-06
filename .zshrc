@@ -10,6 +10,10 @@ ZSH_THEME="steeef"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+\which gls . > /dev/null
+if [ $? = 0 ]; then
+	alias ls="gls"
+fi
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -29,7 +33,7 @@ ZSH_THEME="steeef"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew osx)
+plugins=(git brew osx gnu-utils)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -44,26 +48,13 @@ fi
 if [ -r .dircolors ]; then
   \which gdircolors > /dev/null
   if [ $? = 0 ]; then
-    eval `gdircolors .dircolors`
+#    eval `gdircolors .dircolors`
   else
-    eval `dircolors .dircolors`
+#    eval `dircolors .dircolors`
   fi
 fi
 
 ## エイリアス
-setopt complete_aliases
-\which gls > /dev/null
-if [ $? = 0 ]; then
-  # gls が入っていればそのエイリアス
-  alias ls="gls --color=auto"
-else
-  alias ls="ls --color=auto"
-fi
-alias la="ls -a"
-alias lf="ls -F"
-alias ll="ls -l"
-alias du="du -h"
-alias df="df -h"
-alias grep="grep --color=auto"
+#setopt complete_aliases
 
 
