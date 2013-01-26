@@ -1,6 +1,6 @@
 [user]
-	name = itoasuka
-	email = itoasuka@gmail.com
+	name = asuka
+	email = asuka@microbridge.jp
 [color]
 	status = auto
 	diff = auto
@@ -9,7 +9,7 @@
 	grep = auto
 [core]
 	autocrlf = input
-	excludesfile = /Users/itouasuka/.gitignore
+	excludesfile = /Users/asuka/.gitignore_global
 	editor = vim
 [alias]
 	graph = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --all --date=short
