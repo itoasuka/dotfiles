@@ -6,7 +6,7 @@ m_*
 
 ### Mac用 ###
 
-.DS_Store?
+.DS_Store
 Icon?
 # Thumbnails
 ._*
@@ -15,6 +15,9 @@ Icon?
 .Trashes
 
 # IntelliI IDEA
-/.idea
+/.idea*
 /*.iml
 atlassian-ide-plugin.xml
+
+# Libre Office
+.~lock.*
