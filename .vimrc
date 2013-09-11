@@ -1,16 +1,21 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/vundle.git/
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
+Bundle 'gmarik/vundle'
 
 Bundle 'git://github.com/Shougo/neocomplcache.git'
 Bundle 'git://github.com/Shougo/vimshell.git'
 Bundle 'git://github.com/Shougo/vimproc.git'
 Bundle 'scala.vim'
+" コメントプラグインは果たしてどちらがいいのだろうか
+" Bundle 'tComment'
+Bundle 'commentary.vim'
 
 " ファイルタイプ判定をon
-filetype plugin on
+filetype plugin indent on
 
 " マウスを使えるようにする
 set mouse=a
