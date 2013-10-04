@@ -40,8 +40,8 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 # 環境依存ファイルがあれば読み込む
-if [ -r .profile ]; then
-  source .profile
+if [ -r $HOME/.profile ]; then
+  source $HOME/.profile
 fi
 
 # ls の色付け設定

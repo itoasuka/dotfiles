@@ -15,4 +15,5 @@ ln -s $HOME/dotfiles/.gitignore $HOME/.gitignore
 ln -s $HOME/dotfiles/.gitmodules $HOME/.gitmodules
 ln -s $HOME/dotfiles/.vim $HOME/.vim
 ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
+ls -s $HOME/dotfiles/.gvimrc $HOME/.gvimrc
 ln -s $HOME/dotfiles/.git-completion.bash $HOME/.git-completion.bash
