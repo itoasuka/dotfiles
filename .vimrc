@@ -47,6 +47,12 @@ NeoBundle 'ujihisa/ref-hoogle'        " hoogle 参照
 NeoBundle 'ujihisa/unite-haskellimport'
 " Pukiwiki
 NeoBundle 'syngan/vim-pukiwiki'
+" vimside (Vim Scala IDE)
+NeoBundle "megaannum/self"
+NeoBundle "megaannum/forms"
+NeoBundle "Shougo/vimshell"
+NeoBundle "aemoncannon/ensime"
+NeoBundle "megaannum/vimside"
 
 runtime macros/matchit.vim
 

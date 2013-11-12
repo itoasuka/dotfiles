@@ -1,10 +1,13 @@
 CamelCaseMotion
 The-NERD-Commenter
+ensime
+forms
 ghcmod-vim
 html-template-syntax
 neco-ghc
 neocomplcache
 ref-hoogle
+self
 shabadou.vim
 surround.vim
 unimpaired.vim
@@ -23,3 +26,5 @@ vim-ref
 vim-scala
 vim-watchdogs
 vimproc
+vimshell
+vimside
