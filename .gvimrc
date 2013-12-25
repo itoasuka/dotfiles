@@ -11,7 +11,10 @@ set guifont=Ricty:h14
 
 " IME の設定
 if has('multi_byte_ime') || has('xim') || has('gui_macvim')
-    " ノーマルモードに戻った気は IME を OFF にする
+    set noimdisable
+    set iminsert=0 imsearch=0
+    set noimcmdline
+    " ノーマルモードに戻ったときは IME を OFF にする
     inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
     " IME の ON/OFF でキャレットの色を変える
@@ -19,3 +22,19 @@ if has('multi_byte_ime') || has('xim') || has('gui_macvim')
     highlight CursorIM guifg=NONE guibg=DarkRed
 endif
 
+" インデントの深さに応じて自動的に色を付ける
+let g:indent_guides_auto_colors = 1
+
+if has('gui_macvim')
+    set transparency=5
+endif
+
+set guioptions-=r	" 右スクロールバー非表示
+
+set guioptions-=R
+
+set guioptions-=l	" 左スクロールバー非表示
+
+set guioptions-=L
+
+highlight CursorLine gui=underline

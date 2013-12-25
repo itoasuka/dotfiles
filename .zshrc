@@ -33,7 +33,7 @@ fi
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew osx gnu-utils)
+plugins=(git brew osx gnu-utils vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -57,6 +57,8 @@ fi
 ## エイリアス
 #setopt complete_aliases
 
+# キーマッピング
+bindkey "^R" history-incremental-search-backward
 
 
 ### Added by the Heroku Toolbelt
