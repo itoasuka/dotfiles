@@ -53,7 +53,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Completion {{{
   " 自動補完
-  NeoBundle 'Shougo/neocomplete.vim'
+  if has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
+    NeoBundle 'Shougo/neocomplete.vim'
+  endif
 
   " GHC を用いた Haskell 用補完
   NeoBundle 'ujihisa/neco-ghc'
@@ -157,6 +159,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " Pukiwiki
   NeoBundle 'syngan/vim-pukiwiki'
+
+  " sudo
+  NeoBundle 'sudo.vim'
 " }}}
 
 " ColorSchema {{{

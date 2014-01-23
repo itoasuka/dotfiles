@@ -23,8 +23,10 @@ set ttymouse=xterm2
 set clipboard+=unnamed
 set clipboard=unnamed
 
-" MacでAltキーをMetaキーとしてあつかう
-set macmeta
+if has('mac')
+  " MacでAltキーをMetaキーとしてあつかう
+  set macmeta
+endif
 
 " Ev/Rvでvimrcの編集と反映
 command! Ev edit $MYVIMRC
