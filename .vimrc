@@ -14,7 +14,9 @@ source ~/.vim/conf/indent.vim
 source ~/.vim/conf/apperance.vim
 
 " 補完関連
-source ~/.vim/conf/completion.vim
+if has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
+  source ~/.vim/conf/completion.vim
+endif
 
 " 色関連
 source ~/.vim/conf/color.vim
