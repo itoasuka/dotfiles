@@ -49,6 +49,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   " Haskell インデント
   NeoBundle 'kana/vim-filetype-haskell'
 
+  " emmet-vim (HTML入力を高速化） 
+  NeoBundle 'mattn/emmet-vim'
 " }}}
 
 " Completion {{{
