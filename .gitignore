@@ -1,2 +1,4 @@
 ensime_*
 .vim/bundle/.neobundle
+.project
+.idea
