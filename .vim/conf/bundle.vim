@@ -65,10 +65,10 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Seearching/Moving {{{
   " マーク位置表示
-  NeoBundle "ShowMarks"
+  " NeoBundle "ShowMarks"
   
   " 「%」による対応括弧へのカーソル移動機能を拡張
-  runtime macros/matchit.vim
+  " runtime macros/matchit.vim
 " }}}
 
 " Programming {{{
