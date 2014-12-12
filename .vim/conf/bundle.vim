@@ -49,8 +49,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   " Haskell インデント
   NeoBundle 'kana/vim-filetype-haskell'
 
-  " emmet-vim (HTML入力を高速化） 
+  " emmet-vim (HTML入力を高速化）
   NeoBundle 'mattn/emmet-vim'
+
 " }}}
 
 " Completion {{{
@@ -126,6 +127,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " Hakell HTML テンプレート
   NeoBundle 'pbrisbin/html-template-syntax'
+
+  " TypeScript
+  "
+  " npm install -g typescript-tools しておいて
+  " :TSSstarthere TypeScript Tools 起動
+  " :TSSreload    ts ファイル読み込みなおし
+  " CTRL-x+CTRL-oを押せば補完が効く
+  NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
+  NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
   " シンタックスチェッカ
   " NeoBundle 'scrooloose/syntastic'
