@@ -7,7 +7,7 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 
-call neobundle#rc(expand('~/.vim/bundle'))
+call neobundle#begin(expand('~/.vim/bundle'))
 
 " NeoBundle 自身を NeoBundle の管理対象下に置く
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -143,6 +143,13 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " Quckfix を見てエラー部分をハイライト
   NeoBundle "jceb/vim-hier"
+
+  " JavaScript の補完サーバを利用するもの
+  NeoBundle 'marijnh/tern_for_vim', {
+    \ 'build': {
+    \   'others': 'npm install'
+    \}}
+
 " }}}
 
 " Encording {{{
@@ -178,7 +185,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " ColorSchema {{{
   " かっこいいカラースキーム
-  NeoBundle 'altercation/vim-colors-solarized'
+  NeoBundle 'w0ng/vim-hybrid'
+  NeoBundle 'chriskempson/vim-tomorrow-theme'
 " }}}
 
 " Unit {{{
@@ -192,6 +200,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'ujihisa/unite-haskellimport'
 " }}}
 
+call neobundle#end()
 
 " ファイルタイプ判定をon
 filetype plugin indent on

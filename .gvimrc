@@ -1,7 +1,7 @@
 " カラー設定
 syntax enable
-set background=dark
-colorscheme solarized
+" colorscheme Tomorrow-Night
+colorscheme hybrid
 
 " ウィンドウサイズ
 set lines=50 columns=180
