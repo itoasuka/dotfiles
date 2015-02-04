@@ -1,3 +1,7 @@
+set encoding=utf-8
+
+scriptencoding utf-8
+
 " プラグイン等の読み込み
 source ~/.vim/conf/bundle.vim
 

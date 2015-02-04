@@ -33,7 +33,16 @@ fi
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew osx gnu-utils vi-mode)
+case ${OSTYPE} in
+  darwin*)
+    # ここに Mac 向けの設定
+    plugins=(git brew osx gnu-utils vi-mode)
+    ;;
+  linux*)
+    # ここに Linux 向けの設定
+    plugins=(git gnu-utils vi-mode)
+    ;;
+esac
 
 source $ZSH/oh-my-zsh.sh
 

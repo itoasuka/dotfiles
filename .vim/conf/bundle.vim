@@ -119,6 +119,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   " JavaScript シンタックスハイライト
   NeoBundle 'JavaScript-syntax'
 
+  " Node の require を理解してファイルを開く
+  NeoBundle 'moll/vim-node'
+
   " Scala
   NeoBundle 'derekwyatt/vim-scala'
 
@@ -138,17 +141,22 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
   " シンタックスチェッカ
-  " NeoBundle 'scrooloose/syntastic'
-  NeoBundle "osyo-manga/vim-watchdogs"
+  NeoBundle 'scrooloose/syntastic'
+  " NeoBundle "osyo-manga/vim-watchdogs"
 
   " Quckfix を見てエラー部分をハイライト
   NeoBundle "jceb/vim-hier"
 
   " JavaScript の補完サーバを利用するもの
   NeoBundle 'marijnh/tern_for_vim', {
-    \ 'build': {
-    \   'others': 'npm install'
-    \}}
+    \ 'build': { 'others': 'npm install' }
+    \ }
+
+  " Jade
+  NeoBundle 'digitaltoad/vim-jade'
+
+  " blockdiag
+  NeoBundle 'aohta/blockdiag.vim'
 
 " }}}
 
@@ -157,6 +165,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " }}}
 
 " Utility {{{
+  " ディレクトリおよびファイルのツリー表示
+  NeoBundle 'scrooloose/nerdtree'
+
   " Vim の Shell
   NeoBundle "Shougo/vimshell"
 
@@ -181,6 +192,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " sudo
   NeoBundle 'sudo.vim'
+
+  " ファイラ
+  NeoBundle 'Shougo/vimfiler'
 " }}}
 
 " ColorSchema {{{
@@ -189,7 +203,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'chriskempson/vim-tomorrow-theme'
 " }}}
 
-" Unit {{{
+" Unite {{{
   NeoBundle 'Shougo/unite.vim'
   NeoBundle 'tsukkee/unite-help'
   NeoBundle 'h1mesuke/unite-outline'

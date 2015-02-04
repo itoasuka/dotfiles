@@ -83,3 +83,34 @@ nnoremap <Space>hiu :HierUpdate<CR>
 nnoremap <Space>hic :HierClear<CR>
 
 let g:hier_enabled = 1
+
+"-------------------------------------------------------------------------------
+" VimFiler
+"-------------------------------------------------------------------------------
+" VimFiler をデフォルトのファイラにする
+let g:vimfiler_as_default_explorer = 1
+
+" ファイルを開くときは新たしいタブページで
+let g:vimfiler_edit_action = 'tabopen'
+
+
+"-------------------------------------------------------------------------------
+" Syntastics
+"-------------------------------------------------------------------------------
+" ファイルを開いた時にシンタックスチェックをしない
+let g:syntastic_check_on_open = 0
+" ファイルを保存した時にシンタックスチェックをする
+let g:syntastic_check_on_save = 1
+" TypeScript のシンタックスチェッカを指定
+let g:syntastic_typescript_checkers = ['tsc']
+" シンタックスチェッカを利用するファイルタイプを指定
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'active_filetypes': ['javascript', 'typescript'],
+      \ 'passive_filetypes': []
+      \ }
+let g:syntastic_enable_signs=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+
+
