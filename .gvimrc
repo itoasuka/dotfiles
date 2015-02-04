@@ -7,7 +7,11 @@ colorscheme hybrid
 set lines=50 columns=180
 
 " フォント
-set guifont=Ricty:h14
+if has('win32')
+  set guifont=Ricty_Diminished_for_Powerline:h14
+else
+  set guifont=Ricty:h14
+endif
 
 " IME の設定
 if has('multi_byte_ime') || has('xim') || has('gui_macvim')
@@ -28,6 +32,10 @@ let g:indent_guides_auto_colors = 1
 if has('gui_macvim')
     set transparency=5
 endif
+
+set guioptions-=m " メニューバー非表示
+
+set guioptions-=T " ツールバー非表示
 
 set guioptions-=r	" 右スクロールバー非表示
 
