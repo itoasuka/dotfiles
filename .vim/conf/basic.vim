@@ -2,6 +2,7 @@ set scrolloff=5                   " スクロール時の余白確保
 set textwidth=0                   " 一行に長い文章を書いても自動折り返ししない
 set nobackup                      " バックアップ取らない
 set noswapfile                    " スワップファイル作らない
+set noundofile                    " undoファイルを作らない
 set autoread                      " 他で書き換えたら自動で読み直す
 set hidden                        " 編集中でも他のファイルを開けるようにする
 set backspace=indent,eol,start   " バックスペースでなんでも消せるように
