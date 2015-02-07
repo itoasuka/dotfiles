@@ -52,6 +52,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   " emmet-vim (HTML入力を高速化）
   NeoBundle 'mattn/emmet-vim'
 
+  " eskk
+  NeoBundle 'tyru/eskk.vim'
 " }}}
 
 " Completion {{{
