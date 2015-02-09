@@ -160,6 +160,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   " blockdiag
   NeoBundle 'aohta/blockdiag.vim'
 
+  " Markdown
+  NeoBundle 'plasticboy/vim-markdown'
 " }}}
 
 " Encording {{{
