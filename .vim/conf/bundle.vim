@@ -187,7 +187,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
         \ }
 
   " Jade
-  NeoBundle 'digitaltoad/vim-jade'
+  NeoBundleLazy 'digitaltoad/vim-jade', {
+        \'autoload': {'filetypes': ['jade']},
+        \ }
 
   " blockdiag
   NeoBundle 'aohta/blockdiag.vim'
