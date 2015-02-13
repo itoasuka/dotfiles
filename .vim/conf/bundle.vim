@@ -250,9 +250,10 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Unite {{{
   NeoBundle 'Shougo/unite.vim'
   NeoBundle 'tsukkee/unite-help'
-  NeoBundle 'h1mesuke/unite-outline'
+  "NeoBundle 'h1mesuke/unite-outline'
   NeoBundle 'thinca/vim-unite-history'
   NeoBundle 'tsukkee/unite-tag'
+  NeoBundle 'Shougo/neomru.vim'
 
   " Haskell のインポート
   NeoBundle 'ujihisa/unite-haskellimport'
