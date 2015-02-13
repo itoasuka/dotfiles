@@ -46,6 +46,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   " JavaScript インデント
   NeoBundle 'pangloss/vim-javascript'
 
+  " さらに JSX(React) 対応
+  NeoBundle 'mxw/vim-jsx'
+
   " Haskell インデント
   NeoBundle 'kana/vim-filetype-haskell'
 
@@ -162,6 +165,13 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " Markdown
   NeoBundle 'plasticboy/vim-markdown'
+
+  " Java
+  NeoBundleLazy 'ervandew/eclim', {
+        \ 'build': {
+        \   'others': 'ant'
+        \   }
+        \ }
 " }}}
 
 " Encording {{{
