@@ -1,1 +1,3 @@
 bundle
+eclim
+plugin/eclim.vim
