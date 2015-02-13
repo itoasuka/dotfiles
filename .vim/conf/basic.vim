@@ -36,9 +36,11 @@ command! Rv source $MYVIMRC
 set helpfile=$VIMRUNTIME/doc/help.txt
 
 " JavaScript として扱うファイルの追加
-au BufRead,BufNewFile,BufReadPre .bowerrc set filetype=javascript
+autocmd BufRead,BufNewFile,BufReadPre .bowerrc set filetype=javascript
 " vimにCoffeeScriptを認識させる
-au BufRead,BufNewFile,BufReadPre *.coffee set filetype=coffee
+autocmd BufRead,BufNewFile,BufReadPre *.coffee set filetype=coffee
 " JST(JavaScriptテンプレート)
-au BufRead,BufNewFile *.ejs.* set filetype=jst
-au BufRead,BufNewFile *.ejs set filetype=jst
+autocmd BufRead,BufNewFile *.ejs.* set filetype=jst
+autocmd BufRead,BufNewFile *.ejs set filetype=jst
+" mayaa
+autocmd R BufRead,BufNewFile *.mayaa  setlocal filetype=xml
