@@ -43,4 +43,4 @@ autocmd BufRead,BufNewFile,BufReadPre *.coffee set filetype=coffee
 autocmd BufRead,BufNewFile *.ejs.* set filetype=jst
 autocmd BufRead,BufNewFile *.ejs set filetype=jst
 " mayaa
-autocmd R BufRead,BufNewFile *.mayaa  setlocal filetype=xml
+autocmd BufRead,BufNewFile *.mayaa  set filetype=xml
