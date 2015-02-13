@@ -126,4 +126,11 @@ let g:syntastic_enable_signs=1
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 
-
+"-------------------------------------------------------------------------------
+" Eclim
+"-------------------------------------------------------------------------------
+let s:bundle = neobundle#get("eclim")
+function! s:bundle.hooks.on_source(bundle)
+  let g:EclimCompletionMethod = 'omnifunc'
+endfunction
+unlet s:bundle
