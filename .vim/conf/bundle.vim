@@ -41,19 +41,29 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " PHP 用ナイスなインデンター
   " NeoBundle 'php.vim-html-enhanced' " オリジナル
-  NeoBundle 'comeonly/php.vim-html-enhanced' " CakePHP を念頭にカスタマイズされた版
-
+  " CakePHP を念頭にカスタマイズされた版
+  NeoBundleLazy 'comeonly/php.vim-html-enhanced', {
+        \'autoload': {'filetypes': ['php']}
+        \}
   " JavaScript インデント
-  NeoBundle 'pangloss/vim-javascript'
+  NeoBundleLazy 'pangloss/vim-javascript', {
+        \'autoload': {'filetypes': ['javascript']}
+        \}
 
   " さらに JSX(React) 対応
-  NeoBundle 'mxw/vim-jsx'
+  NeoBundleLazy 'mxw/vim-jsx', {
+        \'autoload': {'filetypes': ['javascript']}
+        \}
 
   " Haskell インデント
-  NeoBundle 'kana/vim-filetype-haskell'
+  NeoBundleLazy 'kana/vim-filetype-haskell', {
+        \'autoload': {'filetypes': ['haskell']}
+        \}
 
   " emmet-vim (HTML入力を高速化）
-  NeoBundle 'mattn/emmet-vim'
+  NeoBundleLazy 'mattn/emmet-vim', {
+        \'autoload': {'filetypes': ['html']}
+        \}
 
   " eskk
   NeoBundle 'tyru/eskk.vim'
@@ -66,7 +76,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   endif
 
   " GHC を用いた Haskell 用補完
-  NeoBundle 'ujihisa/neco-ghc'
+  NeoBundleLazy 'ujihisa/neco-ghc', {
+        \'autoload': {'filetypes': ['haskell']}
+        \}
 " }}}
 
 " Seearching/Moving {{{
@@ -88,27 +100,33 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'thinca/vim-ref'
   
   " Hoogle 参照
-  NeoBundle 'ujihisa/ref-hoogle'
+  NeoBundleLazy 'ujihisa/ref-hoogle', {
+        \'autoload': {'filetypes': ['haskell']}
+        \}
 
   " SQLUtilities : SQL整形、生成ユーティリティ
-  NeoBundle 'SQLUtilities'
+  NeoBundleLazy 'SQLUtilities', {
+        \'autoload': {'filetypes': ['sql']}
+        \}
 
   " Tagbar
   NeoBundle 'majutsushi/tagbar'
   
   " Tagbar PHP
-  NeoBundle 'vim-scripts/tagbar-phpctags', {
-    \   'build' : {
-    \     'others' : 'chmod +x bin/phpctags',
-    \   },
-    \ }
+  NeoBundleLazy 'vim-scripts/tagbar-phpctags', {
+        \'build' : {
+        \ 'others' : 'chmod +x bin/phpctags',
+        \ },
+        \'autoload': {'filetypes': ['php']}
+        \}
 
   " Tagbar Haskell
-  NeoBundle 'bitc/lushtags', {
-    \   'build' : {
-    \     'others' : 'cabal configure && cabal build && cabal install',
-    \   },
-    \ }
+  NeoBundleLazy 'bitc/lushtags', {
+        \'build' : {
+        \ 'others' : 'cabal configure && cabal build && cabal install',
+        \ },
+        \'autoload': {'filetypes': ['haskell']}
+        \}
 
   " GHC を用いた Haskell の型表示
   NeoBundle 'eagletmt/ghcmod-vim'
@@ -116,22 +134,32 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Syntax {{{
   " CoffeeScript の syntax + 自動compile
-  NeoBundle 'kchmck/vim-coffee-script'
+  NeoBundleLazy 'kchmck/vim-coffee-script', {
+        \'autoload': {'filetypes': ['coffee']}
+        \}
 
   " JavaScript テンプレート ejs 用
   NeoBundle 'jeyb/vim-jst'
 
   " JavaScript シンタックスハイライト
-  NeoBundle 'JavaScript-syntax'
+  NeoBundleLazy 'JavaScript-syntax', {
+        \'autoload': {'filetypes': ['javascript']}
+        \}
 
   " Node の require を理解してファイルを開く
-  NeoBundle 'moll/vim-node'
+  NeoBundleLazy 'moll/vim-node', {
+        \'autoload': {'filetypes': ['javascript', 'coffee']}
+        \}
 
   " Scala
-  NeoBundle 'derekwyatt/vim-scala'
+  NeoBundleLazy 'derekwyatt/vim-scala', {
+        \'autoload': {'filetypes': ['scala']}
+        \}
 
   " Haskell
-  NeoBundle 'dag/vim2hs'
+  NeoBundleLazy 'dag/vim2hs', {
+        \'autoload': {'filetypes': ['haskell']}
+        \}
 
   " Hakell HTML テンプレート
   NeoBundle 'pbrisbin/html-template-syntax'
@@ -153,9 +181,10 @@ NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle "jceb/vim-hier"
 
   " JavaScript の補完サーバを利用するもの
-  NeoBundle 'marijnh/tern_for_vim', {
-    \ 'build': { 'others': 'npm install' }
-    \ }
+  NeoBundleLazy 'marijnh/tern_for_vim', {
+        \'autoload': {'filetypes': ['javascript', 'coffee']},
+        \'build': { 'others': 'npm install' }
+        \ }
 
   " Jade
   NeoBundle 'digitaltoad/vim-jade'
@@ -168,9 +197,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " Java
   NeoBundleLazy 'ervandew/eclim', {
-        \ 'build': {
-        \   'others': 'ant'
-        \   }
+        \'autoload': {'filetypes': ['java']},
+        \'build': {'others': 'ant'}
         \ }
 " }}}
 
