@@ -44,3 +44,5 @@ autocmd BufRead,BufNewFile *.ejs.* set filetype=jst
 autocmd BufRead,BufNewFile *.ejs set filetype=jst
 " mayaa
 autocmd BufRead,BufNewFile *.mayaa  set filetype=xml
+" Jade
+autocmd BufRead,BufNewFile *.jade   set filetype=jade
