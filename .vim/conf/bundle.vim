@@ -67,6 +67,10 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " eskk
   NeoBundle 'tyru/eskk.vim'
+
+  " スニペット
+  NeoBundle 'Shougo/neosnippet'
+  NeoBundle 'Shougo/neosnippet-snippets'
 " }}}
 
 " Completion {{{

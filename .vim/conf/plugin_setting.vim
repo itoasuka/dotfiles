@@ -134,3 +134,28 @@ function! s:bundle.hooks.on_source(bundle)
   let g:EclimCompletionMethod = 'omnifunc'
 endfunction
 unlet s:bundle
+
+"-------------------------------------------------------------------------------
+" NeoSnippet
+"-------------------------------------------------------------------------------
+" Plugin key-mappings.  " <C-k>でsnippetの展開
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" 自分用 snippet ファイルの場所
+let s:my_snippet = '~/.vim/snippet/'
+let g:neosnippet#snippets_directory = s:my_snippet
