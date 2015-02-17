@@ -159,3 +159,25 @@ endif
 " 自分用 snippet ファイルの場所
 let s:my_snippet = '~/.vim/snippet/'
 let g:neosnippet#snippets_directory = s:my_snippet
+
+"-------------------------------------------------------------------------------
+" Unite
+"-------------------------------------------------------------------------------
+"prefix keyの設定
+nmap <Space> [unite]
+
+"スペースキーとaキーでカレントディレクトリを表示
+nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+"スペースキーとfキーでバッファと最近開いたファイル一覧を表示
+nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
+"スペースキーとdキーで最近開いたディレクトリを表示
+nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
+"スペースキーとbキーでバッファを表示
+nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+
+"unite.vimを開いている間のキーマッピング
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+    " ESCでuniteを終了
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction"}}}
