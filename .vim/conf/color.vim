@@ -1,7 +1,6 @@
 " カラー設定
-if !has('gui_running')
-    syntax enable
-    " colorscheme Tomorrow-Night
-    colorscheme hybrid 
-endif
+syntax enable
+let g:hybrid_use_Xresources = 1
+set background=dark
+colorscheme hybrid
 

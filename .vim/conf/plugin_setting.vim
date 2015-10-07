@@ -116,6 +116,8 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_save = 1
 " TypeScript のシンタックスチェッカを指定
 let g:syntastic_typescript_checkers = ['tsc']
+" JavaScript のシンタックスチェッカを指定
+let g:syntastic_javascript_checkers = ['eslint']
 " シンタックスチェッカを利用するファイルタイプを指定
 let g:syntastic_mode_map = {
       \ 'mode': 'active',
