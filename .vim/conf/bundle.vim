@@ -124,14 +124,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
         \'autoload': {'filetypes': ['php']}
         \}
 
-  " Tagbar Haskell
-  NeoBundleLazy 'bitc/lushtags', {
-        \'build' : {
-        \ 'others' : 'cabal configure && cabal build && cabal install',
-        \ },
-        \'autoload': {'filetypes': ['haskell']}
-        \}
-
   " GHC を用いた Haskell の型表示
   NeoBundle 'eagletmt/ghcmod-vim'
 " }}}
