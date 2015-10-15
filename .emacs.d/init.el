@@ -27,6 +27,9 @@
 ;; Shellのパス設定を持ってくる
 (exec-path-from-shell-initialize)
 
+;;----------------------------------------------------------------------------
+;; □ ウィンドウ関連の設定 {{{
+;;----------------------------------------------------------------------------
 ;; メニューバーを非表示
 (menu-bar-mode 0)
 ;; ツールバーを非表示
@@ -59,6 +62,8 @@
 				      'append)
 		    (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
 ))
+;;}}}
+;;----------------------------------------------------------------------------
 		    
 ;; 常に行番号を表示する
 (global-linum-mode t)
@@ -67,6 +72,9 @@
 ;; auto-completeの設定
 (when (require 'auto-complete-config nil t)
   (ac-config-default))
+
+(require 'evil)
+(evil-mode 1)
 
 ;; JavaScriptの設定
 (add-hook 'js-mode-hook
