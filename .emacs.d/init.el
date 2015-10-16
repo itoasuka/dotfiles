@@ -3,6 +3,9 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
   (package-initialize))
 
+;;----------------------------------------------------------------------------
+;; □ 文字コードの設定
+;;----------------------------------------------------------------------------
 ;; ファイルシステムの文字コードの設定
 (cond
  ((or (eq window-system 'mac) (eq window-system 'ns))
@@ -24,11 +27,29 @@
   (setq file-name-coding-system 'utf-8)
   (setq locale-coding-system 'utf-8)))
 
+;;----------------------------------------------------------------------------
+;; □ 基本設定
+;;----------------------------------------------------------------------------
+;; 常に行番号を表示する
+(global-linum-mode t)
+(if window-system (setq linum-format "%4d") (setq linum-format "%4d|"))
+
+;;----------------------------------------------------------------------------
+;; □ shell関連の設定
+;;----------------------------------------------------------------------------
 ;; Shellのパス設定を持ってくる
 (exec-path-from-shell-initialize)
 
+;; eshellでエスケープシーケンスをまともに表示させる
+(require 'ansi-color)
+(require 'eshell)
+(defun eshell-handle-ansi-color ()
+  (ansi-color-apply-on-region eshell-last-output-start
+			      eshell-last-output-end))
+(add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
+
 ;;----------------------------------------------------------------------------
-;; □ ウィンドウ関連の設定 {{{
+;; □ ウィンドウ関連の設定
 ;;----------------------------------------------------------------------------
 ;; メニューバーを非表示
 (menu-bar-mode 0)
@@ -62,20 +83,22 @@
 				      'append)
 		    (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
 ))
-;;}}}
-;;----------------------------------------------------------------------------
-		    
-;; 常に行番号を表示する
-(global-linum-mode t)
-(if window-system (setq linum-format "%4d") (setq linum-format "%4d|"))
 
-;; auto-completeの設定
+;;----------------------------------------------------------------------------
+;; □ auto-completeの設定
+;;----------------------------------------------------------------------------
 (when (require 'auto-complete-config nil t)
   (ac-config-default))
 
+;;----------------------------------------------------------------------------
+;; □ Evilの設定
+;;----------------------------------------------------------------------------
 (require 'evil)
 (evil-mode 1)
 
+;;----------------------------------------------------------------------------
+;; □ JavaSriptの設定
+;;----------------------------------------------------------------------------
 ;; JavaScriptの設定
 (add-hook 'js-mode-hook
           (function
@@ -84,20 +107,15 @@
              )))
 (setq js-indent-level 2)
 
-;; eshellでエスケープシーケンスをまともに表示させる
-(require 'ansi-color)
-(require 'eshell)
-(defun eshell-handle-ansi-color ()
-  (ansi-color-apply-on-region eshell-last-output-start
-			      eshell-last-output-end))
-(add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
-
 ;; emmet
 (require 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; マークアップモードで自動的に emmet-mode をたちあげる
 (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2))) ;; indent 2 spaces
 (setq emmet-move-cursor-between-quotes t) ;; 最初のクオートの中にカーソルをぶちこむ
 
+;;----------------------------------------------------------------------------
+;; □ web-modeの設定
+;;----------------------------------------------------------------------------
 ;; web-modeの設定
 (require 'web-mode)
 ;; .jsx ファイルを web-mode の対象とする。
