@@ -2,7 +2,7 @@
 " □ ウィンドウ表示関連 {{{
 "-----------------------------------------------------------------------------
 " ウィンドウサイズ
-set lines=50 columns=180
+set lines=40 columns=160
 
 " Mac版ならほのかに半透明
 if has('gui_macvim')
@@ -34,12 +34,12 @@ highlight CursorLine gui=underline
 
 " フォント
 if has('win32')
-  set guifont=Ricty_Diminished_for_Powerline:h14
+  set guifont=Ricty_Diminished_for_Powerline:h16
 else
-  set guifont=Ricty_Regular_for_Powerline:h14
+  set guifont=Ricty_Regular_for_Powerline:h16
 endif
+set linespace=2
 "}}}
-
 "-----------------------------------------------------------------------------
 " □ IME関連 {{{
 "-----------------------------------------------------------------------------
