@@ -1,6 +1,16 @@
 set encoding=utf-8
 
 "-----------------------------------------------------------------------------
+" □ 設定チートシート
+"-----------------------------------------------------------------------------
+" Unite 関連
+" ,ub     バッファ一覧
+" ,uf     ファイル一覧
+" ,ur     レジスタ一覧
+" ,um     最近使用したファイル一覧
+" ,uu     バッファと最近使用したファイル一覧
+" ,ua     バッファ、ファイル、最近使用したファイル、ブックマーク一覧
+"-----------------------------------------------------------------------------
 " □ 基本設定 {{{
 "-----------------------------------------------------------------------------
 scriptencoding utf-8
@@ -109,6 +119,9 @@ NeoBundle 'Shougo/neocomplete.vim'
 " ロケーション    [l    ]l
 " タグリスト      [t    ]t
 NeoBundle 'unimpaired.vim'
+
+" 最近使ったファイル記録
+NeoBundle 'Shougo/neomru.vim'
 "}}}
 " ファイル管理 {{{
 " Git 操作
@@ -116,6 +129,9 @@ NeoBundle 'tpope/vim-fugitive'
 " Git 差分表示
 NeoBundle 'airblade/vim-gitgutter'
 "}}}
+" Unite {{{
+NeoBundle 'Shougo/unite.vim'
+" }}}
 
 call neobundle#end()
 
@@ -218,6 +234,30 @@ set iminsert=0 imsearch=0
 set noimcmdline
 " ノーマルモードに戻ったときは IME を OFF にする
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+"}}}
+"-----------------------------------------------------------------------------
+" □ Unite の設定 {{{
+"-----------------------------------------------------------------------------
+let g:unite_enable_start_insert=1
+let g:unite_source_history_yank_enable =1
+let g:unite_source_file_mru_limit = 200
+
+" バッファ一覧
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+" ファイル一覧
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+" レジスタ一覧
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+" 最近使用したファイル一覧
+nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" 常用セット
+nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
+" 全部乗せ
+nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+
+" ESCキーを2回押すと終了する
+au FileType unite nmap <silent> <buffer> <ESC><ESC> q
+au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 "}}}
 "-----------------------------------------------------------------------------
 " □ 補完関連の設定 {{{
