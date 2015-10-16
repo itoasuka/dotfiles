@@ -12,6 +12,7 @@ syntax on
 
 " 行番号を表示
 set number
+set numberwidth=3
 
 " カーソル行をハイライト
 set cursorline
@@ -52,6 +53,14 @@ command! Ev edit $MYVIMRC
 command! Rv source $MYVIMRC
 
 set helpfile=$VIMRUNTIME/doc/help.txt
+
+" Sign のありなしでピクピク桁が動くのがいやなので Sing がなくともダミーサイン
+" を入れて SignColumn を常に表示する。
+function! ShowSignColumn()
+  sign define dummy
+  execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+endfunc
+au BufRead,BufNewFile * call ShowSignColumn()
 "}}}
 "-----------------------------------------------------------------------------
 " □ NeoBundle の設定 {{{
@@ -189,7 +198,7 @@ function! MyFilename()
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'unite' ? unite#get_status_string() :
         \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ '' != expand('%:p') ? expand('%:p') : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 "}}}
