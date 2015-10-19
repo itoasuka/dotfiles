@@ -33,6 +33,9 @@ colorscheme hybrid
 highlight clear CursorLine
 highlight CursorLine gui=underline
 
+" カーソルが一番上や下に移動した時のビープ音を消す＆画面フラッシュも消す
+set vb t_vb=
+
 " フォント
 if has('win32')
   set guifont=Ricty_Diminished_for_Powerline:h16

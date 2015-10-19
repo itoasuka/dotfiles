@@ -316,6 +316,13 @@ autocmd FileType * setlocal formatoptions-=ro
 autocmd FileType vim setlocal sw=2 sts=2 ts=2 et
 "}}}
 "-----------------------------------------------------------------------------
+" □ Windows バッチファイルの設定 {{{
+"-----------------------------------------------------------------------------
+autocmd FileType dosbatch :set fileencoding=cp932
+autocmd FileType dosbatch :set fileformat=dos
+autocmd FileType dosbatch setlocal sw=4 sts=4 ts=4 et
+"}}}
+"-----------------------------------------------------------------------------
 
 " vim:set foldmethod=marker:
 
