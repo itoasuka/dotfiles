@@ -26,11 +26,15 @@ set guioptions-=L
 "-----------------------------------------------------------------------------
 " カラースキーム設定
 " ※.vimrcでも指定しているがここでも指定しないとちゃんと反映ならない
+set background=dark
 colorscheme hybrid
 
 " カーソル行はアンダーラインを引く
 highlight clear CursorLine
 highlight CursorLine gui=underline
+
+" カーソルが一番上や下に移動した時のビープ音を消す＆画面フラッシュも消す
+set vb t_vb=
 
 " フォント
 if has('win32')
