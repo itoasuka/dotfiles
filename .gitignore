@@ -1,6 +1,7 @@
 ensime_*
 .vim/bundle/.neobundle
 .vim/bundle/NeoBundle.lock
+.vim/shada
 .project
 .idea
 .netrwhist

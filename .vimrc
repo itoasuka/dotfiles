@@ -50,13 +50,15 @@ set ambiwidth=double              " 全角記号のずれ対応
 " マウスを使えるようにする
 set mouse=a
 set guioptions+=a
-set ttymouse=xterm2
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 
 " OSのクリップボードを使用する
 set clipboard+=unnamed
 set clipboard=unnamed
 
-if has('mac')
+if has('mac') && !has('nvim')
   " MacでAltキーをMetaキーとしてあつかう
   set macmeta
 endif
@@ -124,7 +126,11 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'itchyny/lightline.vim'
 
 " 補完
-NeoBundle 'Shougo/neocomplete.vim'
+if has('nvim')
+  NeoBundle 'Shougo/deoplete.nvim'
+else
+  NeoBundle 'Shougo/neocomplete.vim'
+endif
 
 " Vimのリストをサクサク移動（実践Vim P.116）
 " バッファ     前 [b 次 ]b 最初 [B 最後 ]B
@@ -283,40 +289,44 @@ set history=1000        " コマンド・検索パターンの履歴数
 set complete+=k         " 補完に辞書ファイル追加
 "}}}
 "-----------------------------------------------------------------------------
-" □ NeoComplete の設定 {{{
+" □ NeoComplete / deoplete の設定 {{{
 "-----------------------------------------------------------------------------
 " AutoComplPop を無効化
 let g:acp_enableAtStartup = 0
-" neocomplete を使う
-let g:neocomplete#enable_at_startup = 1
-" smartcase を使う
-let g:neocomplete#enable_smart_case = 1
-" 補完が有効になる文字数
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+if has('nvim')
+  let g:deoplete#enable_at_startup = 1
+else
+  " neocomplete を使う
+  let g:neocomplete#enable_at_startup = 1
+  " smartcase を使う
+  let g:neocomplete#enable_smart_case = 1
+  " 補完が有効になる文字数
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-      \  'default' : '',
-      \  'vimshell' : $HOME.'/.vimshell_hist',
-      \  'scheme' : $HOME.'/.gosh_completions'
-      \ }
+  " Define dictionary.
+  let g:neocomplete#sources#dictionary#dictionaries = {
+        \  'default' : '',
+        \  'vimshell' : $HOME.'/.vimshell_hist',
+        \  'scheme' : $HOME.'/.gosh_completions'
+        \ }
 
-" ポップアップを Return で閉じる
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
+  " ポップアップを Return で閉じる
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function()
+    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  endfunction
 
-" <TAB> : 補完
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS> : ポップアップを閉じて後ろの文字を削除
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" <C-y> : ポップアップを閉じる
-inoremap <expr><C-y> neocomplete#close_popup()
-" <C-e> : ポップアップをキャンセルする
-inoremap <expr><C-e> neocomplete#cancel_popup()
+  " <TAB> : 補完
+  inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+  " <C-h>, <BS> : ポップアップを閉じて後ろの文字を削除
+  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+  " <C-y> : ポップアップを閉じる
+  inoremap <expr><C-y> neocomplete#close_popup()
+  " <C-e> : ポップアップをキャンセルする
+  inoremap <expr><C-e> neocomplete#cancel_popup()
+endif
     
 "}}}
 "-----------------------------------------------------------------------------
