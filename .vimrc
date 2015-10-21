@@ -370,7 +370,6 @@ autocmd FileType * setlocal formatoptions-=ro
 "-----------------------------------------------------------------------------
 " □ Vim Script の設定 {{{
 "-----------------------------------------------------------------------------
-autocmd FileType vim setlocal sw=2 sts=2 ts=2 et
 "}}}
 "-----------------------------------------------------------------------------
 " □ VimShell の設定 {{{
@@ -395,20 +394,11 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-autocmd BufRead,BufNewFile,BufReadPre .eslintrc set filetype=json
-
-autocmd FileType javascript setlocal sw=2 sts=2 ts=2 et
-autocmd FileType jsx        setlocal sw=2 sts=2 ts=2 et
-autocmd FileType json       setlocal sw=2 sts=2 ts=2 et
-
 let s:bundle = neobundle#get('vim-jsdoc')
 function! s:bundle.hooks.on_source(bundle)
   nmap <silent> <C-l> <Plug>(jsdoc)
 endfunction
 unlet s:bundle
-
-" Node 用辞書を追加する
-autocmd FileType javascript setlocal dictionary+=$HOME/.vim/bundle/vim-node-dict/dict/node.dict
 "}}}
 "-----------------------------------------------------------------------------
 " □ その他のキーマップ {{{
