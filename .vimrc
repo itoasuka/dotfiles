@@ -13,6 +13,8 @@ set encoding=utf-8
 " Split 関連
 " [s      左スプリットへ
 " ]s      右スプリットへ
+" JavaScript 関連
+" <C-l>   JsDoc 追加
 "-----------------------------------------------------------------------------
 " □ 基本設定 {{{
 "-----------------------------------------------------------------------------
@@ -75,7 +77,8 @@ function! ShowSignColumn()
   sign define dummy
   execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 endfunc
-autocmd BufRead,BufNewFile * call ShowSignColumn()
+autocmd FileType vim call ShowSignColumn()
+autocmd FileType javascript call ShowSignColumn()
 "}}}
 "-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
@@ -148,10 +151,39 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'tpope/vim-fugitive'
 " Git 差分表示
 NeoBundle 'airblade/vim-gitgutter'
+" ファイラ
+NeoBundle 'Shougo/vimfiler.vim'
 "}}}
 " Unite {{{
 NeoBundle 'Shougo/unite.vim'
 " }}}
+" コーディング関連 {{{
+NeoBundle 'scrooloose/syntastic.git'
+"}}}
+" JavaScript {{{
+" JavaScript 用インデント
+NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
+" JavaScript のシンタックスハイライトをより素敵に
+" ※yajs.vimでことたりそうなのでいまのところコメントアウト
+"NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+" JSX 対応シンタックスハイライト
+NeoBundleLazy 'mxw/vim-jsx', {'autoload':{'filetypes':['javascript']}}
+" ES6 対応シンタックスハイライト
+NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
+" JavaScript の補完  
+NeoBundleLazy 'marijnh/tern_for_vim', {
+      \   'build': {
+      \     'others': 'npm install'
+      \   },
+      \   'autoload': {'filetypes': ['javascript']}
+      \ }
+" JSON の扱いを素敵に
+NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['json']}}
+" JsDoc の入力を楽にする
+NeoBundleLazy 'heavenshell/vim-jsdoc', {'autoload':{'filetypes':['javascript']}}
+" Node 用辞書
+NeoBundle 'guileen/vim-node-dict'
+"}}}
 
 call neobundle#end()
 
@@ -170,7 +202,7 @@ colorscheme hybrid
 " □ ステータスラインの設定 {{{
 "-----------------------------------------------------------------------------
 let g:lightline = {
-      \   'colorscheme' : 'solarized_dark',
+      \   'colorscheme' : 'jellybeans',
       \   'mode_map': {'c': 'NORMAL'},
       \   'active': {
       \     'left': [
@@ -247,6 +279,11 @@ let g:gitgutter_sign_modified = '→'
 let g:gitgutter_sign_removed = '×'
 "}}}
 "-----------------------------------------------------------------------------
+" □ VimFiler の設定 {{{
+"-----------------------------------------------------------------------------
+let g:vimfiler_as_default_explorer = 1
+"}}}
+"-----------------------------------------------------------------------------
 " □ IME関連の設定 {{{
 "-----------------------------------------------------------------------------
 set noimdisable
@@ -258,7 +295,7 @@ inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 "-----------------------------------------------------------------------------
 " □ Unite の設定 {{{
 "-----------------------------------------------------------------------------
-let g:unite_enable_start_insert=1
+"let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable =1
 let g:unite_source_file_mru_limit = 200
 
@@ -303,13 +340,9 @@ else
   " 補完が有効になる文字数
   let g:neocomplete#sources#syntax#min_keyword_length = 3
   let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+  " プレビューウィンドウを自動で閉じる
+  let g:neocomplete#enable_auto_close_preview = 1
 
-  " Define dictionary.
-  let g:neocomplete#sources#dictionary#dictionaries = {
-        \  'default' : '',
-        \  'vimshell' : $HOME.'/.vimshell_hist',
-        \  'scheme' : $HOME.'/.gosh_completions'
-        \ }
 
   " ポップアップを Return で閉じる
   inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -351,6 +384,31 @@ autocmd FileType vimshell setlocal nonumber
 autocmd FileType dosbatch :set fileencoding=cp932
 autocmd FileType dosbatch :set fileformat=dos
 autocmd FileType dosbatch setlocal sw=4 sts=4 ts=4 et
+"}}}
+"-----------------------------------------------------------------------------
+" □ JavaScript の設定"{{{
+"-----------------------------------------------------------------------------
+" vim-json のダブルクォートを隠す機能は不要
+let s:bundle = neobundle#get('vim-json')
+function! s:bundle.hooks.on_source(bundle)
+  let g:vim_json_syntax_conceal = 0
+endfunction
+unlet s:bundle
+
+autocmd BufRead,BufNewFile,BufReadPre .eslintrc set filetype=json
+
+autocmd FileType javascript setlocal sw=2 sts=2 ts=2 et
+autocmd FileType jsx        setlocal sw=2 sts=2 ts=2 et
+autocmd FileType json       setlocal sw=2 sts=2 ts=2 et
+
+let s:bundle = neobundle#get('vim-jsdoc')
+function! s:bundle.hooks.on_source(bundle)
+  nmap <silent> <C-l> <Plug>(jsdoc)
+endfunction
+unlet s:bundle
+
+" Node 用辞書を追加する
+autocmd FileType javascript setlocal dictionary+=$HOME/.vim/bundle/vim-node-dict/dict/node.dict
 "}}}
 "-----------------------------------------------------------------------------
 " □ その他のキーマップ {{{
