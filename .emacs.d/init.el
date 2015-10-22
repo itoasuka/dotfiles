@@ -35,6 +35,16 @@
 (if window-system (setq linum-format "%4d") (setq linum-format "%4d|"))
 
 ;;----------------------------------------------------------------------------
+;; □ 色の設定
+;;----------------------------------------------------------------------------
+;; カラーテーマ
+;(load-theme 'solarized-dark t)
+(add-to-list 'load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'tomorrow-night-eighties t)
+
+
+;;----------------------------------------------------------------------------
 ;; □ shell関連の設定
 ;;----------------------------------------------------------------------------
 ;; Shellのパス設定を持ってくる
@@ -64,8 +74,8 @@
 				   '(top . 0)
 				   '(left . 0)
 				   ;; サイズ
-				   '(width . 180)  ;横
-				   '(height . 50)) ;縦
+				   '(width . 160)  ;横
+				   '(height . 40)) ;縦
 				  initial-frame-alist))
 		    (setq default-frame-alist initial-frame-alist)
 ))
@@ -75,10 +85,10 @@
 
 ;; Ricty フォントの利用
 (if window-system (progn
-		    (create-fontset-from-ascii-font "Ricty-14:weight=normal:slant=normal" nil "ricty")
+		    (create-fontset-from-ascii-font "Ricty-16:weight=normal:slant=normal" nil "ricty")
 		    (set-fontset-font "fontset-ricty"
 				      'unicode
-				      (font-spec :family "Ricty" :size 14)
+				      (font-spec :family "Ricty" :size 16)
 				      nil
 				      'append)
 		    (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
