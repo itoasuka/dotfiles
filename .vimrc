@@ -71,7 +71,7 @@ command! Rv source $MYVIMRC
 
 set helpfile=$VIMRUNTIME/doc/help.txt
 
-" Sign のありなしでピクピク桁が動くのがいやなので Sing がなくともダミーサイン
+" Sign のありなしでピクピク桁が動くのがいやなので Sign がなくともダミーサイン
 " を入れて SignColumn を常に表示する。
 function! ShowSignColumn()
   sign define dummy
@@ -79,6 +79,30 @@ function! ShowSignColumn()
 endfunc
 autocmd FileType vim call ShowSignColumn()
 autocmd FileType javascript call ShowSignColumn()
+
+" Python 環境が思ってたんのと違う場合の対応
+" 参考 http://qiita.com/tmsanrinsha/items/cfa3808b8d0cc915cd75
+if has('kaoriya') && has('mac')
+  " 特にKaoriYa パッチの MacVim で起こる
+  " この辺も参照→ http://goo.gl/OS772W
+  if filereadable('/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python')
+    let $PYTHON_DLL = "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python"
+  endif
+
+  function! s:set_python_path()
+    let s:python_path = system('python -', 'import sys;sys.stdout.write(",".join(sys.path))')
+
+    python <<EOT
+import sys
+import vim
+
+python_paths = vim.eval('s:python_path').split(',')
+for path in python_paths:
+  if not path in sys.path:
+    sys.path.insert(0, path)
+EOT
+  endfunction
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
@@ -183,6 +207,13 @@ NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['json']}}
 NeoBundleLazy 'heavenshell/vim-jsdoc', {'autoload':{'filetypes':['javascript']}}
 " Node 用辞書
 NeoBundle 'guileen/vim-node-dict'
+"}}}
+" Scala {{{
+" シンタックスハイライト
+NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}}
+" SBT 対応 
+NeoBundleLazy 'ktvoelker/sbt-vim',  {'autoload':{'filetypes':['sbt']}}
+NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
 "}}}
 
 call neobundle#end()
@@ -350,6 +381,13 @@ else
     return pumvisible() ? neocomplete#close_popup() : "\<CR>"
   endfunction
 
+  let g:neocomplete#sources#dictionary#dictionaries = {
+    \   'default' : '',
+    \   'vimshell' : $HOME.'/.vimshell_hist',
+    \   'javascript': $HOME.'/.vimrc/bundle/vim-node-dict/dict/node.dict',
+    \   'scala': $HOME.'/.vimrc/dict/scala.dict'
+    \ }
+
   " <TAB> : 補完
   inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
   " <C-h>, <BS> : ポップアップを閉じて後ろの文字を削除
@@ -385,7 +423,7 @@ autocmd FileType dosbatch :set fileformat=dos
 autocmd FileType dosbatch setlocal sw=4 sts=4 ts=4 et
 "}}}
 "-----------------------------------------------------------------------------
-" □ JavaScript の設定"{{{
+" □ JavaScript の設定 {{{
 "-----------------------------------------------------------------------------
 " vim-json のダブルクォートを隠す機能は不要
 let s:bundle = neobundle#get('vim-json')
@@ -397,6 +435,17 @@ unlet s:bundle
 let s:bundle = neobundle#get('vim-jsdoc')
 function! s:bundle.hooks.on_source(bundle)
   nmap <silent> <C-l> <Plug>(jsdoc)
+endfunction
+unlet s:bundle
+"}}}
+"-----------------------------------------------------------------------------
+" □ Scala の設定 {{{
+"-----------------------------------------------------------------------------
+let s:bundle = neobundle#get('ensime-vim')
+function! s:bundle.hooks.on_source(bundle)
+  if !has('nvim')
+    call s:set_python_path()
+  endif
 endfunction
 unlet s:bundle
 "}}}
