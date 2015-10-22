@@ -34,6 +34,9 @@
 (global-linum-mode t)
 (if window-system (setq linum-format "%4d") (setq linum-format "%4d|"))
 
+;; カーソル行をハイライトする
+(global-hl-line-mode t)
+
 ;;----------------------------------------------------------------------------
 ;; □ 色の設定
 ;;----------------------------------------------------------------------------
@@ -43,6 +46,13 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'tomorrow-night-eighties t)
 
+;;----------------------------------------------------------------------------
+;; □ IME 関連の設定
+;;----------------------------------------------------------------------------
+(add-hook 'mw32-ime-on-hook
+	  (function (lambda () (set-cursor-color "magenta"))))
+(add-hook 'mw32-ime-off-hook
+	  (function (lambda () (set-cursor-color "dim gray"))))
 
 ;;----------------------------------------------------------------------------
 ;; □ shell関連の設定
@@ -141,3 +151,8 @@
   (setq indent-tabs-mode nil)
   (setq tab-width 2))
 (add-hook 'web-mode-hook 'my-web-mode-hook)
+
+;;----------------------------------------------------------------------------
+;; □ Scalaの設定
+;;----------------------------------------------------------------------------
+(require 'scala-mode-auto)
