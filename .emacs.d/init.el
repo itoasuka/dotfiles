@@ -155,4 +155,7 @@
 ;;----------------------------------------------------------------------------
 ;; □ Scalaの設定
 ;;----------------------------------------------------------------------------
-(require 'scala-mode-auto)
+(require 'scala-mode2)
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(setq ensime-completion-style 'auto-complete)
