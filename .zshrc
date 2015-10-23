@@ -12,7 +12,7 @@ ZSH_THEME="steeef"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 \which gls . > /dev/null
 if [ $? = 0 ]; then
-	alias ls="gls"
+  alias ls="gls"
 fi
 
 # Set to this to use case-sensitive completion
@@ -53,23 +53,12 @@ if [ -r $HOME/.profile ]; then
   source $HOME/.profile
 fi
 
-# ls の色付け設定
-if [ -r .dircolors ]; then
-  \which gdircolors > /dev/null
-  if [ $? = 0 ]; then
-#    eval `gdircolors .dircolors`
-  else
-#    eval `dircolors .dircolors`
-  fi
-fi
-
-## エイリアス
-#setopt complete_aliases
-
 # キーマッピング
 bindkey "^R" history-incremental-search-backward
-
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit -u
