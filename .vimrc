@@ -210,7 +210,10 @@ NeoBundle 'guileen/vim-node-dict'
 "}}}
 " Scala {{{
 " シンタックスハイライト
-NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala']}}
+NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala', 'html', 'play2-conf', 'play2-routes']}}
+" Play Framework 用シンタックスハイライト 
+" ※NeoBundleLazyだとちゃんと動かないっぽい
+NeoBundle 'gre/play2vim'
 " SBT 対応 
 NeoBundleLazy 'ktvoelker/sbt-vim',  {'autoload':{'filetypes':['sbt']}}
 NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
