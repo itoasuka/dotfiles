@@ -80,19 +80,22 @@ endfunc
 autocmd FileType vim call ShowSignColumn()
 autocmd FileType javascript call ShowSignColumn()
 
-" Python 環境が思ってたんのと違う場合の対応
-" 参考 http://qiita.com/tmsanrinsha/items/cfa3808b8d0cc915cd75
-if has('kaoriya') && has('mac')
-  " 特にKaoriYa パッチの MacVim で起こる
-  " この辺も参照→ http://goo.gl/OS772W
-  if filereadable('/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python')
-    let $PYTHON_DLL = "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python"
+if has('python')
+  " Python 環境が思ってたんのと違う場合の対応
+  " 参考 http://qiita.com/tmsanrinsha/items/cfa3808b8d0cc915cd75
+  if has('kaoriya') && has('mac')
+    " 特にKaoriYa パッチの MacVim で起こる
+    " この辺も参照→ http://goo.gl/OS772W
+    if filereadable('/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python')
+      let $PYTHON_DLL = "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python"
+    endif
   endif
+endif
 
-  function! s:set_python_path()
-    let s:python_path = system('python -', 'import sys;sys.stdout.write(",".join(sys.path))')
+function! s:set_python_path()
+  let s:python_path = system('python -', 'import sys;sys.stdout.write(",".join(sys.path))')
 
-    python <<EOT
+  python <<EOT
 import sys
 import vim
 
@@ -101,8 +104,7 @@ for path in python_paths:
   if not path in sys.path:
     sys.path.insert(0, path)
 EOT
-  endfunction
-endif
+endfunction
 "}}}
 "-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
@@ -155,7 +157,7 @@ NeoBundle 'itchyny/lightline.vim'
 " 補完
 if has('nvim')
   NeoBundle 'Shougo/deoplete.nvim'
-else
+elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
   NeoBundle 'Shougo/neocomplete.vim'
 endif
 
@@ -195,12 +197,15 @@ NeoBundleLazy 'mxw/vim-jsx', {'autoload':{'filetypes':['javascript']}}
 " ES6 対応シンタックスハイライト
 NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
 " JavaScript の補完  
-NeoBundleLazy 'marijnh/tern_for_vim', {
-      \   'build': {
-      \     'others': 'npm install'
-      \   },
-      \   'autoload': {'filetypes': ['javascript']}
-      \ }
+if executable("npm") 
+  " npm が使える環境にのみインストールする
+  NeoBundleLazy 'marijnh/tern_for_vim', {
+        \   'build': {
+        \     'others': 'npm install'
+        \   },
+        \   'autoload': {'filetypes': ['javascript']}
+        \ }
+endif
 " JSON の扱いを素敵に
 NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['json']}}
 " JsDoc の入力を楽にする
@@ -400,6 +405,10 @@ else
   inoremap <expr><C-y> neocomplete#close_popup()
   " <C-e> : ポップアップをキャンセルする
   inoremap <expr><C-e> neocomplete#cancel_popup()
+
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
 endif
     
 "}}}
@@ -444,13 +453,18 @@ unlet s:bundle
 "-----------------------------------------------------------------------------
 " □ Scala の設定 {{{
 "-----------------------------------------------------------------------------
-let s:bundle = neobundle#get('ensime-vim')
-function! s:bundle.hooks.on_source(bundle)
-  if !has('nvim')
-    call s:set_python_path()
-  endif
-endfunction
-unlet s:bundle
+if has('python')
+  " ※ensime-vimはpythonが有効な場合のみインストールされている
+  let s:bundle = neobundle#get('ensime-vim')
+  function! s:bundle.hooks.on_source(bundle)
+    if has('kaoriya') && has('mac')
+      call s:set_python_path()
+    endif
+  endfunction
+  unlet s:bundle
+
+  let g:neocomplete#sources#omni#input_patterns.scala = '\k.\k*'
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ その他のキーマップ {{{
