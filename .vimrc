@@ -16,108 +16,6 @@ set encoding=utf-8
 " JavaScript 関連
 " <C-l>   JsDoc 追加
 "-----------------------------------------------------------------------------
-" □ 基本設定 {{{
-"-----------------------------------------------------------------------------
-scriptencoding utf-8
-
-set fileencoding=utf-8
-set fileencodings=utf-8,cp932
-
-syntax on
-
-" 行番号を表示
-set number
-set numberwidth=3
-
-" カーソル行をハイライト
-set cursorline
-
-set scrolloff=5                   " スクロール時の余白確保
-set textwidth=0                   " 一行に長い文章を書いても自動折り返ししない
-set nobackup                      " バックアップ取らない
-set noswapfile                    " スワップファイル作らない
-set noundofile                    " undoファイルを作らない
-set autoread                      " 他で書き換えたら自動で読み直す
-set hidden                        " 編集中でも他のファイルを開けるようにする
-set backspace=indent,eol,start    " バックスペースでなんでも消せるように
-set formatoptions=lmoq            " テキスト整形オプション，マルチバイト系を追加
-set vb t_vb=                      " ビープをならさない
-set browsedir=buffer              " Exploreの初期ディレクトリ
-set whichwrap=b,s,h,l,<,>,[,]     " カーソルを行頭、行末で止まらないようにする
-set showcmd                       " コマンドをステータス行に表示
-set showmode                      " 現在のモードを表示
-set viminfo='50,<1000,s100,\"50   " viminfoファイルの設定
-set ambiwidth=double              " 全角記号のずれ対応
-
-" マウスを使えるようにする
-set mouse=a
-set guioptions+=a
-if !has('nvim')
-  set ttymouse=xterm2
-endif
-
-" OSのクリップボードを使用する
-set clipboard+=unnamed
-set clipboard=unnamed
-
-if has('mac') && !has('nvim')
-  " MacでAltキーをMetaキーとしてあつかう
-  set macmeta
-endif
-
-" Ev/Rvでvimrcの編集と反映
-command! Ev edit $MYVIMRC
-command! Rv source $MYVIMRC
-
-set helpfile=$VIMRUNTIME/doc/help.txt
-
-" Sign のありなしでピクピク桁が動くのがいやなので Sign がなくともダミーサイン
-" を入れて SignColumn を常に表示する。
-function! ShowSignColumn()
-  sign define dummy
-  execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
-endfunc
-autocmd FileType vim call ShowSignColumn()
-autocmd FileType javascript call ShowSignColumn()
-
-if has('python')
-  " Python 環境が思ってたんのと違う場合の対応
-  " 参考 http://qiita.com/tmsanrinsha/items/cfa3808b8d0cc915cd75
-  if has('kaoriya') && has('mac')
-    " 特にKaoriYa パッチの MacVim で起こる
-    " この辺も参照→ http://goo.gl/OS772W
-    if filereadable('/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python')
-      let $PYTHON_DLL = "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python"
-    endif
-  endif
-endif
-
-function! s:set_python_path()
-  let s:python_path = system('python -', 'import sys;sys.stdout.write(",".join(sys.path))')
-
-  python <<EOT
-import sys
-import vim
-
-python_paths = vim.eval('s:python_path').split(',')
-for path in python_paths:
-  if not path in sys.path:
-    sys.path.insert(0, path)
-EOT
-endfunction
-"}}}
-"-----------------------------------------------------------------------------
-" □ 検索関連の設定 {{{
-"-----------------------------------------------------------------------------
-set wrapscan   " 最後まで検索したら先頭へ戻る
-set ignorecase " 大文字小文字無視
-set smartcase  " 検索文字列に大文字が含まれている場合は区別して検索する
-set incsearch  " インクリメンタルサーチ
-set hlsearch   " 検索文字をハイライト
-"Escの2回押しでハイライト消去
-nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
-"}}}
-"-----------------------------------------------------------------------------
 " □ NeoBundle の設定 {{{
 "-----------------------------------------------------------------------------
 if has('vim_starting')
@@ -229,6 +127,108 @@ call neobundle#end()
 filetype plugin indent on 
 
 NeoBundleCheck
+"}}}
+"-----------------------------------------------------------------------------
+" □ 基本設定 {{{
+"-----------------------------------------------------------------------------
+scriptencoding utf-8
+
+set fileencoding=utf-8
+set fileencodings=utf-8,cp932
+
+syntax on
+
+" 行番号を表示
+set number
+set numberwidth=3
+
+" カーソル行をハイライト
+set cursorline
+
+set scrolloff=5                   " スクロール時の余白確保
+set textwidth=0                   " 一行に長い文章を書いても自動折り返ししない
+set nobackup                      " バックアップ取らない
+set noswapfile                    " スワップファイル作らない
+set noundofile                    " undoファイルを作らない
+set autoread                      " 他で書き換えたら自動で読み直す
+set hidden                        " 編集中でも他のファイルを開けるようにする
+set backspace=indent,eol,start    " バックスペースでなんでも消せるように
+set formatoptions=lmoq            " テキスト整形オプション，マルチバイト系を追加
+set vb t_vb=                      " ビープをならさない
+set browsedir=buffer              " Exploreの初期ディレクトリ
+set whichwrap=b,s,h,l,<,>,[,]     " カーソルを行頭、行末で止まらないようにする
+set showcmd                       " コマンドをステータス行に表示
+set showmode                      " 現在のモードを表示
+set viminfo='50,<1000,s100,\"50   " viminfoファイルの設定
+set ambiwidth=double              " 全角記号のずれ対応
+
+" マウスを使えるようにする
+set mouse=a
+set guioptions+=a
+if !has('nvim')
+  set ttymouse=xterm2
+endif
+
+" OSのクリップボードを使用する
+set clipboard+=unnamed
+set clipboard=unnamed
+
+if has('mac') && !has('nvim')
+  " MacでAltキーをMetaキーとしてあつかう
+  set macmeta
+endif
+
+" Ev/Rvでvimrcの編集と反映
+command! Ev edit $MYVIMRC
+command! Rv source $MYVIMRC
+
+set helpfile=$VIMRUNTIME/doc/help.txt
+
+" Sign のありなしでピクピク桁が動くのがいやなので Sign がなくともダミーサイン
+" を入れて SignColumn を常に表示する。
+function! ShowSignColumn()
+  sign define dummy
+  execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+endfunc
+autocmd FileType vim call ShowSignColumn()
+autocmd FileType javascript call ShowSignColumn()
+
+if has('python')
+  " Python 環境が思ってたんのと違う場合の対応
+  " 参考 http://qiita.com/tmsanrinsha/items/cfa3808b8d0cc915cd75
+  if has('kaoriya') && has('mac')
+    " 特にKaoriYa パッチの MacVim で起こる
+    " この辺も参照→ http://goo.gl/OS772W
+    if filereadable('/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python')
+      let $PYTHON_DLL = "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python"
+    endif
+  endif
+endif
+
+function! s:set_python_path()
+  let s:python_path = system('python -', 'import sys;sys.stdout.write(",".join(sys.path))')
+
+  python <<EOT
+import sys
+import vim
+
+python_paths = vim.eval('s:python_path').split(',')
+for path in python_paths:
+  if not path in sys.path:
+    sys.path.insert(0, path)
+EOT
+endfunction
+"}}}
+"-----------------------------------------------------------------------------
+" □ 検索関連の設定 {{{
+"-----------------------------------------------------------------------------
+set wrapscan   " 最後まで検索したら先頭へ戻る
+set ignorecase " 大文字小文字無視
+set smartcase  " 検索文字列に大文字が含まれている場合は区別して検索する
+set incsearch  " インクリメンタルサーチ
+set hlsearch   " 検索文字をハイライト
+"Escの2回押しでハイライト消去
+nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
 "}}}
 "-----------------------------------------------------------------------------
 " □ カラースキームの設定 {{{
