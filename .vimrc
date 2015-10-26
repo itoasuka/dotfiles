@@ -463,7 +463,8 @@ if has('python')
   endfunction
   unlet s:bundle
 
-  let g:neocomplete#sources#omni#input_patterns.scala = '\k.\k*'
+  "ensimeのオムニ補完が重たいのでneocompleteと連動させないようにコメントアウト
+  "let g:neocomplete#sources#omni#input_patterns.scala = '\k.\k*'
 endif
 "}}}
 "-----------------------------------------------------------------------------
