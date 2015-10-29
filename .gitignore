@@ -2,6 +2,8 @@ ensime_*
 .vim/bundle/.neobundle
 .vim/bundle/NeoBundle.lock
 .vim/shada
+.vim/eclim
+.vim/plugin/eclim.vim
 .project
 .idea
 .netrwhist
