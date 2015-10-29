@@ -121,6 +121,17 @@ NeoBundle 'gre/play2vim'
 NeoBundleLazy 'ktvoelker/sbt-vim',  {'autoload':{'filetypes':['sbt']}}
 NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
 "}}}
+" その他 {{{
+" Scala IDEがまともに扱えないのでコメントアウト
+"if executable("ant")
+  " EclipseをVimからこき使う
+"  NeoBundle 'ervandew/eclim.git', {
+"        \   "build": {
+"        \     "other": "ant"
+"        \   }
+"        \ }
+"endif
+"}}}
 
 call neobundle#end()
 
@@ -463,7 +474,11 @@ if has('python')
   endfunction
   unlet s:bundle
 
-  let g:neocomplete#sources#omni#input_patterns.scala = '\k.\k*'
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_omni_input_patterns.scala = '\k\.\k*'
+  set completeopt-=preview
 endif
 "}}}
 "-----------------------------------------------------------------------------
