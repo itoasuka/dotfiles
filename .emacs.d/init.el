@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; ファイルシステムの文字コードの設定
 (cond
- ((or (eq window-system 'mac) (eq window-system 'ns))
+ ((or (eq system-type 'darwin) (eq window-system 'ns))
   ;; Mac OS X の HFS+ ファイルフォーマットではファイル名は NFD (の様な物)で扱うため以下の設定をする必要がある
   (require 'ucs-normalize)
   (setq file-name-coding-system 'utf-8-hfs)
