@@ -232,6 +232,10 @@ for path in python_paths:
     sys.path.insert(0, path)
 EOT
 endfunction
+
+if has('nvim')
+  call s:set_python_path()
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
