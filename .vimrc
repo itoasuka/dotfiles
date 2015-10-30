@@ -69,6 +69,9 @@ NeoBundle 'unimpaired.vim'
 
 " 最近使ったファイル記録
 NeoBundle 'Shougo/neomru.vim'
+
+" sudo
+NeoBundle "sudo.vim"
 "}}}
 " ファイル管理 {{{
 " Git 操作
