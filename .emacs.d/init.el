@@ -1,3 +1,6 @@
+(prefer-coding-system 'utf-8)
+(set-language-environment "Japanese")
+
 ;; MELPAの設定
 (when (require 'package nil t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -168,7 +171,7 @@
 ;; □ ウィンドウ関連の設定
 ;;----------------------------------------------------------------------------
 ;; メニューバーを非表示
-(menu-bar-mode 0)
+;(menu-bar-mode 0)
 ;; ツールバーを非表示
 (tool-bar-mode 0)
 
