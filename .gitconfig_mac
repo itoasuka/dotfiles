@@ -1,0 +1,26 @@
+[user]
+	name = 伊藤 飛佳
+	email = asuka@microbridge.jp
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	interactive = auto
+	grep = auto
+[core]
+	autocrlf = input
+	excludesfile = /Users/asuka/.gitignore_global
+	editor = vim
+	quotepath = false
+[alias]
+	graph = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --all --date=short
+	co = checkout
+
+[mergetool]
+	keepBackup = true
+[difftool "sourcetree"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	trustExitCode = true

@@ -8,12 +8,26 @@ cd $HOME
 
 wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
 
-ln -s $HOME/dotfiles/.dircolors $HOME/.dircolors
+if [ -e $HOME/.zshrc ]; then
+  rm $HOME/.zshrc
+fi
 ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
-ln -s $HOME/dotfiles/.gitconfig $HOME/.gitconfig
+if [ `uname` == 'Darwin' ]; then
+  ln -s $HOME/dotfiles/.gitconfig_mac $HOME/.gitconfig
+else
+  ln -s $HOME/dotfiles/.gitconfig $HOME/.gitconfig
+fi
 ln -s $HOME/dotfiles/.gitignore $HOME/.gitignore
-ln -s $HOME/dotfiles/.gitmodules $HOME/.gitmodules
 ln -s $HOME/dotfiles/.vim $HOME/.vim
 ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 ln -s $HOME/dotfiles/.gvimrc $HOME/.gvimrc
-ln -s $HOME/dotfiles/.git-completion.bash $HOME/.git-completion.bash
+
+mkdir -p $HOME/.zsh/completion/
+cd $HOME/.zsh/completion/
+
+wget https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
+wget https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh
+
+mv git-completion.zsh _git
+rm -f ~/.zcompdump
+compinit
