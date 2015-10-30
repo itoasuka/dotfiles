@@ -19,6 +19,7 @@ else
 fi
 ln -s $HOME/dotfiles/.gitignore $HOME/.gitignore
 ln -s $HOME/dotfiles/.vim $HOME/.vim
+ln -s $HOME/dotfiles/.vim $HOME/.config/nvim
 ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 ln -s $HOME/dotfiles/.gvimrc $HOME/.gvimrc
 
