@@ -3,12 +3,83 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
   (package-initialize))
 
+;; パッケージ情報の更新
+(package-refresh-contents)
+
+;; インストールするパッケージ
+(defvar my/favorite-packages
+  '(
+    ;;;; Theme
+    color-theme-solarized
+
+    ;;;; for auto-complete
+    auto-complete
+
+    ;;;; helm
+    helm
+
+    ;;;; evil
+    evil
+
+    ;;;; Scala
+    ensime scala-mode2
+
+    ;;;; Other
+    web-mode
+
+    recentf-ext
+    ))
+
+;; my/favorite-packagesからインストールしていないパッケージをインストール
+(dolist (package my/favorite-packages)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+;;----------------------------------------------------------------------------
+;; □ 最近使ったファイルのパスの保存
+;;----------------------------------------------------------------------------
+(require 'recentf)
+(setq recentf-save-file "~/.emacs.d/.recentf")
+(setq recentf-max-saved-items 1000)            ;; recentf に保存するファイルの数
+(setq recentf-exclude '(".recentf"))           ;; .recentf自体は含まない
+(setq recentf-auto-cleanup 10)                 ;; 保存する内容を整理
+(run-with-idle-timer 30 t 'recentf-save-list)  ;; 30秒ごとに .recentf を保存
+(require 'recentf-ext)
+
+;;----------------------------------------------------------------------------
+;; □ システムの判別
+;;----------------------------------------------------------------------------
+;; system-type predicates
+;; from http://d.hatena.ne.jp/tomoya/20090807/1249601308
+(setq darwin-p   (eq system-type 'darwin)
+      linux-p    (eq system-type 'gnu/linux)
+      carbon-p   (eq system-type 'mac)
+      meadow-p   (featurep 'meadow))
+
+;;----------------------------------------------------------------------------
+;; □ クリップボード連係の設定
+;;----------------------------------------------------------------------------
+; Emacs と Mac のクリップボード共有
+; from http://hakurei-shain.blogspot.com/2010/05/mac.html
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+
+(if (or darwin-p carbon-p)
+  (setq interprogram-cut-function 'paste-to-osx)
+  (setq interprogram-paste-function 'copy-from-osx))    
+
 ;;----------------------------------------------------------------------------
 ;; □ 文字コードの設定
 ;;----------------------------------------------------------------------------
 ;; ファイルシステムの文字コードの設定
 (cond
- ((or (eq system-type 'darwin) (eq window-system 'ns))
+ ((or darwin-p carbon-p)
   ;; Mac OS X の HFS+ ファイルフォーマットではファイル名は NFD (の様な物)で扱うため以下の設定をする必要がある
   (require 'ucs-normalize)
   (setq file-name-coding-system 'utf-8-hfs)
@@ -41,19 +112,44 @@
 ;; □ 色の設定
 ;;----------------------------------------------------------------------------
 ;; カラーテーマ
-;(load-theme 'solarized-dark t)
-(add-to-list 'load-path "~/.emacs.d/themes")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night-eighties t)
+(load-theme 'solarized t)
+(set-terminal-parameter nil 'background-mode 'dark)
+(set-frame-parameter nil 'background-mode 'dark)
+(setq solarized-termcolors 256)
+(enable-theme 'solarized)
+;(add-to-list 'load-path "~/.emacs.d/themes")
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;(load-theme 'tomorrow-night-eighties t)
 
 ;;----------------------------------------------------------------------------
 ;; □ IME 関連の設定
 ;;----------------------------------------------------------------------------
+;; Solarizedのカーソル色
+(setq solarized-dark-cursor-color "#839496")
+
 (add-hook 'mw32-ime-on-hook
 	  (function (lambda () (set-cursor-color "magenta"))))
 (add-hook 'mw32-ime-off-hook
-	  (function (lambda () (set-cursor-color "dim gray"))))
+	  (function (lambda () (set-cursor-color solarized-dark-cursor-color))))
 
+(when (fboundp 'mac-set-input-method-parameter)
+  (mac-set-input-method-parameter "com.google.inputmethod.Japanese.base" `cursor-color "magenta")
+  (mac-set-input-method-parameter "com.apple.keylayout.US" `cursor-color solarized-dark-cursor-color))
+
+;; Emacs Mac Port 用設定
+;; ミニバッファで入力する際に自動的にASCIIにする
+(when (fboundp 'mac-auto-ascii-mode)
+  (mac-auto-ascii-mode 1))
+;; カーソルの色を変える
+(when (fboundp 'mac-input-source)
+  (defun my-mac-selected-keyboard-input-source-chage-function ()
+    "英語のときはカーソルの色をdim grayに、日本語のときはbrownにします."
+    (let ((mac-input-source (mac-input-source)))
+      (set-cursor-color
+       (if (string-match "\\.Roman$" mac-input-source)
+	   solarized-dark-cursor-color "magenta"))))
+  (add-hook 'mac-selected-keyboard-input-source-change-hook
+	    'my-mac-selected-keyboard-input-source-chage-function))
 ;;----------------------------------------------------------------------------
 ;; □ shell関連の設定
 ;;----------------------------------------------------------------------------
@@ -115,6 +211,11 @@
 ;;----------------------------------------------------------------------------
 (require 'evil)
 (evil-mode 1)
+;; unimpaired風操作
+(define-key evil-normal-state-map "]b" 'next-buffer)
+(define-key evil-normal-state-map "[b" 'previous-buffer)
+;; unite風操作
+(define-key evil-normal-state-map ",um" 'helm-recentf)
 
 ;;----------------------------------------------------------------------------
 ;; □ JavaSriptの設定
@@ -158,4 +259,13 @@
 (require 'scala-mode2)
 (require 'ensime)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(setq ensime-completion-style 'auto-complete)
+;;(setq ensime-completion-style 'auto-complete)
+(defun my-ac-scala-mode ()
+  (add-to-list 'ac-sources 'ac-source-dictionary)
+  (add-to-list 'ac-sources 'ac-source-yasnippet)
+  (add-to-list 'ac-sources 'ac-source-words-in-buffer)
+  (add-to-list 'ac-sources 'ac-source-words-in-same-mode-buffers)
+  (setq ac-sources (reverse ac-sources)) ;;;追記2
+  )
+
+(add-hook 'ensime-mode-hook 'my-ac-scala-mode)

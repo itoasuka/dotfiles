@@ -10,3 +10,4 @@ ensime_*
 .emacs.d/elpa
 .emacs.d/ac-comphist.dat
 .emacs.d/eshell
+.emacs.d/ensime
