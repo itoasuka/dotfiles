@@ -232,6 +232,10 @@ for path in python_paths:
     sys.path.insert(0, path)
 EOT
 endfunction
+
+if has('nvim')
+  call s:set_python_path()
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
@@ -467,7 +471,7 @@ unlet s:bundle
 "-----------------------------------------------------------------------------
 " □ Scala の設定 {{{
 "-----------------------------------------------------------------------------
-if has('python')
+if has('python') || has('nvim')
   " ※ensime-vimはpythonが有効な場合のみインストールされている
   let s:bundle = neobundle#get('ensime-vim')
   function! s:bundle.hooks.on_source(bundle)
