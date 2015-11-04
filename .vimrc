@@ -471,7 +471,7 @@ unlet s:bundle
 "-----------------------------------------------------------------------------
 " □ Scala の設定 {{{
 "-----------------------------------------------------------------------------
-if has('python')
+if has('python') || has('nvim')
   " ※ensime-vimはpythonが有効な場合のみインストールされている
   let s:bundle = neobundle#get('ensime-vim')
   function! s:bundle.hooks.on_source(bundle)
