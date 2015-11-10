@@ -134,6 +134,8 @@ NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
 "        \   }
 "        \ }
 "endif
+" Re:VIEW 用コードハイライト（使うかな？）
+NeoBundle 'moro/vim-review'
 "}}}
 
 call neobundle#end()
