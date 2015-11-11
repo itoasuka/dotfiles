@@ -124,6 +124,9 @@ NeoBundle 'gre/play2vim'
 NeoBundleLazy 'ktvoelker/sbt-vim',  {'autoload':{'filetypes':['sbt']}}
 NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
 "}}}
+" VisualBasic(!) {{{
+NeoBundleLazy 'hachibeeDI/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }}
+" }}}
 " その他 {{{
 " Scala IDEがまともに扱えないのでコメントアウト
 "if executable("ant")
@@ -323,7 +326,7 @@ function! MyFilename()
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'unite' ? unite#get_status_string() :
         \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
-        \ '' != expand('%:p') ? expand('%:p') : '[No Name]') .
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 "}}}
