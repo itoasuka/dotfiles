@@ -137,6 +137,8 @@ NeoBundleLazy 'hachibeeDI/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }
 "        \   }
 "        \ }
 "endif
+" Re:VIEW 用コードハイライト（使うかな？）
+NeoBundle 'moro/vim-review'
 "}}}
 
 call neobundle#end()
@@ -484,10 +486,13 @@ if has('python') || has('nvim')
   endfunction
   unlet s:bundle
 
-  if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
+  if has('nvim')
+  else
+    if !exists('g:neocomplete#force_omni_input_patterns')
+      let g:neocomplete#force_omni_input_patterns = {}
+    endif
+    let g:neocomplete#force_omni_input_patterns.scala = '\k\.\k*'
   endif
-  let g:neocomplete#force_omni_input_patterns.scala = '\k\.\k*'
   set completeopt-=preview
 endif
 "}}}
