@@ -5,8 +5,13 @@
 set lines=40 columns=160
 
 " Mac版ならほのかに半透明
-if has('gui_macvim')
+"if has('gui_macvim')
+if has('kaoriya')
   set transparency=5
+
+  if has('win32') || has('win64')
+    autocmd GUIEnter * set transparency=240
+  endif
 endif
 
 set guioptions-=m " メニューバー非表示
@@ -37,7 +42,7 @@ highlight CursorLine gui=underline
 set vb t_vb=
 
 " フォント
-if has('win32')
+if has('win32') || has('win64')
   set guifont=Ricty_Diminished_for_Powerline:h16
 else
   set guifont=Ricty_Regular_for_Powerline:h16

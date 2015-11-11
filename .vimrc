@@ -23,11 +23,18 @@ if has('vim_starting')
     set nocompatible               " Be iMproved
   endif
 
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  if has('win32') || has('win64')
+    set runtimepath+=~/vimfiles/bundle/neobundle.vim/
+  else
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+  endif
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-
+if has('win32') || has('win64')
+  call neobundle#begin(expand('~/vimfiles/bundle/'))
+else
+  call neobundle#begin(expand('~/.vim/bundle/'))
+endif
 " 基本 {{{
 " NeoBundle 自体を NeoBundle の管理下に置く
 NeoBundleFetch 'Shougo/neobundle.vim'
