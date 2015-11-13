@@ -132,7 +132,7 @@ NeoBundleLazy 'ktvoelker/sbt-vim',  {'autoload':{'filetypes':['sbt']}}
 NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
 "}}}
 " VisualBasic(!) {{{
-NeoBundleLazy 'hachibeeDI/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }}
+NeoBundleLazy 'yukpiz/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }}
 " }}}
 " その他 {{{
 " Scala IDEがまともに扱えないのでコメントアウト
