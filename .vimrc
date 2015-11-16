@@ -136,6 +136,11 @@ NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
 " VisualBasic(!) {{{
 NeoBundleLazy 'yukpiz/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }}
 " }}}
+" Haskell {{{
+NeoBundleLazy 'neovimhaskell/haskell-vim', {"autoload" : { "filetypes" : ["haskell"] }}
+NeoBundleLazy 'eagletmt/neco-ghc', {"autoload" : { "filetypes" : ["haskell"] }}
+NeoBundleLazy 'eagletmt/ghcmod-vim', {"autoload" : { "filetypes" : ["haskell"] }}
+" }}}
 " その他 {{{
 " Scala IDEがまともに扱えないのでコメントアウト
 "if executable("ant")
@@ -410,8 +415,15 @@ set complete+=k         " 補完に辞書ファイル追加
 " AutoComplPop を無効化
 let g:acp_enableAtStartup = 0
 if has('nvim')
+  " deoplete を使う
   let g:deoplete#enable_at_startup = 1
 elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
+  " smartcase を使う
+  let g:deoplete#enable_smart_case = 1
+  " 補完が有効になる文字数
+  let g:deoplete#auto_completion_start_length = 3
+else
+>>>>>>> Stashed changes
   " neocomplete を使う
   let g:neocomplete#enable_at_startup = 1
   " smartcase を使う
@@ -504,6 +516,10 @@ if has('python') || has('nvim')
   unlet s:bundle
 
   if has('nvim')
+    if !exists('g:deoplete#omni#input_patterns')
+      let g:deoplete#omni#input_patterns = {}
+    endif
+    let g:deoplete#omni#input_patterns.scala= '\k\.\k*'
   else
     if !exists('g:neocomplete#force_omni_input_patterns')
       let g:neocomplete#force_omni_input_patterns = {}
