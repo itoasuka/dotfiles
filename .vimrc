@@ -81,10 +81,12 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle "sudo.vim"
 "}}}
 " ファイル管理 {{{
-" Git 操作
-NeoBundle 'tpope/vim-fugitive'
-" Git 差分表示
-NeoBundle 'airblade/vim-gitgutter'
+if executable('git')
+  " Git 操作
+  NeoBundle 'tpope/vim-fugitive'
+  " Git 差分表示
+  NeoBundle 'airblade/vim-gitgutter'
+endif
 " ファイラ
 NeoBundle 'Shougo/vimfiler.vim'
 "}}}
@@ -187,6 +189,8 @@ set showcmd                       " コマンドをステータス行に表示
 set showmode                      " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50   " viminfoファイルの設定
 set ambiwidth=double              " 全角記号のずれ対応
+set modeline                      " モードラインを有効にする
+set laststatus=2                  " ステータス行は2行
 
 " マウスを使えるようにする
 set mouse=a
@@ -300,34 +304,40 @@ endfunction
 
 function! MyFugitive()
   try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      let _ = fugitive#head()
-      return strlen(_) ? '⭠ '._ : ''
-    endif
+    if executable('git')
+      if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+        let _ = fugitive#head()
+        return strlen(_) ? '⭠ '._ : ''
+      endif
+    end
   catch
   endtry
   return ''
 endfunction
 
 function! MyGitGutter()
-  if ! exists('*GitGutterGetHunkSummary')
-        \ || ! get(g:, 'gitgutter_enabled', 0)
-        \ || winwidth('.') <= 90
+  if executable('git')
+    if ! exists('*GitGutterGetHunkSummary')
+          \ || ! get(g:, 'gitgutter_enabled', 0)
+          \ || winwidth('.') <= 90
+      return ''
+    endif
+    let symbols = [
+          \ g:gitgutter_sign_added,
+          \ g:gitgutter_sign_modified,
+          \ g:gitgutter_sign_removed
+          \ ]
+    let hunks = GitGutterGetHunkSummary()
+    let ret = []
+    for i in [0, 1, 2]
+      if hunks[i] > 0
+        call add(ret, symbols[i] . hunks[i])
+      endif
+    endfor
+    return join(ret, ' ')
+  else
     return ''
   endif
-  let symbols = [
-        \ g:gitgutter_sign_added,
-        \ g:gitgutter_sign_modified,
-        \ g:gitgutter_sign_removed
-        \ ]
-  let hunks = GitGutterGetHunkSummary()
-  let ret = []
-  for i in [0, 1, 2]
-    if hunks[i] > 0
-      call add(ret, symbols[i] . hunks[i])
-    endif
-  endfor
-  return join(ret, ' ')
 endfunction
 
 function! MyFilename()
@@ -401,7 +411,7 @@ set complete+=k         " 補完に辞書ファイル追加
 let g:acp_enableAtStartup = 0
 if has('nvim')
   let g:deoplete#enable_at_startup = 1
-else
+elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
   " neocomplete を使う
   let g:neocomplete#enable_at_startup = 1
   " smartcase を使う
