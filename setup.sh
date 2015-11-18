@@ -11,6 +11,9 @@ wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master
 if [ -e $HOME/.zshrc ]; then
   rm $HOME/.zshrc
 fi
+if [ ! -e $HOME/.config ]; then
+  mkdir $HOME/.config
+fi
 ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
 if [ `uname` == 'Darwin' ]; then
   ln -s $HOME/dotfiles/.gitconfig_mac $HOME/.gitconfig
@@ -22,6 +25,7 @@ ln -s $HOME/dotfiles/.vim $HOME/.vim
 ln -s $HOME/dotfiles/.vim $HOME/.config/nvim
 ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 ln -s $HOME/dotfiles/.gvimrc $HOME/.gvimrc
+ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 
 mkdir -p $HOME/.zsh/completion/
 cd $HOME/.zsh/completion/
@@ -31,4 +35,5 @@ wget https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh
 
 mv git-completion.zsh _git
 rm -f ~/.zcompdump
+source $HOME/.zshrc
 compinit

@@ -14,6 +14,7 @@ ZSH_THEME="steeef"
 if [ $? = 0 ]; then
   alias ls="gls"
 fi
+alias tmux="TERM=screen-256color-bce tmux"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
