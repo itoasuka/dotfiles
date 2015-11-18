@@ -1,7 +1,7 @@
 ensime_*
 .vim/bundle/.neobundle
 .vim/bundle/NeoBundle.lock
-.vim/bindle/*
+.vim/bundle/*
 .vim/shada
 .vim/eclim
 .vim/plugin/eclim.vim

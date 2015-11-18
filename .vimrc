@@ -153,6 +153,8 @@ NeoBundleLazy 'eagletmt/ghcmod-vim', {"autoload" : { "filetypes" : ["haskell"] }
 "endif
 " Re:VIEW 用コードハイライト（使うかな？）
 NeoBundle 'moro/vim-review'
+" Markdown
+NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload':{'filetypes':['markdown']}}
 "}}}
 
 call neobundle#end()
