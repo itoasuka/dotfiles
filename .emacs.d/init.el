@@ -115,14 +115,14 @@
 ;; □ 色の設定
 ;;----------------------------------------------------------------------------
 ;; カラーテーマ
-(load-theme 'solarized t)
-(set-terminal-parameter nil 'background-mode 'dark)
-(set-frame-parameter nil 'background-mode 'dark)
-(setq solarized-termcolors 256)
-(enable-theme 'solarized)
-;(add-to-list 'load-path "~/.emacs.d/themes")
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;(load-theme 'tomorrow-night-eighties t)
+;(load-theme 'solarized t)
+;(set-terminal-parameter nil 'background-mode 'dark)
+;(set-frame-parameter nil 'background-mode 'dark)
+;(setq solarized-termcolors 256)
+;(enable-theme 'solarized)
+(add-to-list 'load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'tomorrow-night-eighties t)
 
 ;;----------------------------------------------------------------------------
 ;; □ IME 関連の設定
@@ -171,7 +171,7 @@
 ;; □ ウィンドウ関連の設定
 ;;----------------------------------------------------------------------------
 ;; メニューバーを非表示
-;(menu-bar-mode 0)
+(menu-bar-mode 0)
 ;; ツールバーを非表示
 (tool-bar-mode 0)
 
