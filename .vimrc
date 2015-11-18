@@ -196,6 +196,7 @@ set viminfo='50,<1000,s100,\"50   " viminfoファイルの設定
 set ambiwidth=double              " 全角記号のずれ対応
 set modeline                      " モードラインを有効にする
 set laststatus=2                  " ステータス行は2行
+set cmdheight=2                   " コマンド行は2行
 
 " マウスを使えるようにする
 set mouse=a
@@ -417,13 +418,11 @@ let g:acp_enableAtStartup = 0
 if has('nvim')
   " deoplete を使う
   let g:deoplete#enable_at_startup = 1
-elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
   " smartcase を使う
   let g:deoplete#enable_smart_case = 1
   " 補完が有効になる文字数
   let g:deoplete#auto_completion_start_length = 3
-else
->>>>>>> Stashed changes
+elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
   " neocomplete を使う
   let g:neocomplete#enable_at_startup = 1
   " smartcase を使う
