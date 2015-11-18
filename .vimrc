@@ -51,7 +51,9 @@ NeoBundle 'Shougo/vimproc.vim', {
       \ }
 
 " Shell
-NeoBundle 'Shougo/vimshell.vim'
+if has('nvim') || v:version > 703
+  NeoBundle 'Shougo/vimshell.vim'
+endif
 
 " かっこいいカラースキーム
 NeoBundle 'w0ng/vim-hybrid'
@@ -88,10 +90,14 @@ if executable('git')
   NeoBundle 'airblade/vim-gitgutter'
 endif
 " ファイラ
-NeoBundle 'Shougo/vimfiler.vim'
+if has('nvim') || v:version > 703
+  NeoBundle 'Shougo/vimfiler.vim'
+endif
 "}}}
 " Unite {{{
-NeoBundle 'Shougo/unite.vim'
+if has('nvim') || v:version > 703
+  NeoBundle 'Shougo/unite.vim'
+endif
 " }}}
 " コーディング関連 {{{
 NeoBundle 'scrooloose/syntastic.git'
@@ -184,7 +190,9 @@ set scrolloff=5                   " スクロール時の余白確保
 set textwidth=0                   " 一行に長い文章を書いても自動折り返ししない
 set nobackup                      " バックアップ取らない
 set noswapfile                    " スワップファイル作らない
-set noundofile                    " undoファイルを作らない
+if v:version > 702
+  set noundofile                    " undoファイルを作らない
+endif
 set autoread                      " 他で書き換えたら自動で読み直す
 set hidden                        " 編集中でも他のファイルを開けるようにする
 set backspace=indent,eol,start    " バックスペースでなんでも消せるように
@@ -382,26 +390,28 @@ inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 "-----------------------------------------------------------------------------
 " □ Unite の設定 {{{
 "-----------------------------------------------------------------------------
-"let g:unite_enable_start_insert=1
-let g:unite_source_history_yank_enable =1
-let g:unite_source_file_mru_limit = 200
+if has('nvim') || v:version > 703
+  "let g:unite_enable_start_insert=1
+  let g:unite_source_history_yank_enable =1
+  let g:unite_source_file_mru_limit = 200
 
-" バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-" ファイル一覧
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-" レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" 常用セット
-nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
-" 全部乗せ
-nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+  " バッファ一覧
+  nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+  " ファイル一覧
+  nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+  " レジスタ一覧
+  nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+  " 最近使用したファイル一覧
+  nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+  " 常用セット
+  nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
+  " 全部乗せ
+  nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
-" ESCキーを2回押すと終了する
-au FileType unite nmap <silent> <buffer> <ESC><ESC> q
-au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
+  " ESCキーを2回押すと終了する
+  au FileType unite nmap <silent> <buffer> <ESC><ESC> q
+  au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ 補完関連の設定 {{{
