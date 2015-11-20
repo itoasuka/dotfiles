@@ -42,11 +42,7 @@ highlight CursorLine gui=underline
 set vb t_vb=
 
 " フォント
-if has('win32') || has('win64')
-  set guifont=Ricty_Diminished_for_Powerline:h16
-else
-  set guifont=Ricty_Regular_for_Powerline:h16
-endif
+set guifont=Myrica_M_for_Powerline:h16
 set linespace=2
 "}}}
 "-----------------------------------------------------------------------------
