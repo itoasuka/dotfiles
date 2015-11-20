@@ -1,5 +1,21 @@
-(prefer-coding-system 'utf-8)
-(set-language-environment "Japanese")
+; -*- Mode: Emacs-Lisp ; Coding: utf-8 -*-
+;; ------------------------------------------------------------------------
+;; @ load-path
+;; load-pathの追加関数
+(defun add-to-load-path (&rest paths)
+  (let (path)
+    (dolist (path paths paths)
+      (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
+        (add-to-list 'load-path default-directory)
+        (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+            (normal-top-level-add-subdirs-to-load-path))))))
+
+;; load-pathに追加するフォルダ
+;; 2つ以上フォルダを指定する場合の引数 => (add-to-load-path "elisp" "xxx" "xxx")
+(add-to-load-path "elisp")
+
+;; ------------------------------------------------------------------------
+;; @ package
 
 ;; MELPAの設定
 (when (require 'package nil t)
@@ -30,13 +46,76 @@
     ;;;; Other
     web-mode
 
-    recentf-ext
+    recentf-ext hlinum
     ))
 
 ;; my/favorite-packagesからインストールしていないパッケージをインストール
 (dolist (package my/favorite-packages)
   (unless (package-installed-p package)
     (package-install package)))
+
+;; ------------------------------------------------------------------------
+;; @ general
+
+;; common lisp
+(require 'cl)
+
+;; 文字コード
+(set-language-environment "Japanese")
+(let ((ws window-system))
+  (cond ((eq ws 'w32)
+         (prefer-coding-system 'utf-8-unix)
+         (set-default-coding-systems 'utf-8-unix)
+         (setq file-name-coding-system 'sjis)
+         (setq locale-coding-system 'utf-8))
+        ((eq ws 'ns)
+         (require 'ucs-normalize)
+         (prefer-coding-system 'utf-8-hfs)
+         (setq file-name-coding-system 'utf-8-hfs)
+         (setq locale-coding-system 'utf-8-hfs))))
+
+;; フォント
+(let ((ws window-system))
+  (cond ((eq ws 'w32)
+         (set-face-attribute 'default nil
+                             :family "Myrica M"  ;; 英数
+                             :height 160)
+         (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Myrica M")))  ;; 日本語
+        ((eq ws 'ns)
+         (set-face-attribute 'default nil
+                             :family "Myrica M"  ;; 英数
+                             :height 160)
+         (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Myrica M")))))  ;; 日本語
+
+;; スタートアップ非表示
+(setq inhibit-startup-screen t)
+
+;; scratchの初期メッセージ消去
+(setq initial-scratch-message "")
+
+;; ツールバー非表示
+(tool-bar-mode -1)
+
+;; メニューバーを非表示
+(menu-bar-mode -1)
+
+;; スクロールバー非表示
+(set-scroll-bar-mode nil)
+
+;; タイトルバーにファイルのフルパス表示
+(setq frame-title-format
+      (format "%%f - Emacs@%s" (system-name)))
+
+;; 行番号表示
+(require 'hlinum)
+(hlinum-activate)
+(global-linum-mode t)
+(set-face-attribute 'linum nil
+                    :foreground "#800"
+                    :height 0.9)
+
+;; 行番号フォーマット
+(setq linum-format "%4d")
 
 ;;----------------------------------------------------------------------------
 ;; □ 最近使ったファイルのパスの保存
@@ -78,40 +157,6 @@
   (setq interprogram-paste-function 'copy-from-osx))    
 
 ;;----------------------------------------------------------------------------
-;; □ 文字コードの設定
-;;----------------------------------------------------------------------------
-;; ファイルシステムの文字コードの設定
-(cond
- ((or darwin-p carbon-p)
-  ;; Mac OS X の HFS+ ファイルフォーマットではファイル名は NFD (の様な物)で扱うため以下の設定をする必要がある
-  (require 'ucs-normalize)
-  (setq file-name-coding-system 'utf-8-hfs)
-  (setq locale-coding-system 'utf-8-hfs))
- (or (eq system-type 'cygwin) (eq system-type 'windows-nt)
-     (setq file-name-coding-system 'utf-8)
-     (setq locale-coding-system 'utf-8)
-     ;; もしコマンドプロンプトを利用するなら sjis にする
-     ;; (setq file-name-coding-system 'sjis)
-     ;; (setq locale-coding-system 'sjis)
-     ;; 古い Cygwin だと EUC-JP にする
-     ;; (setq file-name-coding-system 'euc-jp)
-     ;; (setq locale-coding-system 'euc-jp)
-     )
- (t
-  (setq file-name-coding-system 'utf-8)
-  (setq locale-coding-system 'utf-8)))
-
-;;----------------------------------------------------------------------------
-;; □ 基本設定
-;;----------------------------------------------------------------------------
-;; 常に行番号を表示する
-(global-linum-mode t)
-(if window-system (setq linum-format "%4d") (setq linum-format "%4d|"))
-
-;; カーソル行をハイライトする
-(global-hl-line-mode t)
-
-;;----------------------------------------------------------------------------
 ;; □ 色の設定
 ;;----------------------------------------------------------------------------
 ;; カラーテーマ
@@ -120,9 +165,9 @@
 ;(set-frame-parameter nil 'background-mode 'dark)
 ;(setq solarized-termcolors 256)
 ;(enable-theme 'solarized)
-(add-to-list 'load-path "~/.emacs.d/themes")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night-eighties t)
+;(add-to-list 'load-path "~/.emacs.d/themes")
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;(load-theme 'tomorrow-night-eighties t)
 
 ;;----------------------------------------------------------------------------
 ;; □ IME 関連の設定
@@ -170,11 +215,6 @@
 ;;----------------------------------------------------------------------------
 ;; □ ウィンドウ関連の設定
 ;;----------------------------------------------------------------------------
-;; メニューバーを非表示
-(menu-bar-mode 0)
-;; ツールバーを非表示
-(tool-bar-mode 0)
-
 ;; 起動時のフレーム設定
 (if window-system (progn
 		    (setq initial-frame-alist
@@ -187,20 +227,6 @@
 				   '(height . 40)) ;縦
 				  initial-frame-alist))
 		    (setq default-frame-alist initial-frame-alist)
-))
-
-;; スタートアップページを表示しない
-(setq inhibit-startup-message t)
-
-;; Ricty フォントの利用
-(if window-system (progn
-		    (create-fontset-from-ascii-font "Ricty-16:weight=normal:slant=normal" nil "ricty")
-		    (set-fontset-font "fontset-ricty"
-				      'unicode
-				      (font-spec :family "Ricty" :size 16)
-				      nil
-				      'append)
-		    (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
 ))
 
 ;;----------------------------------------------------------------------------
