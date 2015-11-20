@@ -275,6 +275,13 @@ if !has('gui_running')
   set ttimeout
   set timeoutlen=100
 endif
+
+" タブやインデントのデフォルト挙動
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop<
+set autoindent
 "}}}
 "-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
