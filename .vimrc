@@ -268,6 +268,13 @@ endfunction
 if has('nvim')
   call s:set_python_path()
 endif
+
+" カーソルキーが正しく動くようにする
+if !has('gui_running')
+  set notimeout
+  set ttimeout
+  set timeoutlen=100
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
@@ -384,8 +391,6 @@ let g:vimfiler_as_default_explorer = 1
 set noimdisable
 set iminsert=0 imsearch=0
 set noimcmdline
-" ノーマルモードに戻ったときは IME を OFF にする
-inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 "}}}
 "-----------------------------------------------------------------------------
 " □ Unite の設定 {{{
