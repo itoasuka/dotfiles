@@ -467,6 +467,9 @@ if has('nvim')
   let g:deoplete#enable_smart_case = 1
   " 補完が有効になる文字数
   let g:deoplete#auto_completion_start_length = 3
+
+  " <TAB> : 補完
+  inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
   " neocomplete を使う
   let g:neocomplete#enable_at_startup = 1
