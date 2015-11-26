@@ -99,10 +99,6 @@ if has('nvim') || v:version > 703
   NeoBundle 'Shougo/unite.vim'
 endif
 " }}}
-" SKK 関連 {{{
-NeoBundle 'tyru/eskk.vim'
-NeoBundle 'tyru/skkdict.vim'
-"}}}
 " コーディング関連 {{{
 NeoBundle 'scrooloose/syntastic.git'
 "}}}
@@ -288,18 +284,6 @@ set tabstop<
 set autoindent
 "}}}
 "-----------------------------------------------------------------------------
-" □ SKK の設定 {{{
-"-----------------------------------------------------------------------------
-let g:eskk#directory = "~/.vim/eskk"
-let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 0, 'encoding': 'utf-8', }
-let g:eskk#large_dictionary = { 'path': "~/.skk/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp', }
-let g:eskk#enable_completion = 1
-let g:eskk#server = {
-\   'host': 'localhost',
-\   'port': 55100,
-\}
-"}}}
-"-----------------------------------------------------------------------------
 " □ 検索関連の設定 {{{
 "-----------------------------------------------------------------------------
 set wrapscan   " 最後まで検索したら先頭へ戻る
@@ -325,7 +309,7 @@ let g:lightline = {
       \   'mode_map': {'c': 'NORMAL'},
       \   'active': {
       \     'left': [
-      \       ['mode', 'kanastatus', 'paste'],
+      \       ['mode', 'paste'],
       \       ['fugitive', 'gitgutter', 'filename'],
       \     ]
       \   },
@@ -334,8 +318,7 @@ let g:lightline = {
       \     'readonly'  : 'MyReadonly',
       \     'fugitive'  : 'MyFugitive',
       \     'gitgutter' : 'MyGitGutter',
-      \     'filename'  : 'MyFilename',
-      \     'kanastatus': 'MyKanaStatus'
+      \     'filename'  : 'MyFilename'
       \   },
       \   'separator'   : { 'left': '⮀', 'right': '⮂' },
       \   'subseparator': { 'left': '⮁', 'right': '⮃' }
@@ -394,10 +377,6 @@ function! MyFilename()
         \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
         \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
-endfunction
-
-function! MyKanaStatus()
-  return eskk#statusline()
 endfunction
 "}}}
 "-----------------------------------------------------------------------------
