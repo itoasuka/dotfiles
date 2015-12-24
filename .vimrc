@@ -61,6 +61,8 @@ NeoBundle 'w0ng/vim-hybrid'
 " かっこいいステータスライン
 NeoBundle 'itchyny/lightline.vim'
 
+NeoBundle 'Shougo/neoinclude.vim'
+
 " 補完
 if has('nvim')
   NeoBundle 'Shougo/deoplete.nvim'
@@ -81,6 +83,9 @@ NeoBundle 'Shougo/neomru.vim'
 
 " sudo
 NeoBundle "sudo.vim"
+
+" Project
+NeoBundle "shemerey/vim-project"
 "}}}
 " ファイル管理 {{{
 if executable('git')
@@ -97,6 +102,7 @@ endif
 " Unite {{{
 if has('nvim') || v:version > 703
   NeoBundle 'Shougo/unite.vim'
+  NeoBundle "tsukkee/unite-tag"
 endif
 " }}}
 " コーディング関連 {{{
@@ -380,6 +386,16 @@ function! MyFilename()
 endfunction
 "}}}
 "-----------------------------------------------------------------------------
+" □ Project の設定 {{{
+"-----------------------------------------------------------------------------
+" ファイルが選択されたらウィンドウを閉じる
+let g:proj_flags = 'imtc'
+" <Leader>Pでプロジェクトをトグル開閉する
+nmap <silent> <Leader>P <Plug>ToggleProject
+" <Leader>pでデフォルトのプロジェクトを開く
+nmap <silent> <Leader>p :Project<CR>
+"}}}
+"-----------------------------------------------------------------------------
 " □ gitgutter の設定 {{{
 "-----------------------------------------------------------------------------
 " vim-gitgutter
@@ -563,6 +579,7 @@ endif
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h') . '/' : '%%'
 nnoremap [s <C-w>h
 nnoremap ]s <C-w>l
+map \ <Leader>
 "}}}
 "-----------------------------------------------------------------------------
 
