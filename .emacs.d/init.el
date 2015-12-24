@@ -29,7 +29,7 @@
 (defvar my/favorite-packages
   '(
     ;;;; Theme
-    color-theme-solarized
+    idea-darkula-theme
 
     ;;;; for auto-complete
     auto-complete
@@ -74,18 +74,14 @@
          (setq file-name-coding-system 'utf-8-hfs)
          (setq locale-coding-system 'utf-8-hfs))))
 
+;; カラーテーマ
+(load-theme 'idea-darkula t)
+
 ;; フォント
-(let ((ws window-system))
-  (cond ((eq ws 'w32)
-         (set-face-attribute 'default nil
-                             :family "Myrica M"  ;; 英数
-                             :height 160)
-         (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Myrica M")))  ;; 日本語
-        ((eq ws 'ns)
-         (set-face-attribute 'default nil
-                             :family "Myrica M"  ;; 英数
-                             :height 160)
-         (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Myrica M")))))  ;; 日本語
+(set-face-attribute 'default nil
+		    :family "Myrica M"  ;; 英数
+		    :height 160)
+(set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Myrica M"))  ;; 日本語
 
 ;; スタートアップ非表示
 (setq inhibit-startup-screen t)
@@ -155,19 +151,6 @@
 (if (or darwin-p carbon-p)
   (setq interprogram-cut-function 'paste-to-osx)
   (setq interprogram-paste-function 'copy-from-osx))    
-
-;;----------------------------------------------------------------------------
-;; □ 色の設定
-;;----------------------------------------------------------------------------
-;; カラーテーマ
-;(load-theme 'solarized t)
-;(set-terminal-parameter nil 'background-mode 'dark)
-;(set-frame-parameter nil 'background-mode 'dark)
-;(setq solarized-termcolors 256)
-;(enable-theme 'solarized)
-;(add-to-list 'load-path "~/.emacs.d/themes")
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;(load-theme 'tomorrow-night-eighties t)
 
 ;;----------------------------------------------------------------------------
 ;; □ IME 関連の設定
