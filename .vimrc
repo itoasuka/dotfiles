@@ -86,6 +86,9 @@ NeoBundle "sudo.vim"
 
 " Project
 NeoBundle "shemerey/vim-project"
+
+" ディレクトリごとの設定ができるやつ
+NeoBundle 'thinca/vim-localrc'
 "}}}
 " ファイル管理 {{{
 if executable('git')
