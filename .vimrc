@@ -110,6 +110,12 @@ endif
 " }}}
 " コーディング関連 {{{
 NeoBundle 'scrooloose/syntastic.git'
+if executable('ctags')
+  " ctagsを使うのを楽にするやつ
+  NeoBundle 'soramugi/auto-ctags.vim'
+  " タグリストを出すやつ
+  NeoBundle 'majutsushi/tagbar'
+endif
 "}}}
 " JavaScript {{{
 " JavaScript 用インデント
@@ -514,6 +520,26 @@ endif
 "-----------------------------------------------------------------------------
 autocmd FileType * setlocal formatoptions-=ro
 "}}}
+"-----------------------------------------------------------------------------
+" □ tags 関連 {{{
+"-----------------------------------------------------------------------------
+" タグバーのトグル
+if executable('ctags')
+  nmap <F8> :TagbarToggle<CR>
+endif
+if has('nvim') || v:version > 703
+  " Unite-tag でタグジャンプ
+  autocmd BufEnter *
+        \   if empty(&buftype)
+        \|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+        \|  endif
+  " Unite-tag でのタグジャンプの戻り
+  autocmd BufEnter *
+        \   if empty(&buftype)
+        \|      nnoremap <buffer> <C-t> :<C-u>Unite jump<CR>
+        \|  endif
+endif
+" }}}
 "-----------------------------------------------------------------------------
 " □ Vim Script の設定 {{{
 "-----------------------------------------------------------------------------
