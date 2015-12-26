@@ -1,5 +1,15 @@
 ; -*- Mode: Emacs-Lisp ; Coding: utf-8 -*-
-;; ------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
+;; □ システムの判別
+;;----------------------------------------------------------------------------
+;; system-type predicates
+;; from http://d.hatena.ne.jp/tomoya/20090807/1249601308
+(setq darwin-p   (eq system-type 'darwin)
+      linux-p    (eq system-type 'gnu/linux)
+      carbon-p   (eq system-type 'mac)
+      meadow-p   (featurep 'meadow))
+
+; ------------------------------------------------------------------------
 ;; @ load-path
 ;; load-pathの追加関数
 (defun add-to-load-path (&rest paths)
@@ -74,7 +84,7 @@
          (setq file-name-coding-system 'utf-8-hfs)
          (setq locale-coding-system 'utf-8-hfs))))
 
-;; カラーテーマ
+; カラーテーマ
 (load-theme 'idea-darkula t)
 
 ;; フォント
@@ -93,7 +103,7 @@
 (tool-bar-mode -1)
 
 ;; メニューバーを非表示
-(menu-bar-mode -1)
+;(menu-bar-mode -1)
 
 ;; スクロールバー非表示
 (set-scroll-bar-mode nil)
@@ -125,18 +135,11 @@
 (require 'recentf-ext)
 
 ;;----------------------------------------------------------------------------
-;; □ システムの判別
-;;----------------------------------------------------------------------------
-;; system-type predicates
-;; from http://d.hatena.ne.jp/tomoya/20090807/1249601308
-(setq darwin-p   (eq system-type 'darwin)
-      linux-p    (eq system-type 'gnu/linux)
-      carbon-p   (eq system-type 'mac)
-      meadow-p   (featurep 'meadow))
-
-;;----------------------------------------------------------------------------
 ;; □ クリップボード連係の設定
 ;;----------------------------------------------------------------------------
+; 文字化け回避
+(set-clipboard-coding-system 'utf-8)
+
 ; Emacs と Mac のクリップボード共有
 ; from http://hakurei-shain.blogspot.com/2010/05/mac.html
 (defun copy-from-osx ()
@@ -151,6 +154,9 @@
 (if (or darwin-p carbon-p)
   (setq interprogram-cut-function 'paste-to-osx)
   (setq interprogram-paste-function 'copy-from-osx))    
+
+; X のクリップボード共有
+(setq x-select-enable-clipboard t)
 
 ;;----------------------------------------------------------------------------
 ;; □ IME 関連の設定
@@ -216,7 +222,8 @@
 ;; □ auto-completeの設定
 ;;----------------------------------------------------------------------------
 (when (require 'auto-complete-config nil t)
-  (ac-config-default))
+  (ac-config-default)
+  (ac-linum-workaround))
 
 ;;----------------------------------------------------------------------------
 ;; □ Evilの設定
