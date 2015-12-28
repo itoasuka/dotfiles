@@ -242,7 +242,7 @@ endif
 
 " OSのクリップボードを使用する
 set clipboard+=unnamed
-set clipboard=unnamed
+set clipboard+=autoselect
 
 if has('mac') && !has('nvim')
   " MacでAltキーをMetaキーとしてあつかう
