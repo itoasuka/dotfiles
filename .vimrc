@@ -52,7 +52,16 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 " Shell
 if has('nvim') || v:version > 703
-  NeoBundle 'Shougo/vimshell.vim'
+  NeoBundleLazy 'Shougo/vimshell.vim', {
+    \ 'depends' : 'Shougo/vimproc.vim',
+    \ 'autoload' : {
+    \   'commands' : [{ 'name' : 'VimShell',
+    \                   'complete' : 'customlist,vimshell#complete'},
+    \                   'VimShellExecute', 'VimShellInteractive',
+    \                   'VimShellTerminal', 'VimShellPop'],
+    \   'mappings' : ['<Plug>(vimshell_']
+    \ }
+    \}
 endif
 
 " かっこいいカラースキーム
@@ -85,7 +94,7 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle "sudo.vim"
 
 " Project
-NeoBundle "shemerey/vim-project"
+NeoBundleLazy "shemerey/vim-project", {'commands':['Project']}
 
 " ディレクトリごとの設定ができるやつ
 NeoBundle 'thinca/vim-localrc'
@@ -99,13 +108,13 @@ if executable('git')
 endif
 " ファイラ
 if has('nvim') || v:version > 703
-  NeoBundle 'Shougo/vimfiler.vim'
+  NeoBundleLazy 'Shougo/vimfiler.vim', {'autoload':{'commands':['VimFiler', 'VimFilerBufferDir']}}
 endif
 "}}}
 " Unite {{{
 if has('nvim') || v:version > 703
   NeoBundle 'Shougo/unite.vim'
-  NeoBundle "tsukkee/unite-tag"
+  NeoBundle 'tsukkee/unite-tag'
 endif
 " }}}
 " コーディング関連 {{{
@@ -119,12 +128,13 @@ endif
 "}}}
 " JavaScript {{{
 " JavaScript 用インデント
-NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
+" ※NeoBundleLazyだとvim-jsxが上手く動かないっぽい
+NeoBundle 'pangloss/vim-javascript'
 " JavaScript のシンタックスハイライトをより素敵に
 " ※yajs.vimでことたりそうなのでいまのところコメントアウト
 "NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 " JSX 対応シンタックスハイライト
-NeoBundleLazy 'mxw/vim-jsx', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy 'mxw/vim-jsx', {'depends':['pangloss/vim-javascript'], 'autoload':{'filetypes':['jsx']}}
 " ES6 対応シンタックスハイライト
 NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
 " JavaScript の補完  
@@ -142,7 +152,7 @@ NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['json']}}
 " JsDoc の入力を楽にする
 NeoBundleLazy 'heavenshell/vim-jsdoc', {'autoload':{'filetypes':['javascript']}}
 " Node 用辞書
-NeoBundle 'guileen/vim-node-dict'
+NeoBundleLazy 'guileen/vim-node-dict', {'autoload':{'filetypes':['javascript']}}
 "}}}
 " Scala {{{
 " シンタックスハイライト
@@ -173,7 +183,7 @@ NeoBundleLazy 'eagletmt/ghcmod-vim', {"autoload" : { "filetypes" : ["haskell"] }
 "        \ }
 "endif
 " Re:VIEW 用コードハイライト（使うかな？）
-NeoBundle 'moro/vim-review'
+NeoBundleLazy 'moro/vim-review', {'autoload':{'filetype':['review']}}
 " Markdown
 NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload':{'filetypes':['markdown']}}
 "}}}
@@ -397,12 +407,15 @@ endfunction
 "-----------------------------------------------------------------------------
 " □ Project の設定 {{{
 "-----------------------------------------------------------------------------
-" ファイルが選択されたらウィンドウを閉じる
-let g:proj_flags = 'imtc'
-" <Leader>Pでプロジェクトをトグル開閉する
-nmap <silent> <Leader>P <Plug>ToggleProject
-" <Leader>pでデフォルトのプロジェクトを開く
-nmap <silent> <Leader>p :Project<CR>
+let s:bundle = neobundle#get('vim-project')
+function! s:bundle.hooks.on_source(bundle)
+  " ファイルが選択されたらウィンドウを閉じる
+  let g:proj_flags = 'imtc'
+  " <Leader>Pでプロジェクトをトグル開閉する
+  nmap <silent> <Leader>P <Plug>ToggleProject
+  " <Leader>pでデフォルトのプロジェクトを開く
+  nmap <silent> <Leader>p :Project<CR>
+endfunction
 "}}}
 "-----------------------------------------------------------------------------
 " □ gitgutter の設定 {{{
@@ -540,6 +553,12 @@ if has('nvim') || v:version > 703
         \|  endif
 endif
 " }}}
+"-----------------------------------------------------------------------------
+" □ Syntastic の設定 {{{
+"-----------------------------------------------------------------------------
+let g:syntastic_javascript_checkers=['eslint']
+"}}}
+"-----------------------------------------------------------------------------
 "-----------------------------------------------------------------------------
 " □ Vim Script の設定 {{{
 "-----------------------------------------------------------------------------
