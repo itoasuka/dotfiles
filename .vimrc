@@ -119,12 +119,15 @@ endif
 " }}}
 " コーディング関連 {{{
 NeoBundle 'scrooloose/syntastic.git'
+
 if executable('ctags')
   " ctagsを使うのを楽にするやつ
   NeoBundle 'soramugi/auto-ctags.vim'
   " タグリストを出すやつ
   NeoBundle 'majutsushi/tagbar'
 endif
+
+NeoBundle 'nathanaelkane/vim-indent-guides'
 "}}}
 " JavaScript {{{
 " JavaScript 用インデント
@@ -172,6 +175,9 @@ NeoBundleLazy 'neovimhaskell/haskell-vim', {"autoload" : { "filetypes" : ["haske
 NeoBundleLazy 'eagletmt/neco-ghc', {"autoload" : { "filetypes" : ["haskell"] }}
 NeoBundleLazy 'eagletmt/ghcmod-vim', {"autoload" : { "filetypes" : ["haskell"] }}
 " }}}
+" DB {{{
+NeoBundle 'vim-scripts/dbext.vim'
+" }}}
 " その他 {{{
 " Scala IDEがまともに扱えないのでコメントアウト
 "if executable("ant")
@@ -186,6 +192,8 @@ NeoBundleLazy 'eagletmt/ghcmod-vim', {"autoload" : { "filetypes" : ["haskell"] }
 NeoBundleLazy 'moro/vim-review', {'autoload':{'filetype':['review']}}
 " Markdown
 NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload':{'filetypes':['markdown']}}
+" blockdiag
+NeoBundle 'aohta/blockdiag.vim'
 "}}}
 
 call neobundle#end()
@@ -242,7 +250,9 @@ endif
 
 " OSのクリップボードを使用する
 set clipboard+=unnamed
-set clipboard+=autoselect
+if !has('nvim')
+  set clipboard+=autoselect
+endif
 
 if has('mac') && !has('nvim')
   " MacでAltキーをMetaキーとしてあつかう
@@ -270,8 +280,8 @@ if has('python')
   if has('kaoriya') && has('mac')
     " 特にKaoriYa パッチの MacVim で起こる
     " この辺も参照→ http://goo.gl/OS772W
-    if filereadable('/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python')
-      let $PYTHON_DLL = "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Python"
+    if filereadable('/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/Python')
+      let $PYTHON_DLL = "/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/Python"
     endif
   endif
 endif
@@ -404,6 +414,17 @@ function! MyFilename()
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 "}}}
+"-----------------------------------------------------------------------------
+" □ indent-guides の設定 {{{
+"-----------------------------------------------------------------------------
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_start_level=2
+let g:indent_guides_auto_colors=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=234
+let g:indent_guides_color_change_percent = 30
+let g:indent_guides_guide_size = 1
+" }}}
 "-----------------------------------------------------------------------------
 " □ Project の設定 {{{
 "-----------------------------------------------------------------------------
@@ -619,6 +640,11 @@ if has('python') || has('nvim')
   set completeopt-=preview
 endif
 "}}}
+"-----------------------------------------------------------------------------
+" □ データベース関連の設定 {{{
+"-----------------------------------------------------------------------------
+let g:dbext_default_profile_obane = 'type=PGSQL:user=obane:passwd=obane:dbname=obane'
+" }}}
 "-----------------------------------------------------------------------------
 " □ その他のキーマップ {{{
 "-----------------------------------------------------------------------------
