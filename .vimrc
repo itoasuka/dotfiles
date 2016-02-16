@@ -169,6 +169,21 @@ NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
 "}}}
 " VisualBasic(!) {{{
 NeoBundleLazy 'yukpiz/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }}
+if has('win32') || has('win64')
+  NeoBundle 'taku25/vim-visualstudio'
+endif
+" }}}
+" C# {{{
+if has('python')
+  NeoBundleLazy 'OmniSharp/omnisharp-vim', {
+  \   'autoload': {'filetypes': ['cs']},
+  \   'build': {
+  \     'windows': 'MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
+  \     'mac': 'xbuild server/OmniSharp.sln',
+  \     'unix': 'xbuild server/OmniSharp.sln',
+  \   }
+  \ }
+endif
 " }}}
 " Haskell {{{
 NeoBundleLazy 'neovimhaskell/haskell-vim', {"autoload" : { "filetypes" : ["haskell"] }}
