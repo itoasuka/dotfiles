@@ -16,25 +16,27 @@ set encoding=utf-8
 " JavaScript 関連
 " <C-l>   JsDoc 追加
 "-----------------------------------------------------------------------------
-" □ NeoBundle の設定 {{{
+" □ 初期設定 {{{
 "-----------------------------------------------------------------------------
-if has('vim_starting')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
-
-  if has('win32') || has('win64')
-    set runtimepath+=~/vimfiles/bundle/neobundle.vim/
-  else
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-  endif
+if &compatible
+  set nocompatible               " Be iMproved
 endif
 
 if has('win32') || has('win64')
-  call neobundle#begin(expand('~/vimfiles/bundle/'))
+  let s:vimdir = $HOME . '/vimfiles'
 else
-  call neobundle#begin(expand('~/.vim/bundle/'))
+  let s:vimdir = $HOME . '/.vim'
 endif
+" }}}
+"-----------------------------------------------------------------------------
+" □ NeoBundle の設定 {{{
+"-----------------------------------------------------------------------------
+let s:bundle_dir = s:vimdir . '/bundle'
+if has('vim_starting')
+  let &runtimepath = &runtimepath . ',' . s:bundle_dir . '/neobundle.vim/'
+endif
+
+call neobundle#begin(s:bundle_dir)
 " 基本 {{{
 " NeoBundle 自体を NeoBundle の管理下に置く
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -94,7 +96,7 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle "sudo.vim"
 
 " Project
-NeoBundleLazy "shemerey/vim-project", {'commands':['Project']}
+NeoBundleLazy "shemerey/vim-project", {'autoload':{'commands':['Project']}}
 
 " ディレクトリごとの設定ができるやつ
 NeoBundle 'thinca/vim-localrc'
