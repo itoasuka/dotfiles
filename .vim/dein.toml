@@ -1,0 +1,57 @@
+# 基本 {{{
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif dein#util#_is_cygwin()
+    let cmd = 'make -f make_cygwin.mak'
+  elseif executable('gmake')
+    let cmd = 'gmake'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+# かっこいいカラースキーム
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+
+# かっこいいステータスライン
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+# Vimのリストをサクサク移動（実践Vim P.116）
+# バッファ     前 [b 次 ]b 最初 [B 最後 ]B
+# 引数リスト      [a    ]a
+# Quickfix        [q    ]q
+# ロケーション    [l    ]l
+# タグリスト      [t    ]t
+[[plugins]]
+repo = 'unimpaired.vim'
+
+# sudo
+[[plugins]]
+repo = "sudo.vim"
+
+# ディレクトリごとの設定ができるやつ
+[[plugins]]
+repo = 'thinca/vim-localrc'
+# }}}
+# ファイル管理 {{{
+# Git 操作
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+if = 'executable("git")'
+
+# Git 差分表示
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+if = 'executable("git")'
+# }}}
+
+# vim:set foldmethod=marker:

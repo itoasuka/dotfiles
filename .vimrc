@@ -27,203 +27,256 @@ if has('win32') || has('win64')
 else
   let s:vimdir = $HOME . '/.vim'
 endif
+
+" deinを使うか（移行用の設定）
+let s:use_dein = 1
+" }}}
+"-----------------------------------------------------------------------------
+" □ dein の設定  {{{
+"-----------------------------------------------------------------------------
+let s:dein_enabled  = 0
+if s:use_dein && v:version >= 704
+  let s:dein_enabled = 1
+
+  " dein 関連のパスを設定する
+  let s:dein_dir = s:vimdir . '/dein'
+  let s:dein_github = s:dein_dir . '/repos/github.com'
+  let s:dein_repo_name = "Shougo/dein.vim"
+  let s:dein_repo_dir = s:dein_github . '/' . s:dein_repo_name
+
+  " dein がインストールされていなければ git でプルする
+  if !isdirectory(s:dein_repo_dir)
+    echo "dein is not installed, install now "
+    let s:dein_repo = "https://github.com/" . s:dein_repo_name
+    echo "git clone " . s:dein_repo . " " . s:dein_repo_dir
+    call system("git clone " . s:dein_repo . " " . s:dein_repo_dir)
+  endif
+
+  if has('vim_starting')
+    let &runtimepath = &runtimepath . "," . s:dein_repo_dir
+  endif
+
+  if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir)
+
+    " プラグインリストを収めた TOML ファイル
+    let s:toml      = s:vimdir . '/dein.toml'
+    let s:lazy_toml = s:vimdir . '/dein_lazy.toml'
+
+    " TOML を読み込み、キャッシュしておく
+    call dein#load_toml(s:toml,      {'lazy': 0})
+    call dein#load_toml(s:lazy_toml, {'lazy': 1})
+
+    call dein#end()
+    call dein#save_state()
+  endif
+
+  filetype plugin indent on 
+
+  " インストールチェック
+  if dein#check_install()
+    call dein#install()
+  endif 
+endif
 " }}}
 "-----------------------------------------------------------------------------
 " □ NeoBundle の設定 {{{
 "-----------------------------------------------------------------------------
-let s:bundle_dir = s:vimdir . '/bundle'
-if has('vim_starting')
-  let &runtimepath = &runtimepath . ',' . s:bundle_dir . '/neobundle.vim/'
-endif
+if ! s:dein_enabled
+  let s:bundle_dir = s:vimdir . '/bundle'
+  if has('vim_starting')
+    let &runtimepath = &runtimepath . ',' . s:bundle_dir . '/neobundle.vim/'
+  endif
 
-call neobundle#begin(s:bundle_dir)
-" 基本 {{{
-" NeoBundle 自体を NeoBundle の管理下に置く
-NeoBundleFetch 'Shougo/neobundle.vim'
+  call neobundle#begin(s:bundle_dir)
+  " 基本 {{{
+  " NeoBundle 自体を NeoBundle の管理下に置く
+  NeoBundleFetch 'Shougo/neobundle.vim'
 
-" 非同期処理
-NeoBundle 'Shougo/vimproc.vim', {
-      \   'build' : {
-      \     'windows' : 'tools\\update-dll-mingw',
-      \     'cygwin'  : 'make -f make_cygwin.mak',
-      \     'mac'     : 'make',
-      \     'linux'   : 'make',
-      \     'unix'    : 'gmake',
-      \   },
-      \ }
-
-" Shell
-if has('nvim') || v:version > 703
-  NeoBundleLazy 'Shougo/vimshell.vim', {
-    \ 'depends' : 'Shougo/vimproc.vim',
-    \ 'autoload' : {
-    \   'commands' : [{ 'name' : 'VimShell',
-    \                   'complete' : 'customlist,vimshell#complete'},
-    \                   'VimShellExecute', 'VimShellInteractive',
-    \                   'VimShellTerminal', 'VimShellPop'],
-    \   'mappings' : ['<Plug>(vimshell_']
-    \ }
-    \}
-endif
-
-" かっこいいカラースキーム
-NeoBundle 'w0ng/vim-hybrid'
-
-" かっこいいステータスライン
-NeoBundle 'itchyny/lightline.vim'
-
-NeoBundle 'Shougo/neoinclude.vim'
-
-" 補完
-if has('nvim')
-  NeoBundle 'Shougo/deoplete.nvim'
-elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
-  NeoBundle 'Shougo/neocomplete.vim'
-endif
-
-" Vimのリストをサクサク移動（実践Vim P.116）
-" バッファ     前 [b 次 ]b 最初 [B 最後 ]B
-" 引数リスト      [a    ]a
-" Quickfix        [q    ]q
-" ロケーション    [l    ]l
-" タグリスト      [t    ]t
-NeoBundle 'unimpaired.vim'
-
-" 最近使ったファイル記録
-NeoBundle 'Shougo/neomru.vim'
-
-" sudo
-NeoBundle "sudo.vim"
-
-" Project
-NeoBundleLazy "shemerey/vim-project", {'autoload':{'commands':['Project']}}
-
-" ディレクトリごとの設定ができるやつ
-NeoBundle 'thinca/vim-localrc'
-"}}}
-" ファイル管理 {{{
-if executable('git')
-  " Git 操作
-  NeoBundle 'tpope/vim-fugitive'
-  " Git 差分表示
-  NeoBundle 'airblade/vim-gitgutter'
-endif
-" ファイラ
-if has('nvim') || v:version > 703
-  NeoBundleLazy 'Shougo/vimfiler.vim', {'autoload':{'commands':['VimFiler', 'VimFilerBufferDir']}}
-endif
-"}}}
-" Unite {{{
-if has('nvim') || v:version > 703
-  NeoBundle 'Shougo/unite.vim'
-  NeoBundle 'tsukkee/unite-tag'
-endif
-" }}}
-" コーディング関連 {{{
-NeoBundle 'scrooloose/syntastic.git'
-
-if executable('ctags')
-  " ctagsを使うのを楽にするやつ
-  NeoBundle 'soramugi/auto-ctags.vim'
-  " タグリストを出すやつ
-  NeoBundle 'majutsushi/tagbar'
-endif
-
-NeoBundle 'nathanaelkane/vim-indent-guides'
-
-" コメントのトグル
-NeoBundle "tyru/caw.vim"
-"}}}
-" JavaScript {{{
-" JavaScript 用インデント
-" ※NeoBundleLazyだとvim-jsxが上手く動かないっぽい
-NeoBundle 'pangloss/vim-javascript'
-" JavaScript のシンタックスハイライトをより素敵に
-" ※yajs.vimでことたりそうなのでいまのところコメントアウト
-"NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-" JSX 対応シンタックスハイライト
-NeoBundleLazy 'mxw/vim-jsx', {'depends':['pangloss/vim-javascript'], 'autoload':{'filetypes':['jsx']}}
-" ES6 対応シンタックスハイライト
-NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
-" JavaScript の補完  
-if executable("npm") 
-  " npm が使える環境にのみインストールする
-  NeoBundleLazy 'marijnh/tern_for_vim', {
-        \   'build': {
-        \     'others': 'npm install'
+  " 非同期処理
+  NeoBundle 'Shougo/vimproc.vim', {
+        \   'build' : {
+        \     'windows' : 'tools\\update-dll-mingw',
+        \     'cygwin'  : 'make -f make_cygwin.mak',
+        \     'mac'     : 'make',
+        \     'linux'   : 'make',
+        \     'unix'    : 'gmake',
         \   },
-        \   'autoload': {'filetypes': ['javascript']}
         \ }
-endif
-" JSON の扱いを素敵に
-NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['json']}}
-" JsDoc の入力を楽にする
-NeoBundleLazy 'heavenshell/vim-jsdoc', {'autoload':{'filetypes':['javascript']}}
-" Node 用辞書
-NeoBundleLazy 'guileen/vim-node-dict', {'autoload':{'filetypes':['javascript']}}
-"}}}
-" Scala {{{
-" シンタックスハイライト
-NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala', 'html', 'play2-conf', 'play2-routes']}}
-" Play Framework 用シンタックスハイライト 
-" ※NeoBundleLazyだとちゃんと動かないっぽい
-NeoBundle 'gre/play2vim'
-" SBT 対応 
-NeoBundleLazy 'ktvoelker/sbt-vim',  {'autoload':{'filetypes':['sbt']}}
-NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
-"}}}
-" VisualBasic(!) {{{
-NeoBundleLazy 'yukpiz/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }}
-if has('win32') || has('win64')
-  NeoBundle 'taku25/vim-visualstudio'
-endif
-" }}}
-" C# {{{
-if has('python')
-  NeoBundleLazy 'OmniSharp/omnisharp-vim', {
-  \   'autoload': {'filetypes': ['cs']},
-  \   'build': {
-  \     'windows': 'MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
-  \     'mac': 'xbuild server/OmniSharp.sln',
-  \     'unix': 'xbuild server/OmniSharp.sln',
-  \   }
-  \ }
-endif
-" }}}
-" Haskell {{{
-NeoBundleLazy 'neovimhaskell/haskell-vim', {'autoload' : { 'filetypes' : ['haskell'] }}
-NeoBundleLazy 'eagletmt/neco-ghc', {'autoload' : { 'filetypes' : ['haskell'] }}
-NeoBundleLazy 'eagletmt/ghcmod-vim', {'autoload' : { 'filetypes' : ['haskell'] }}
-NeoBundleLazy 'itchyny/vim-haskell-indent', {'autoload' : { 'filetypes' : ['haskell']}}
-" }}}
-" DB {{{
-NeoBundle 'vim-scripts/dbext.vim'
-" }}}
-" その他 {{{
-" Scala IDEがまともに扱えないのでコメントアウト
-"if executable("ant")
-  " EclipseをVimからこき使う
-"  NeoBundle 'ervandew/eclim.git', {
-"        \   "build": {
-"        \     "other": "ant"
-"        \   }
-"        \ }
-"endif
-" Re:VIEW 用コードハイライト（使うかな？）
-NeoBundleLazy 'moro/vim-review', {'autoload':{'filetype':['review']}}
-" Markdown
-NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload':{'filetypes':['markdown']}}
-" blockdiag
-NeoBundle 'aohta/blockdiag.vim'
-" TOML
-NeoBundleLazy 'cespare/vim-toml', {'autoload':{'filetype':['toml']}}
-"}}}
 
-call neobundle#end()
+  " Shell
+  if has('nvim') || v:version > 703
+    NeoBundleLazy 'Shougo/vimshell.vim', {
+      \ 'depends' : 'Shougo/vimproc.vim',
+      \ 'autoload' : {
+      \   'commands' : [{ 'name' : 'VimShell',
+      \                   'complete' : 'customlist,vimshell#complete'},
+      \                   'VimShellExecute', 'VimShellInteractive',
+      \                   'VimShellTerminal', 'VimShellPop'],
+      \   'mappings' : ['<Plug>(vimshell_']
+      \ }
+      \}
+  endif
 
-filetype plugin indent on 
+  " かっこいいカラースキーム
+  NeoBundle 'w0ng/vim-hybrid'
 
-NeoBundleCheck
+  " かっこいいステータスライン
+  NeoBundle 'itchyny/lightline.vim'
+
+  NeoBundle 'Shougo/neoinclude.vim'
+
+  " 補完
+  if has('nvim')
+    NeoBundle 'Shougo/deoplete.nvim'
+  elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
+    NeoBundle 'Shougo/neocomplete.vim'
+  endif
+
+  " Vimのリストをサクサク移動（実践Vim P.116）
+  " バッファ     前 [b 次 ]b 最初 [B 最後 ]B
+  " 引数リスト      [a    ]a
+  " Quickfix        [q    ]q
+  " ロケーション    [l    ]l
+  " タグリスト      [t    ]t
+  NeoBundle 'unimpaired.vim'
+
+  " 最近使ったファイル記録
+  NeoBundle 'Shougo/neomru.vim'
+
+  " sudo
+  NeoBundle "sudo.vim"
+
+  " Project
+  NeoBundleLazy "shemerey/vim-project", {'autoload':{'commands':['Project']}}
+
+  " ディレクトリごとの設定ができるやつ
+  NeoBundle 'thinca/vim-localrc'
+  "}}}
+  " ファイル管理 {{{
+  if executable('git')
+    " Git 操作
+    NeoBundle 'tpope/vim-fugitive'
+    " Git 差分表示
+    NeoBundle 'airblade/vim-gitgutter'
+  endif
+  " ファイラ
+  if has('nvim') || v:version > 703
+    NeoBundleLazy 'Shougo/vimfiler.vim', {'autoload':{'commands':['VimFiler', 'VimFilerBufferDir']}}
+  endif
+  "}}}
+  " Unite {{{
+  if has('nvim') || v:version > 703
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'tsukkee/unite-tag'
+  endif
+  " }}}
+  " コーディング関連 {{{
+  NeoBundle 'scrooloose/syntastic.git'
+
+  if executable('ctags')
+    " ctagsを使うのを楽にするやつ
+    NeoBundle 'soramugi/auto-ctags.vim'
+    " タグリストを出すやつ
+    NeoBundle 'majutsushi/tagbar'
+  endif
+
+  NeoBundle 'nathanaelkane/vim-indent-guides'
+
+  " コメントのトグル
+  NeoBundle "tyru/caw.vim"
+  "}}}
+  " JavaScript {{{
+  " JavaScript 用インデント
+  " ※NeoBundleLazyだとvim-jsxが上手く動かないっぽい
+  NeoBundle 'pangloss/vim-javascript'
+  " JavaScript のシンタックスハイライトをより素敵に
+  " ※yajs.vimでことたりそうなのでいまのところコメントアウト
+  "NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+  " JSX 対応シンタックスハイライト
+  NeoBundleLazy 'mxw/vim-jsx', {'depends':['pangloss/vim-javascript'], 'autoload':{'filetypes':['jsx']}}
+  " ES6 対応シンタックスハイライト
+  NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
+  " JavaScript の補完  
+  if executable("npm") 
+    " npm が使える環境にのみインストールする
+    NeoBundleLazy 'marijnh/tern_for_vim', {
+          \   'build': {
+          \     'others': 'npm install'
+          \   },
+          \   'autoload': {'filetypes': ['javascript']}
+          \ }
+  endif
+  " JSON の扱いを素敵に
+  NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['json']}}
+  " JsDoc の入力を楽にする
+  NeoBundleLazy 'heavenshell/vim-jsdoc', {'autoload':{'filetypes':['javascript']}}
+  " Node 用辞書
+  NeoBundleLazy 'guileen/vim-node-dict', {'autoload':{'filetypes':['javascript']}}
+  "}}}
+  " Scala {{{
+  " シンタックスハイライト
+  NeoBundleLazy 'derekwyatt/vim-scala', {'autoload':{'filetypes':['scala', 'html', 'play2-conf', 'play2-routes']}}
+  " Play Framework 用シンタックスハイライト 
+  " ※NeoBundleLazyだとちゃんと動かないっぽい
+  NeoBundle 'gre/play2vim'
+  " SBT 対応 
+  NeoBundleLazy 'ktvoelker/sbt-vim',  {'autoload':{'filetypes':['sbt']}}
+  NeoBundleLazy 'ensime/ensime-vim',  {'autoload':{'filetypes':['scala']}}
+  "}}}
+  " VisualBasic(!) {{{
+  NeoBundleLazy 'yukpiz/vim-vbnet', {"autoload" : { "filetypes" : ["vbnet"], }}
+  if has('win32') || has('win64')
+    NeoBundle 'taku25/vim-visualstudio'
+  endif
+  " }}}
+  " C# {{{
+  if has('python')
+    NeoBundleLazy 'OmniSharp/omnisharp-vim', {
+    \   'autoload': {'filetypes': ['cs']},
+    \   'build': {
+    \     'windows': 'MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
+    \     'mac': 'xbuild server/OmniSharp.sln',
+    \     'unix': 'xbuild server/OmniSharp.sln',
+    \   }
+    \ }
+  endif
+  " }}}
+  " Haskell {{{
+  NeoBundleLazy 'neovimhaskell/haskell-vim', {'autoload' : { 'filetypes' : ['haskell'] }}
+  NeoBundleLazy 'eagletmt/neco-ghc', {'autoload' : { 'filetypes' : ['haskell'] }}
+  NeoBundleLazy 'eagletmt/ghcmod-vim', {'autoload' : { 'filetypes' : ['haskell'] }}
+  NeoBundleLazy 'itchyny/vim-haskell-indent', {'autoload' : { 'filetypes' : ['haskell']}}
+  " }}}
+  " DB {{{
+  NeoBundle 'vim-scripts/dbext.vim'
+  " }}}
+  " その他 {{{
+  " Scala IDEがまともに扱えないのでコメントアウト
+  "if executable("ant")
+    " EclipseをVimからこき使う
+  "  NeoBundle 'ervandew/eclim.git', {
+  "        \   "build": {
+  "        \     "other": "ant"
+  "        \   }
+  "        \ }
+  "endif
+  " Re:VIEW 用コードハイライト（使うかな？）
+  NeoBundleLazy 'moro/vim-review', {'autoload':{'filetype':['review']}}
+  " Markdown
+  NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload':{'filetypes':['markdown']}}
+  " blockdiag
+  NeoBundle 'aohta/blockdiag.vim'
+  " TOML
+  NeoBundleLazy 'cespare/vim-toml', {'autoload':{'filetype':['toml']}}
+  "}}}
+
+  call neobundle#end()
+
+  filetype plugin indent on 
+
+  NeoBundleCheck
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ 基本設定 {{{
@@ -451,15 +504,17 @@ let g:indent_guides_guide_size = 1
 "-----------------------------------------------------------------------------
 " □ Project の設定 {{{
 "-----------------------------------------------------------------------------
-let s:bundle = neobundle#get('vim-project')
-function! s:bundle.hooks.on_source(bundle)
-  " ファイルが選択されたらウィンドウを閉じる
-  let g:proj_flags = 'imtc'
-  " <Leader>Pでプロジェクトをトグル開閉する
-  nmap <silent> <Leader>P <Plug>ToggleProject
-  " <Leader>pでデフォルトのプロジェクトを開く
-  nmap <silent> <Leader>p :Project<CR>
-endfunction
+if ! s:dein_enabled
+  let s:bundle = neobundle#get('vim-project')
+  function! s:bundle.hooks.on_source(bundle)
+    " ファイルが選択されたらウィンドウを閉じる
+    let g:proj_flags = 'imtc'
+    " <Leader>Pでプロジェクトをトグル開閉する
+    nmap <silent> <Leader>P <Plug>ToggleProject
+    " <Leader>pでデフォルトのプロジェクトを開く
+    nmap <silent> <Leader>p :Project<CR>
+  endfunction
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ gitgutter の設定 {{{
@@ -570,7 +625,6 @@ elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
     let g:neocomplete#sources#omni#input_patterns = {}
   endif
 endif
-    
 "}}}
 "-----------------------------------------------------------------------------
 " □ ファイルタイプ共通設定 {{{
@@ -603,7 +657,6 @@ endif
 let g:syntastic_javascript_checkers=['eslint']
 "}}}
 "-----------------------------------------------------------------------------
-"-----------------------------------------------------------------------------
 " □ Vim Script の設定 {{{
 "-----------------------------------------------------------------------------
 "}}}
@@ -624,43 +677,47 @@ autocmd FileType dosbatch setlocal sw=4 sts=4 ts=4 et
 " □ JavaScript の設定 {{{
 "-----------------------------------------------------------------------------
 " vim-json のダブルクォートを隠す機能は不要
-let s:bundle = neobundle#get('vim-json')
-function! s:bundle.hooks.on_source(bundle)
-  let g:vim_json_syntax_conceal = 0
-endfunction
-unlet s:bundle
+if ! s:dein_enabled
+  let s:bundle = neobundle#get('vim-json')
+  function! s:bundle.hooks.on_source(bundle)
+    let g:vim_json_syntax_conceal = 0
+  endfunction
+  unlet s:bundle
 
-let s:bundle = neobundle#get('vim-jsdoc')
-function! s:bundle.hooks.on_source(bundle)
-  nmap <silent> <C-l> <Plug>(jsdoc)
-endfunction
-unlet s:bundle
+  let s:bundle = neobundle#get('vim-jsdoc')
+  function! s:bundle.hooks.on_source(bundle)
+    nmap <silent> <C-l> <Plug>(jsdoc)
+  endfunction
+  unlet s:bundle
+endif
 "}}}
 "-----------------------------------------------------------------------------
 " □ Scala の設定 {{{
 "-----------------------------------------------------------------------------
-if has('python') || has('nvim')
-  " ※ensime-vimはpythonが有効な場合のみインストールされている
-  let s:bundle = neobundle#get('ensime-vim')
-  function! s:bundle.hooks.on_source(bundle)
-    if has('kaoriya') && has('mac')
-      call s:set_python_path()
-    endif
-  endfunction
-  unlet s:bundle
+if ! s:dein_enabled
+  if has('python') || has('nvim')
+    " ※ensime-vimはpythonが有効な場合のみインストールされている
+    let s:bundle = neobundle#get('ensime-vim')
+    function! s:bundle.hooks.on_source(bundle)
+      if has('kaoriya') && has('mac')
+        call s:set_python_path()
+      endif
+    endfunction
+    unlet s:bundle
 
-  if has('nvim')
-    if !exists('g:deoplete#omni#input_patterns')
-      let g:deoplete#omni#input_patterns = {}
+    if has('nvim')
+      if !exists('g:deoplete#omni#input_patterns')
+        let g:deoplete#omni#input_patterns = {}
+      endif
+      let g:deoplete#omni#input_patterns.scala = '\k\.\k*'
+    else
+      if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+      endif
+      let g:neocomplete#force_omni_input_patterns.scala = '\k\.\k*'
     endif
-    let g:deoplete#omni#input_patterns.scala = '\k\.\k*'
-  else
-    if !exists('g:neocomplete#force_omni_input_patterns')
-      let g:neocomplete#force_omni_input_patterns = {}
-    endif
-    let g:neocomplete#force_omni_input_patterns.scala = '\k\.\k*'
+    set completeopt-=preview
   endif
-  set completeopt-=preview
 endif
 "}}}
 "-----------------------------------------------------------------------------

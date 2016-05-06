@@ -1,0 +1,48 @@
+# 基本 {{{
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+if = 'has("lua")'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_path = '.*'
+
+[[plugins]]
+repo = 'shemerey/vim-project'
+on_cmd = ['Project']
+hook_post_source = '''
+  " ファイルが選択されたらウィンドウを閉じる
+  let g:proj_flags = 'imtc'
+  " <Leader>Pでプロジェクトをトグル開閉する
+  nmap <silent> <Leader>P <Plug>ToggleProject
+  " <Leader>pでデフォルトのプロジェクトを開く
+  nmap <silent> <Leader>p :Project<CR>
+'''
+# }}}
+# ファイル管理 {{{
+# ファイラ
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+# }}}
+# Unit {{{
+[[plugins]]
+repo = 'Shougo/unite.vim'
+on_source = 'neomru.vim'
+
+[[plugins]]
+repo = 'tsukkee/unite-tag'
+depends = 'unite.vim'
+#}}}
+
+# TOML
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+# vim:set foldmethod=marker:
