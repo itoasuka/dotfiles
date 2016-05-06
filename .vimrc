@@ -128,6 +128,9 @@ if executable('ctags')
 endif
 
 NeoBundle 'nathanaelkane/vim-indent-guides'
+
+" コメントのトグル
+NeoBundle "tyru/caw.vim"
 "}}}
 " JavaScript {{{
 " JavaScript 用インデント
@@ -186,9 +189,10 @@ if has('python')
 endif
 " }}}
 " Haskell {{{
-NeoBundleLazy 'neovimhaskell/haskell-vim', {"autoload" : { "filetypes" : ["haskell"] }}
-NeoBundleLazy 'eagletmt/neco-ghc', {"autoload" : { "filetypes" : ["haskell"] }}
-NeoBundleLazy 'eagletmt/ghcmod-vim', {"autoload" : { "filetypes" : ["haskell"] }}
+NeoBundleLazy 'neovimhaskell/haskell-vim', {'autoload' : { 'filetypes' : ['haskell'] }}
+NeoBundleLazy 'eagletmt/neco-ghc', {'autoload' : { 'filetypes' : ['haskell'] }}
+NeoBundleLazy 'eagletmt/ghcmod-vim', {'autoload' : { 'filetypes' : ['haskell'] }}
+NeoBundleLazy 'itchyny/vim-haskell-indent', {'autoload' : { 'filetypes' : ['haskell']}}
 " }}}
 " DB {{{
 NeoBundle 'vim-scripts/dbext.vim'
@@ -209,6 +213,8 @@ NeoBundleLazy 'moro/vim-review', {'autoload':{'filetype':['review']}}
 NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload':{'filetypes':['markdown']}}
 " blockdiag
 NeoBundle 'aohta/blockdiag.vim'
+" TOML
+NeoBundleLazy 'cespare/vim-toml', {'autoload':{'filetype':['toml']}}
 "}}}
 
 call neobundle#end()
@@ -645,7 +651,7 @@ if has('python') || has('nvim')
     if !exists('g:deoplete#omni#input_patterns')
       let g:deoplete#omni#input_patterns = {}
     endif
-    let g:deoplete#omni#input_patterns.scala= '\k\.\k*'
+    let g:deoplete#omni#input_patterns.scala = '\k\.\k*'
   else
     if !exists('g:neocomplete#force_omni_input_patterns')
       let g:neocomplete#force_omni_input_patterns = {}
