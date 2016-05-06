@@ -5,6 +5,7 @@ ensime_*
 .vim/shada
 .vim/eclim
 .vim/plugin/eclim.vim
+.vim/dein
 .project
 .idea
 .netrwhist
