@@ -27,6 +27,9 @@ ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 ln -s $HOME/dotfiles/.gvimrc $HOME/.gvimrc
 ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+ln -s $HOME/dotfiles/.spacemacs $HOME/.spacemacs
+
 mkdir -p $HOME/.zsh/completion/
 cd $HOME/.zsh/completion/
 
