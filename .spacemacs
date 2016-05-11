@@ -23,18 +23,19 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; git
+     git
+     html
      ;; markdown
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     spell-checking
+     syntax-checking
+     version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -249,6 +250,24 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  ;; 文字コード
+  (set-language-environment "Japanese")
+  (let ((ws window-system))
+    (cond ((eq ws 'w32)
+           (prefer-coding-system 'utf-8-unix)
+           (set-default-coding-systems 'utf-8-unix)
+           (setq file-name-coding-system 'sjis)
+           (setq locale-coding-system 'utf-8))
+          ((eq ws 'ns)
+           (require 'ucs-normalize)
+           (prefer-coding-system 'utf-8-hfs)
+           (setq file-name-coding-system 'utf-8-hfs)
+           (setq locale-coding-system 'utf-8-hfs))))
+
+  ;; Emacs Mac Port 用設定
+  ;; ミニバッファで入力する際に自動的にASCIIにする
+  (when (fboundp 'mac-auto-ascii-mode)
+    (mac-auto-ascii-mode 1))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
