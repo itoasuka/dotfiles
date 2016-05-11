@@ -33,16 +33,53 @@ repo = 'Shougo/vimfiler.vim'
 # Unit {{{
 [[plugins]]
 repo = 'Shougo/unite.vim'
-on_source = 'neomru.vim'
+depends = 'neomru.vim'
 
 [[plugins]]
 repo = 'tsukkee/unite-tag'
 depends = 'unite.vim'
 #}}}
+# コーディング関連 {{{
+[[plugins]]
+repo = 'scrooloose/syntastic.git'
+on_ft = ['cs', 'javascript', 'vim']
 
+# ctagsを使うのを楽にするやつ
+[[plugins]]
+repo = 'soramugi/auto-ctags.vim'
+if = 'executable("ctags")'
+on_ft = ['cs', 'javascript', 'vim']
+
+# タグリストを出すやつ
+[[plugins]]
+repo = 'majutsushi/tagbar'
+if = 'executable("ctags")'
+on_ft = ['cs', 'javascript', 'vim']
+
+# コメントのトグル
+[[plugins]]
+repo = "tyru/caw.vim"
+on_ft = ['cs', 'javascript', 'vim']
+# }}}
+# C# {{{
+[[plugins]]
+repo = 'OmniSharp/omnisharp-vim'
+if = 'has("python") && has("lua")'
+on_ft = 'cs'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"'
+  else
+    let cmd = 'xbuild server/OmniSharp.sln'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+# }}}
+# その他 {{{
 # TOML
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
-
+on_source = ['context_filetype.vim']
+# }}}
 # vim:set foldmethod=marker:

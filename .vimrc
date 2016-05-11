@@ -57,11 +57,11 @@ if s:use_dein && v:version >= 704
   endif
 
   if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir)
-
     " プラグインリストを収めた TOML ファイル
     let s:toml      = s:vimdir . '/dein.toml'
     let s:lazy_toml = s:vimdir . '/dein_lazy.toml'
+    
+    call dein#begin(s:dein_dir, [$MYVIMRC, s:toml, s:lazy_toml])
 
     " TOML を読み込み、キャッシュしておく
     call dein#load_toml(s:toml,      {'lazy': 0})

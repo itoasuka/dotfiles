@@ -53,5 +53,18 @@ if = 'executable("git")'
 repo = 'airblade/vim-gitgutter'
 if = 'executable("git")'
 # }}}
+# コーディング関連 {{{
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+
+# カーソル位置のコンテキストに合わせてftを切り替える
+[[plugins]] 
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+# カーソル位置のコンテキストのftを判定するライブラリ
+[[plugins]] 
+repo = 'Shougo/context_filetype.vim'
+# }}}
 
 # vim:set foldmethod=marker:
