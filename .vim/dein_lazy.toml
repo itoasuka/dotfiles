@@ -61,6 +61,45 @@ on_ft = ['cs', 'javascript', 'vim']
 repo = "tyru/caw.vim"
 on_ft = ['cs', 'javascript', 'vim']
 # }}}
+# JavaScript {{{
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript']
+
+# JSX 対応シンタックスハイライト
+[[plugins]]
+repo = 'mxw/vim-jsx'
+depends = ['pangloss/vim-javascript']
+on_ft = ['jsx']
+
+# ES6 対応シンタックスハイライト
+[[plugins]]
+repo = 'othree/yajs.vim'
+on_ft = ['javascript']
+
+# JavaScript の補完  
+[[plugins]]
+repo = 'marijnh/tern_for_vim'
+if = 'executable("npm")' # npm が使える環境にのみインストールする
+build = 'npm install'
+on_ft = ['javascript']
+
+# JSON の扱いを素敵に
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = ['json']
+
+# JsDoc の入力を楽にする
+[[plugins]]
+repo = 'heavenshell/vim-jsdoc'
+on_ft = ['javascript']
+
+# Node 用辞書
+[[plugins]]
+repo = 'guileen/vim-node-dict'
+on_ft = ['javascript']
+
+# }}}
 # C# {{{
 [[plugins]]
 repo = 'OmniSharp/omnisharp-vim'
