@@ -73,3 +73,5 @@ export PATH="/usr/local/heroku/bin:$PATH"
 fpath=(~/.zsh/completion $fpath)
 autoload -U compinit
 compinit -u
+
+unsetopt promptcr
