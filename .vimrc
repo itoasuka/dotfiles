@@ -431,8 +431,7 @@ let g:lightline = {
       \     'gitgutter' : 'MyGitGutter',
       \     'filename'  : 'MyFilename'
       \   },
-      \   'separator'   : { 'left': '⮀', 'right': '⮂' },
-      \   'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \   'subseparator': { 'left': "|", 'right': "|" }
       \ }
 
 function! MyModified()
