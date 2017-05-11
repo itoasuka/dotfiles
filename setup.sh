@@ -3,10 +3,9 @@
 git submodule init
 git submodule update
 
-
 cd $HOME
 
-wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
 if [ -e $HOME/.zshrc ]; then
   rm $HOME/.zshrc
@@ -15,6 +14,11 @@ if [ ! -e $HOME/.config ]; then
   mkdir $HOME/.config
 fi
 ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
+ln -s $HOME/dotfiles/.zprofile $HOME/.zprofile
+ln -s $HOME/dotfiles/.zpreztorc $HOME/.zpreztorc
+ls -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogin" $HOME/.zlogin
+ls -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogout" $HOME/.zlogout
+ls -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshenv" $HOME/.zshenv
 if [ `uname` == 'Darwin' ]; then
   ln -s $HOME/dotfiles/.gitconfig_mac $HOME/.gitconfig
 else
@@ -27,13 +31,3 @@ ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 ln -s $HOME/dotfiles/.gvimrc $HOME/.gvimrc
 ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 
-mkdir -p $HOME/.zsh/completion/
-cd $HOME/.zsh/completion/
-
-wget https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
-wget https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh
-
-mv git-completion.zsh _git
-rm -f ~/.zcompdump
-source $HOME/.zshrc
-compinit
