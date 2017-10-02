@@ -76,4 +76,4 @@ if [[ "$OSTYPE" == darwin* ]]; then
   export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 fi
 
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.nodebrew/current/bin:$PATH
