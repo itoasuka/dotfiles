@@ -139,16 +139,6 @@ elseif OSTYPE == "Darwin\n"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-" ESCでIME OFF
-if has('mac')
-  set ttimeoutlen=1
-  let g:imeoff = 'osascript -e "tell application \"System Events\" to key code 102"'
-  augroup MyIMEGroup
-    autocmd!
-    autocmd InsertLeave * :call system(g:imeoff)
-  augroup END
-  noremap <silent> <ESC> <ESC>:call system(g:imeoff)<CR>
-endif
 "}}}
 "-------------------------------------------------------------------------------------------------
 

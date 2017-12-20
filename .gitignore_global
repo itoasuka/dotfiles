@@ -24,3 +24,7 @@ atlassian-ide-plugin.xml
 
 # VS Code
 .vscode
+
+# Eclipse
+.projects
+
