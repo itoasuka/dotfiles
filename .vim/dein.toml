@@ -4,6 +4,10 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+# EditorConfig
+[[plugins]]
+repo = "editorconfig/editorconfig-vim"
+
 # カーソル位置のコンテキストの fr を判定するライブラリ
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -21,12 +25,6 @@ on_ft = 'toml'
 # かっこいいカラースキーム
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
-hook_add = '''
-  set background=dark
-  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
-  " ただし colorscheme イベントの発生が抑制されないよう nested をつける。
-  au MyAutoCmd VimEnter * nested colorscheme hybrid
-'''
 
 # かっこいいステータスライン
 [[plugins]]

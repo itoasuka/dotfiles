@@ -59,8 +59,15 @@ endif
 "-------------------------------------------------------------------------------------------------
 " □ 基本設定 {{{
 "-------------------------------------------------------------------------------------------------
+set fileencoding=utf-8
+set fileencodings=utf-8,cp932
+
 " クリップボードを OS と共有
 set clipboard=unnamed,autoselect
+
+" カラースキームの設定
+set background=dark
+colorscheme hybrid
 " カーソル行ハイライト
 set cursorline
 " アンダーラインを引く(color terminal)
@@ -75,6 +82,14 @@ set autoindent
 
 " 編集中でも他のファイルを開けるようにする
 set hidden
+" バックアップファイルは作らない
+set nobackup
+" スワップファイルは作らない
+set noswapfile
+" undo ファイルは作らない
+set noundofile
+" 他で書き換えたら自動で読み直す
+set autoread
 
 " ビープを鳴らさない
 set vb t_vb=

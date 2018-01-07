@@ -40,7 +40,7 @@ endif
 set background=dark
 colorscheme hybrid
 
-" カレント行ハイライトON
+" カーソル行ハイライト
 set cursorline
 " アンダーラインを引く(gui)
 highlight CursorLine gui=underline guifg=NONE guibg=NONE
