@@ -54,6 +54,13 @@ hook_add = '''
   let g:deoplete#enable_smart_case = 1
   " 補完が有効になる文字数
   let g:deoplete#auto_completion_start_length = 3
+
+  let g:deoplete#sources = {}
+  let g:deoplete#sources._=['buffer', 'file', 'dictionary']
+  let g:deoplete#sources.cs = ['omni', 'file', 'buffer']
+
+  let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns.cs = ['\w*']
 '''
 
 # NeoVim のプラグインを Vim8 で使うのに必要なやつ
@@ -68,6 +75,32 @@ repo = 'roxma/vim-hug-neovim-rpc'
 if = '''!has('nvim')'''
 depends = ['deoplete.nvim']
 
+# }}}
+#-------------------------------------------------------------------------------------------------
+# □ コーディング関連 {{{
+#-------------------------------------------------------------------------------------------------
+# インデントを見やすく
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+hook_add = '''
+  let g:indent_guides_enable_on_vim_startup = 1
+'''
+
+# 構文チェック
+[[plugins]]
+repo = 'scrooloose/syntastic.git'
+on_ft = ['vim', 'cs']
+
+# C#
+[[plugins]]
+repo = 'OmniSharp/omnisharp-vim'
+hook_add = '''
+  augroup omnisharp_commands
+    autocmd!
+
+    autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+  augroup END
+'''
 # }}}
 #-------------------------------------------------------------------------------------------------
 # vim:set foldmethod=marker:
