@@ -1,7 +1,8 @@
 set encoding=utf-8
+scriptencoding utf-8
 
-if &compatible
-  set nocompatible               " Be iMproved
+" macvim-kaoriya では Python2 と Python3 が共存できず先勝ちなので Python3 を早々とロードする
+if has('python3')
 endif
 
 " augroup リセット
@@ -36,7 +37,7 @@ endif
 
 " Required:
 if has('vim_starting')
-  let &runtimepath = &runtimepath . "," . s:dein_repo_dir
+  let &runtimepath = &runtimepath . ',' . s:dein_repo_dir
 endif
 
 " Required:
@@ -90,9 +91,11 @@ set noswapfile
 set noundofile
 " 他で書き換えたら自動で読み直す
 set autoread
+" 自動的に折り返さない
+set textwidth=0
 
 " ビープを鳴らさない
-set vb t_vb=
+set visualbell t_vb=
 " }}}
 "-------------------------------------------------------------------------------------------------
 " vim:set foldmethod=marker:

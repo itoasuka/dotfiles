@@ -4,6 +4,22 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+# 最後に開いたバッファを記録
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+# すごいやつ
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+  " 最近使用したファイル一覧 File-Recent
+  nnoremap <silent> <Space>fr :<C-u>Denite file_mru<CR>
+  " カレントディレクトリ以下のファイル File-Go
+  nnoremap <silent> <Space>fg :<C-u>Denite file_rec<CR>
+  " 常用セット
+  nnoremap <silent> <Space>uu :<C-u>Denite buffer file_mru<CR>
+'''
+
 # EditorConfig
 [[plugins]]
 repo = "editorconfig/editorconfig-vim"
@@ -88,12 +104,12 @@ hook_add = '''
 
 # 構文チェック
 [[plugins]]
-repo = 'scrooloose/syntastic.git'
-on_ft = ['vim', 'cs']
+repo = 'w0rp/ale'
 
 # C#
 [[plugins]]
 repo = 'OmniSharp/omnisharp-vim'
+if = '''has('python')'''
 hook_add = '''
   augroup omnisharp_commands
     autocmd!
