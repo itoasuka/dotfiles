@@ -1,4 +1,8 @@
 # 基本 {{{
 [[plugins]]
 repo = 'Shougo/dein.vim'
+
+# かっこいいカラースキーム
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
 # }}}
