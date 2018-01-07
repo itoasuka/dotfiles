@@ -4,6 +4,10 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
+" augroup リセット
+augroup MyAutoCmd
+  autocmd!
+augroup END
 "-------------------------------------------------------------------------------------------------
 " □ 各パスの設定 {{{
 "-------------------------------------------------------------------------------------------------
@@ -57,15 +61,20 @@ endif
 "-------------------------------------------------------------------------------------------------
 " クリップボードを OS と共有
 set clipboard=unnamed,autoselect
-" カラースキームの設定
-set background=dark
-colorscheme hybrid
 " カーソル行ハイライト
 set cursorline
 " アンダーラインを引く(color terminal)
 highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
-" アンダーラインを引く(gui)
-highlight CursorLine gui=underline guifg=NONE guibg=NONE
+
+" タブやインデントのデフォルト挙動
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop<
+set autoindent
+
+" ビープを鳴らさない
+set vb t_vb=
 " }}}
 "-------------------------------------------------------------------------------------------------
 " vim:set foldmethod=marker:

@@ -1,8 +1,50 @@
-# 基本 {{{
+#-------------------------------------------------------------------------------------------------
+# □ 基本 {{{
+#-------------------------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/dein.vim'
+
+# カーソル位置のコンテキストの fr を判定するライブラリ
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+# カーソル位置のコンテキストに合わせて ft を切り替える
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+# toml syntax
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
 
 # かっこいいカラースキーム
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
+hook_add = '''
+  set background=dark
+  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+  " ただし colorscheme イベントの発生が抑制されないよう nested をつける。
+  au MyAutoCmd VimEnter * nested colorscheme hybrid
+'''
+
+# かっこいいステータスライン
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  " フォント依存のセパレータを使うと何かとめんどくさいので使わないことにする
+  let g:lightline = {
+    \ 'colorscheme': 'wombat',
+    \ 'component' : {
+    \   'readonly': '%{&readonly?"🔒":""}',
+    \ },
+    \ 'subseparator': { 'left': "|", 'right': "|" }
+    \ }
+'''
+
+# いろいろサクサク移動
+[[plugins]]
+repo = 'tpope/vim-unimpaired'
 # }}}
+#-------------------------------------------------------------------------------------------------
+# vim:set foldmethod=marker:
