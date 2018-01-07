@@ -11,7 +11,5 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-alias vi=nvim
-alias vim=nvim
 
 fpath=(/usr/local/share/zsh-completions $fpath)
