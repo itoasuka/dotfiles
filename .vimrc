@@ -73,6 +73,9 @@ set softtabstop=2
 set tabstop<
 set autoindent
 
+" 編集中でも他のファイルを開けるようにする
+set hidden
+
 " ビープを鳴らさない
 set vb t_vb=
 " }}}

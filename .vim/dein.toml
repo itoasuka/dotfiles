@@ -45,6 +45,31 @@ hook_add = '''
 # いろいろサクサク移動
 [[plugins]]
 repo = 'tpope/vim-unimpaired'
+
+# 補完
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+hook_add = '''
+  " deoplete を使う
+  let g:deoplete#enable_at_startup = 1
+  " smartcase を使う
+  let g:deoplete#enable_smart_case = 1
+  " 補完が有効になる文字数
+  let g:deoplete#auto_completion_start_length = 3
+'''
+
+# NeoVim のプラグインを Vim8 で使うのに必要なやつ
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+if = '''!has('nvim')'''
+depends = ['deoplete.nvim']
+
+# NeoVim のプラグインを Vim8 で使うのに必要なやつ
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+if = '''!has('nvim')'''
+depends = ['deoplete.nvim']
+
 # }}}
 #-------------------------------------------------------------------------------------------------
 # vim:set foldmethod=marker:
