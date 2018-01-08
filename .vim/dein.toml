@@ -109,6 +109,19 @@ hook_add = '''
 [[plugins]]
 repo = 'w0rp/ale'
 
+# Language Server 対応
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+build = 'bash install.sh'
+depends = 'deoplete.nvim'
+on_ft = ['javascript', 'javascript.jsx']
+hook_add = '''
+  let g:LanguageClient_serverCommands = {
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['javascript-typescript-stdio'],
+      \ }
+'''
+
 # C#
 [[plugins]]
 repo = 'OmniSharp/omnisharp-vim'
