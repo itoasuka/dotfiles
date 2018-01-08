@@ -154,6 +154,11 @@ hook_add = '''
   let g:deoplete#omni#input_patterns.elm = '[^ \t]+'
   let g:deoplete#sources.elm = ['omni'] + g:deoplete#sources._
 '''
+
+# JavaScript
+[[plugins]]
+repo = 'othree/yajs.vim'
+on_ft = 'javascript'
 # }}}
 #-------------------------------------------------------------------------------------------------
 # vim:set foldmethod=marker:
