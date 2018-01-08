@@ -73,10 +73,10 @@ hook_add = '''
 
   let g:deoplete#sources = {}
   let g:deoplete#sources._=['buffer', 'file', 'dictionary']
-  let g:deoplete#sources.cs = ['omni', 'file', 'buffer']
 
   let g:deoplete#omni#input_patterns = {}
-  let g:deoplete#omni#input_patterns.cs = ['\w*']
+
+  let g:deoplete#omni#functions = {}
 '''
 
 # NeoVim のプラグインを Vim8 で使うのに必要なやつ
@@ -110,12 +110,33 @@ repo = 'w0rp/ale'
 [[plugins]]
 repo = 'OmniSharp/omnisharp-vim'
 if = '''has('python')'''
+depends = ['deoplete.nvim']
 hook_add = '''
+  let g:deoplete#sources.cs = ['omni', 'file', 'buffer']
+  let g:deoplete#omni#input_patterns.cs = ['\w*']
+
   augroup omnisharp_commands
     autocmd!
 
     autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
   augroup END
+'''
+
+# Elm
+[[plugins]]
+repo = 'elmcast/elm-vim'
+on_ft = 'elm'
+depends = ['deoplete.nvim']
+hook_add = '''
+  augroup elm_commands
+    autocmd!
+
+    autocmd FileType elm nnoremap <buffer> <Space>sr :<C-u>ElmFormat<CR>
+  augroup END
+
+  let g:deoplete#omni#functions.elm = ['elm#Complete']
+  let g:deoplete#omni#input_patterns.elm = '[^ \t]+'
+  let g:deoplete#sources.elm = ['omni'] + g:deoplete#sources._
 '''
 # }}}
 #-------------------------------------------------------------------------------------------------
