@@ -134,6 +134,8 @@ hook_add = '''
     autocmd!
 
     autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+    autocmd FileType cs nnoremap <buffer> <Space>sr :<C-u>OmniSharpCodeFormat<CR>
+    autocmd FileType cs nnoremap <buffer> <Space>sd :<C-u>OmniSharpGotoDefinition<CR>
   augroup END
 '''
 
