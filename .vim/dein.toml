@@ -114,7 +114,6 @@ repo = 'w0rp/ale'
 repo = 'autozimu/LanguageClient-neovim'
 build = 'bash install.sh'
 depends = 'deoplete.nvim'
-on_ft = ['javascript', 'javascript.jsx']
 hook_add = '''
   let g:LanguageClient_serverCommands = {
       \ 'javascript': ['javascript-typescript-stdio'],
