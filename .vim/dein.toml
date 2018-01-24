@@ -42,19 +42,82 @@ on_ft = 'toml'
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
 
+# アイコンフォントの有効活用
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+hook_add = '''
+  " フォルダアイコンの表示をON
+  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+'''
+
+# 非同期で Git 情報を取得するやつ
+[[plugins]]
+repo = 'lambdalisue/gina.vim'
+
 # かっこいいステータスライン
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+depends =[ 'gina', 'vim-devicons' ]
 hook_add = '''
   " Cica っていうフォント入れてね（https://github.com/miiton/Cica）
   let g:lightline = {
     \ 'colorscheme': 'wombat',
-    \ 'component' : {
-    \   'readonly': '%{&readonly?"🔒":""}',
+    \ 'active': {
+    \   'left' : [ [ 'mode', 'paste' ],
+    \              [ 'gina', 'filename' ] ]
+    \ },
+    \ 'component_function' : {
+    \   'gina': 'LightLineGina',
+    \   'readonly': 'LightLineReadonly',
+    \   'modified': 'LightLineModified',
+    \   'filename': 'LightLineFilename',
+    \   'filetype': 'LightLineFiletype',
+    \   'fileformat': 'LightLineFileformat',
     \ },
     \ 'separator': { 'left': "", 'right': "" },
     \ 'subseparator': { 'left': "", 'right': "" }
     \ }
+
+  function! LightLineModified()
+    if &filetype == "help"
+      return ""
+    elseif &modified
+      return "+"
+    elseif &modifiable
+      return ""
+    else
+      return ""
+    endif
+  endfunction
+
+  function! LightLineReadonly()
+    if &filetype == "help"
+      return ""
+    elseif &readonly
+      return ""
+    else
+      return ""
+    endif
+  endfunction
+
+  function! LightLineGina()
+    let _ = gina#component#repo#branch()
+    return strlen(_) ? ''._ : ''
+  endfunction
+
+  function! LightLineFilename()
+    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+          \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+          \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+  endfunction
+
+  function! LightLineFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+  endfunction
+
+  function! LightLineFileformat()
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  endfunction
 '''
 
 # いろいろサクサク移動
