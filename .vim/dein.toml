@@ -46,13 +46,14 @@ repo = 'w0ng/vim-hybrid'
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
-  " フォント依存のセパレータを使うと何かとめんどくさいので使わないことにする
+  " Cica っていうフォント入れてね（https://github.com/miiton/Cica）
   let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'component' : {
     \   'readonly': '%{&readonly?"🔒":""}',
     \ },
-    \ 'subseparator': { 'left': "|", 'right': "|" }
+    \ 'separator': { 'left': "", 'right': "" },
+    \ 'subseparator': { 'left': "", 'right': "" }
     \ }
 '''
 
@@ -160,6 +161,14 @@ hook_add = '''
 [[plugins]]
 repo = 'othree/yajs.vim'
 on_ft = 'javascript'
+
+# VimScript
+[[plugins]]
+repo = 'machakann/vim-Verdin'
+on_ft = 'vim'
+hook_add = '''
+  let g:deoplete#sources.vim = ['Verdin'] + g:deoplete#sources._
+'''
 # }}}
 #-------------------------------------------------------------------------------------------------
 # vim:set foldmethod=marker:
