@@ -28,7 +28,8 @@ set guioptions-=L
 " □ 表示関連 {{{
 "-------------------------------------------------------------------------------------------------
 " フォントの設定
-set guifont=Myrica\ Monospace:h14
+" https://github.com/miiton/Cica
+set guifont=Cica:h14:cSHIFTJIS:qDRAFT
 set linespace=2
 
 if has('win32') || has('win64')
