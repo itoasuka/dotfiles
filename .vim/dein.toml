@@ -54,6 +54,16 @@ hook_add = '''
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 
+# ツリー表示
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+depends =[ 'vim-devicons' ]
+hook_add = '''
+  nnoremap <silent><C-e> :NERDTreeToggle<CR>
+  let g:NERDTreeDirArrowExpandable = '▸'
+  let g:NERDTreeDirArrowCollapsible = '▾'
+'''
+
 # かっこいいステータスライン
 [[plugins]]
 repo = 'itchyny/lightline.vim'
