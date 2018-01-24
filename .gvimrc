@@ -1,3 +1,4 @@
+scriptencoding utf-8
 "-------------------------------------------------------------------------------------------------
 " □ ウィンドウ関連 {{{
 "-------------------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ set linespace=2
 
 if has('win32') || has('win64')
   " Direct X を使用する
-  set rop=type:directx,geom:1,renmode:5
+  set renderoptions=type:directx,geom:1,renmode:5
 endif
 
 " カラースキームの設定
@@ -47,7 +48,7 @@ set cursorline
 highlight CursorLine gui=underline guifg=NONE guibg=NONE
 
 " カーソルが一番上や下に移動した時のビープ音を消す＆画面フラッシュも消す
-set vb t_vb=
+set visualbell t_vb=
 " }}}
 "-------------------------------------------------------------------------------------------------
 " vim:set foldmethod=marker:
