@@ -101,6 +101,8 @@ set textwidth=0
 set laststatus=2
 " コマンド行は2行
 set cmdheight=2
+" スクロール時の余白確保
+set scrolloff=5
 
 " 大文字小文字の区別なし
 set ignorecase
