@@ -65,6 +65,8 @@ endif
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 
+set ambiwidth=double
+
 " クリップボードを OS と共有
 set clipboard=unnamed,unnamedplus
 
@@ -95,6 +97,10 @@ set noundofile
 set autoread
 " 自動的に折り返さない
 set textwidth=0
+" ステータスラインは常に表示
+set laststatus=2
+" コマンド行は2行
+set cmdheight=2
 
 " 大文字小文字の区別なし
 set ignorecase
