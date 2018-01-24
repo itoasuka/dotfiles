@@ -14,16 +14,21 @@ let g:mapleader = ' '
 "-------------------------------------------------------------------------------------------------
 " □ 各パスの設定 {{{
 "-------------------------------------------------------------------------------------------------
-if has('win32') || has('win64')
-  let s:vimdir = $HOME . '/vimfiles'
+if has('nvim')
+  let s:config_home = empty($XDG_CONFIG_HOME) ? expand($HOME . '/.config') : $XDG_CONFIG_HOME
+  let s:vimdir = s:config_home . '/nvim'
 else
-  let s:vimdir = $HOME . '/.vim'
+  if has('win32') || has('win64')
+    let s:vimdir = $HOME . '/vimfiles'
+  else
+    let s:vimdir = $HOME . '/.vim'
+  endif
 endif
 
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand($HOME . '/.cache') : $XDG_CACHE_HOME
 " }}}
 "-------------------------------------------------------------------------------------------------
-" □ dein の設定 {{{
+" □ dein の設定 {{
 "-------------------------------------------------------------------------------------------------
 " dein 関連のパスを設定する
 let s:dein_dir       = s:cache_home . '/dein'
