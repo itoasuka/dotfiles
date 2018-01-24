@@ -1,4 +1,9 @@
 scriptencoding utf-8
+
+" augroup リセット
+augroup GMyAutoCmd
+  autocmd!
+augroup END
 "-------------------------------------------------------------------------------------------------
 " □ ウィンドウ関連 {{{
 "-------------------------------------------------------------------------------------------------
@@ -10,7 +15,9 @@ if has('kaoriya')
   set transparency=5
 
   if has('win32') || has('win64')
-    autocmd GUIEnter * set transparency=240
+    augroup GMyAutoCmd
+      autocmd GUIEnter * set transparency=240
+    augroup END
   endif
 endif
 
