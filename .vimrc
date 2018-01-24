@@ -66,7 +66,7 @@ set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 
 " クリップボードを OS と共有
-set clipboard=unnamed,autoselect
+set clipboard=unnamed,unnamedplus
 
 " カラースキームの設定
 set background=dark
