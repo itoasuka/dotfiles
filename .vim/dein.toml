@@ -192,8 +192,15 @@ hook_add = '''
 # Language Server 対応
 [[plugins]]
 repo = 'autozimu/LanguageClient-neovim'
-build = 'bash install.sh'
 depends = 'deoplete.nvim'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'powershell .\\build.ps1'
+  else
+    let cmd = 'bash build.sh'
+  endif
+  let g:dein#plugin.build = cmd
+'''
 hook_add = '''
   let g:LanguageClient_serverCommands = {
     \ 'typescript': ['javascript-typescript-stdio'],
