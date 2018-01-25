@@ -109,7 +109,7 @@ set cmdheight=2
 " スクロール時の余白確保
 set scrolloff=5
 
-" 大文字小文字の区別なし
+" 検索時に大文字小文字の区別なし
 set ignorecase
 " 検索時に大文字を含んでいたら大/小を区別
 set smartcase
