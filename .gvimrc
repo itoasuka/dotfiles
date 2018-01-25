@@ -37,7 +37,11 @@ set guioptions-=L
 "-------------------------------------------------------------------------------------------------
 " フォントの設定
 " https://github.com/miiton/Cica
-set guifont=Cica:h12:cSHIFTJIS:qDRAFT
+if has('win32') || has('win64')
+  set guifont=Cica:h15:cSHIFTJIS:qDRAFT
+else
+  set guifont=Cica-Regular:h16
+endif
 set linespace=2
 
 if has('win32') || has('win64')
