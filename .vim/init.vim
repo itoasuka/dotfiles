@@ -1,1 +1,1 @@
-/home/asuka/dotfiles/.vimrc
+../../dotfiles/.vimrc
