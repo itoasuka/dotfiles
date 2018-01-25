@@ -1,1 +1,0 @@
-/home/asuka/dotfiles/.vim
