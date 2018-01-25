@@ -182,6 +182,12 @@ hook_add = '''
 # 構文チェック
 [[plugins]]
 repo = 'w0rp/ale'
+hook_add = '''
+  let g:ale_linters = {
+    \ 'javascript': ['eslint'],
+    \ 'typescript': ['tslint']
+    \ }
+'''
 
 # Language Server 対応
 [[plugins]]
@@ -190,9 +196,17 @@ build = 'bash install.sh'
 depends = 'deoplete.nvim'
 hook_add = '''
   let g:LanguageClient_serverCommands = {
+    \ 'typescript': ['javascript-typescript-stdio'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ }
+
+  augroup languageClient_commands
+    autocmd!
+
+    autocmd FileType javascript,typescript nnoremap <buffer> <Space>sr :call LanguageClient_textDocument_formatting()<CR>
+    autocmd FileType javascript,typescript nnoremap <buffer> <Space>sd :call LanguageClient_textDocument_definition()<CR>
+  augroup END
 '''
 
 # C#
@@ -234,6 +248,11 @@ hook_add = '''
 [[plugins]]
 repo = 'othree/yajs.vim'
 on_ft = 'javascript'
+
+# TypeScript
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = 'typescript'
 
 # VimScript
 [[plugins]]
