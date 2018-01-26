@@ -195,9 +195,9 @@ repo = 'autozimu/LanguageClient-neovim'
 depends = 'deoplete.nvim'
 hook_post_update = '''
   if dein#util#_is_windows()
-    let cmd = 'powershell .\\build.ps1'
+    let cmd = 'powershell .\\install.ps1'
   else
-    let cmd = 'bash build.sh'
+    let cmd = 'bash install.sh'
   endif
   let g:dein#plugin.build = cmd
 '''
