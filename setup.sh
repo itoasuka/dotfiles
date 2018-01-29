@@ -10,24 +10,26 @@ git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$H
 if [ -e $HOME/.zshrc ]; then
   rm $HOME/.zshrc
 fi
-if [ ! -e $HOME/.config ]; then
-  mkdir $HOME/.config
+if [ ! -e $HOME/.config/nvim ]; then
+  mkdir -p $HOME/.config/nvim
 fi
-ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
-ln -s $HOME/dotfiles/.zprofile $HOME/.zprofile
-ln -s $HOME/dotfiles/.zpreztorc $HOME/.zpreztorc
-ls -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogin" $HOME/.zlogin
-ls -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogout" $HOME/.zlogout
-ls -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshenv" $HOME/.zshenv
-if [ `uname` == 'Darwin' ]; then
-  ln -s $HOME/dotfiles/.gitconfig_mac $HOME/.gitconfig
+ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
+ln -sf $HOME/dotfiles/.zprofile $HOME/.zprofile
+ln -sf $HOME/dotfiles/.zpreztorc $HOME/.zpreztorc
+ls -sf "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogin" $HOME/.zlogin
+ls -sf "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogout" $HOME/.zlogout
+ls -sf "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshenv" $HOME/.zshenv
+if [ `uname` = 'Darwin' ]; then
+  ln -sf $HOME/dotfiles/.gitconfig_mac $HOME/.gitconfig
 else
-  ln -s $HOME/dotfiles/.gitconfig $HOME/.gitconfig
+  ln -sf $HOME/dotfiles/.gitconfig $HOME/.gitconfig
 fi
-ln -s $HOME/dotfiles/.gitignore $HOME/.gitignore
-ln -s $HOME/dotfiles/.vim $HOME/.vim
-ln -s $HOME/dotfiles/.config/nvim $HOME/.config/nvim
-ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
-ln -s $HOME/dotfiles/.gvimrc $HOME/.gvimrc
-ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
+ln -sf $HOME/dotfiles/.gitignore $HOME/.gitignore
+ln -sf $HOME/dotfiles/.vim $HOME/
+ln -sf $HOME/dotfiles/.vimrc $HOME/.vimrc
+ln -sf $HOME/dotfiles/.vimrc $HOME/.config/nvim/init.vim
+ln -sf $HOME/dotfiles/.vim/after $HOME/.config/nvim/
+ln -sf $HOME/dotfiles/.gvimrc $HOME/.gvimrc
+ln -sf $HOME/dotfiles/.gvimrc $HOME/.config/nvim/ginit.vim
+ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 
