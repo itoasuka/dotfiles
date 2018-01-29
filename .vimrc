@@ -15,7 +15,11 @@ let g:mapleader = ' '
 " □ 各パスの設定 {{{
 "-------------------------------------------------------------------------------------------------
 if has('nvim')
-  let s:config_home = empty($XDG_CONFIG_HOME) ? expand($HOME . '/.config') : $XDG_CONFIG_HOME
+  if has('win32') || has('win64')
+    let s:config_home = $HOME . '/AppData/Local'
+  else
+    let s:config_home = empty($XDG_CONFIG_HOME) ? expand($HOME . '/.config') : $XDG_CONFIG_HOME
+  endif
   let s:vimdir = s:config_home . '/nvim'
 else
   if has('win32') || has('win64')
