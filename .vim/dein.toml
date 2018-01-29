@@ -219,6 +219,8 @@ hook_add = '''
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ }
 
+  let g:LanguageClient_autoStart = 1
+
   augroup languageClient_commands
     autocmd!
 
@@ -226,6 +228,10 @@ hook_add = '''
     autocmd FileType javascript,typescript nnoremap <buffer> <Space>sd :call LanguageClient_textDocument_definition()<CR>
   augroup END
 '''
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = 'html'
 
 # C#
 [[plugins]]
@@ -266,6 +272,11 @@ hook_add = '''
 [[plugins]]
 repo = 'othree/yajs.vim'
 on_ft = 'javascript'
+depends = ['deoplete.nvim']
+hook_add = '''
+  let g:deoplete#sources.javascript = ['omni', 'file', 'buffer']
+  let g:deoplete#omni#input_patterns.javascript = ['\w*']
+'''
 
 # TypeScript
 [[plugins]]
