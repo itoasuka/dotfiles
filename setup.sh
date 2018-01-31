@@ -29,6 +29,7 @@ ln -sf $HOME/dotfiles/.vim $HOME/
 ln -sf $HOME/dotfiles/.vimrc $HOME/.vimrc
 ln -sf $HOME/dotfiles/.vimrc $HOME/.config/nvim/init.vim
 ln -sf $HOME/dotfiles/.vim/after $HOME/.config/nvim/
+ln -sf $HOME/dotfiles/.vim/dein.toml $HOME/.config/nvim/
 ln -sf $HOME/dotfiles/.gvimrc $HOME/.gvimrc
 ln -sf $HOME/dotfiles/.gvimrc $HOME/.config/nvim/ginit.vim
 ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
