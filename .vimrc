@@ -35,7 +35,11 @@ let s:cache_home = empty($XDG_CACHE_HOME) ? expand($HOME . '/.cache') : $XDG_CAC
 " □ dein の設定 {{{
 "-------------------------------------------------------------------------------------------------
 " dein 関連のパスを設定する
-let s:dein_dir       = s:cache_home . '/dein'
+if has('win32') || has('win64')
+  let s:dein_dir       = 'C:\dein'
+else
+  let s:dein_dir       = s:cache_home . '/dein'
+end  
 let s:dein_github    = s:dein_dir . '/repos/github.com'
 let s:dein_repo_name = 'Shougo/dein.vim'
 let s:dein_repo_dir  = s:dein_github . '/' . s:dein_repo_name
