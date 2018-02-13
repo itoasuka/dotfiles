@@ -130,11 +130,15 @@ set visualbell t_vb=
 
 if (exists('+colorcolumn'))
   " 1行が長くなりすぎないように目印をつける
-  set colorcolumn=120
+  set colorcolumn=80
 endif
 
 " マウスを使えるようにする
 set mouse=a
+
+" 行番号を表示する
+set number
+set numberwidth=3
 " }}}
 "-------------------------------------------------------------------------------------------------
 " □ キーバインド {{{
