@@ -77,3 +77,4 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 export PATH=/Applications/MacVim.app/Contents/bin:$HOME/.local/bin:$HOME/.nodebrew/current/bin:$PATH
+
