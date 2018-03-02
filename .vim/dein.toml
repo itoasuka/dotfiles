@@ -194,7 +194,7 @@ hook_add = '''
 [[plugins]]
 repo = 'sbdchd/neoformat'
 hook_add = '''
-  let g:neoformat_enabled_haskell = ['brittany', 'stylishhaskell', 'hindent']
+  let g:neoformat_enabled_haskell = ['stylishhaskell', 'brittany', 'hindent']
   augroup MyAutoCmd
     autocmd FileType haskell nnoremap <buffer> <Space>sr :<C-u>Neoformat<CR>
   augroup END
