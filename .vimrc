@@ -78,10 +78,10 @@ endif
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 
-if has('kaoriya')
+if has('kaoriya') && (has('win32') || has('win64')) 
   set ambiwidth=auto
 else
-  set ambiwidth=single
+"  set ambiwidth=single
 endif
 
 " クリップボードを OS と共有

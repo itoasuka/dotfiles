@@ -70,7 +70,7 @@ repo = 'itchyny/lightline.vim'
 depends =[ 'gina', 'vim-devicons' ]
 hook_add = '''
   " Cica っていうフォント入れてね（https://github.com/miiton/Cica）
-  if has('kaoriya')
+  if has('kaoriya') && (has('win32') || has('win64')) 
     let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -124,7 +124,7 @@ hook_add = '''
     if &filetype == "help"
       return ""
     elseif &readonly
-      if has('kaoriya')
+      if has('kaoriya') && (has('win32') || has('win64')) 
         return ""
       else
         return " "
@@ -136,7 +136,7 @@ hook_add = '''
 
   function! LightLineGina()
     let _ = gina#component#repo#branch()
-    if has('kaoriya')
+    if has('kaoriya') && (has('win32') || has('win64')) 
       return strlen(_) ? ''._ : ''
     else
       return strlen(_) ? ' '._ : ''
