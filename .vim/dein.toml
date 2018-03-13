@@ -70,23 +70,43 @@ repo = 'itchyny/lightline.vim'
 depends =[ 'gina', 'vim-devicons' ]
 hook_add = '''
   " Cica っていうフォント入れてね（https://github.com/miiton/Cica）
-  let g:lightline = {
-    \ 'colorscheme': 'wombat',
-    \ 'active': {
-    \   'left' : [ [ 'mode', 'paste' ],
-    \              [ 'gina', 'filename' ] ]
-    \ },
-    \ 'component_function' : {
-    \   'gina': 'LightLineGina',
-    \   'readonly': 'LightLineReadonly',
-    \   'modified': 'LightLineModified',
-    \   'filename': 'LightLineFilename',
-    \   'filetype': 'LightLineFiletype',
-    \   'fileformat': 'LightLineFileformat',
-    \ },
-    \ 'separator': { 'left': "", 'right': " " },
-    \ 'subseparator': { 'left': "", 'right': " " }
-    \ }
+  if has('kaoriya')
+    let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left' : [ [ 'mode', 'paste' ],
+      \              [ 'gina', 'filename' ] ]
+      \ },
+      \ 'component_function' : {
+      \   'gina': 'LightLineGina',
+      \   'readonly': 'LightLineReadonly',
+      \   'modified': 'LightLineModified',
+      \   'filename': 'LightLineFilename',
+      \   'filetype': 'LightLineFiletype',
+      \   'fileformat': 'LightLineFileformat',
+      \ },
+      \ 'separator': { 'left': "", 'right': "" },
+      \ 'subseparator': { 'left': "", 'right': "" }
+      \ }
+  else
+    let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left' : [ [ 'mode', 'paste' ],
+      \              [ 'gina', 'filename' ] ]
+      \ },
+      \ 'component_function' : {
+      \   'gina': 'LightLineGina',
+      \   'readonly': 'LightLineReadonly',
+      \   'modified': 'LightLineModified',
+      \   'filename': 'LightLineFilename',
+      \   'filetype': 'LightLineFiletype',
+      \   'fileformat': 'LightLineFileformat',
+      \ },
+      \ 'separator': { 'left': "", 'right': " " },
+      \ 'subseparator': { 'left': "", 'right': " " }
+      \ }
+  endif
 
   function! LightLineModified()
     if &filetype == "help"
@@ -104,7 +124,11 @@ hook_add = '''
     if &filetype == "help"
       return ""
     elseif &readonly
-      return " "
+      if has('kaoriya')
+        return ""
+      else
+        return " "
+      endif
     else
       return ""
     endif
@@ -112,7 +136,11 @@ hook_add = '''
 
   function! LightLineGina()
     let _ = gina#component#repo#branch()
-    return strlen(_) ? ' '._ : ''
+    if has('kaoriya')
+      return strlen(_) ? ''._ : ''
+    else
+      return strlen(_) ? ' '._ : ''
+    endif
   endfunction
 
   function! LightLineFilename()
@@ -247,6 +275,11 @@ hook_add = '''
 [[plugins]]
 repo = 'mattn/emmet-vim'
 on_ft = 'html'
+
+# Markdown
+[[plugins]]
+repo = 'tpope/vim-markdown'
+on_ft = 'md'
 
 # C#
 [[plugins]]

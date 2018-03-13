@@ -78,7 +78,11 @@ endif
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 
-set ambiwidth=single
+if has('kaoriya')
+  set ambiwidth=auto
+else
+  set ambiwidth=single
+endif
 
 " クリップボードを OS と共有
 set clipboard=unnamed,unnamedplus
