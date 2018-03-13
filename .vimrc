@@ -78,7 +78,7 @@ endif
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 
-set ambiwidth=double
+set ambiwidth=single
 
 " クリップボードを OS と共有
 set clipboard=unnamed,unnamedplus
