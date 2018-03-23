@@ -70,6 +70,12 @@ repo = 'itchyny/lightline.vim'
 depends =[ 'gina', 'vim-devicons' ]
 hook_add = '''
   " Cica っていうフォント入れてね（https://github.com/miiton/Cica）
+  if &ambiwidth == 'single' 
+    let leftA = ' '
+  else
+    let leftA = ''
+  end
+    
   let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'active': {
@@ -84,7 +90,7 @@ hook_add = '''
     \   'filetype': 'LightLineFiletype',
     \   'fileformat': 'LightLineFileformat',
     \ },
-    \ 'separator': { 'left': "", 'right': "" },
+    \ 'separator': { 'left': "", 'right': leftA },
     \ 'subseparator': { 'left': "", 'right': "" }
     \ }
 
@@ -104,15 +110,24 @@ hook_add = '''
     if &filetype == "help"
       return ""
     elseif &readonly
-      return ""
+      if &ambiwidth == 'single' 
+        return " "
+      else
+        return ""
+      end
     else
       return ""
     endif
   endfunction
 
   function! LightLineGina()
+    if &ambiwidth == 'single' 
+      let branch = ' '
+    else
+      let branch = ''
+    end
     let _ = gina#component#repo#branch()
-    return strlen(_) ? ''._ : ''
+    return strlen(_) ? branch._ : ''
   endfunction
 
   function! LightLineFilename()
@@ -122,11 +137,21 @@ hook_add = '''
   endfunction
 
   function! LightLineFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+    if &ambiwidth == 'single' 
+      let spacer = ' '
+    else
+      let spacer = ''
+    end
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() . spacer : 'no ft') : ''
   endfunction
 
   function! LightLineFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+    if &ambiwidth == 'single' 
+      let spacer = ' '
+    else
+      let spacer = ''
+    end
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol() . spacer) : ''
   endfunction
 '''
 

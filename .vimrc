@@ -81,7 +81,7 @@ set fileencodings=utf-8,cp932
 if has('kaoriya') && (has('win32') || has('win64')) 
   set ambiwidth=auto
 else
-  set ambiwidth=double
+  set ambiwidth=single
 endif
 
 " クリップボードを OS と共有

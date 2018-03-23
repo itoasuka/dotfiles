@@ -33,4 +33,3 @@ ln -sf $HOME/dotfiles/.vim/dein.toml $HOME/.config/nvim/
 ln -sf $HOME/dotfiles/.gvimrc $HOME/.gvimrc
 ln -sf $HOME/dotfiles/.gvimrc $HOME/.config/nvim/ginit.vim
 ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
-ln -sf $HOME/dotfiles/dircolors-solarized/dircolors.256dark $HOME/.dir_colors
