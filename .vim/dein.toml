@@ -269,6 +269,12 @@ hook_add = '''
   augroup END
 '''
 
+# fish script
+[[plugins]]
+repo = 'dag/vim-fish'
+on_ft = 'fish'
+
+# HTML
 [[plugins]]
 repo = 'mattn/emmet-vim'
 on_ft = 'html'
