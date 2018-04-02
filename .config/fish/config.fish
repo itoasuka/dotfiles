@@ -1,0 +1,18 @@
+set fish_plugins theme peco
+
+function fish_user_key_bindings
+  bind \cr 'peco_select_history (commandline -b)'
+end
+
+set -x EDITOR nvim
+set -x GOPATH $HOME/.go
+
+# 環境ごとの設定
+switch (uname -s)
+  case Darwin
+    set -x JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home
+  case "*"
+    echo "other"
+end
+
+set PATH $HOME/.nodebrew/current/bin $PATH
