@@ -1,30 +1,26 @@
-#!/bin/sh
+#!/usr/bin/fish
 
 git submodule init
 git submodule update
 
 cd $HOME
 
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+fisher install omf/theme-bobthefish
+fisher install z
+fisher install 0rax/fish-bd
+fisher oh-my-fish/plugin-peco
+mkdir -p $HOME/.config/fish
+ln -sf $HOME/dotfiles/.config/fish/config.fish $HOME/.config/fish/config.fish
 
-if [ -e $HOME/.zshrc ]; then
-  rm $HOME/.zshrc
-fi
-ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
-ln -sf $HOME/dotfiles/.zprofile $HOME/.zprofile
-ln -sf $HOME/dotfiles/.zpreztorc $HOME/.zpreztorc
-ls -sf "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogin" $HOME/.zlogin
-ls -sf "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zlogout" $HOME/.zlogout
-ls -sf "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshenv" $HOME/.zshenv
-
-if [ ! -e $HOME/.config/nvim ]; then
+if test ! -e $HOME/.config/nvim 
   mkdir -p $HOME/.config/nvim
-fi
-if [ `uname` = 'Darwin' ]; then
+end
+if test `uname` = 'Darwin'
   ln -sf $HOME/dotfiles/.gitconfig_mac $HOME/.gitconfig
 else
   ln -sf $HOME/dotfiles/.gitconfig $HOME/.gitconfig
-fi
+end
 ln -sf $HOME/dotfiles/.gitignore $HOME/.gitignore
 ln -sf $HOME/dotfiles/.vim $HOME/
 ln -sf $HOME/dotfiles/.vimrc $HOME/.vimrc
