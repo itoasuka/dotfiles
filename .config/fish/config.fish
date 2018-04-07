@@ -12,7 +12,13 @@ switch (uname -s)
   case Darwin
     set -x JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home
   case "*"
-    echo "other"
+end
+
+switch $TERM
+  case linux
+    set -x LANG en_US.UTF-8
+  case "*"
+    set -x LANG ja_JP.UTF-8
 end
 
 set PATH $HOME/.nodebrew/current/bin $PATH
