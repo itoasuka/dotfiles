@@ -11,6 +11,7 @@ set -x GOPATH $HOME/.go
 switch (uname -s)
   case Darwin
     set -x JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home
+    set PATH $HOME/.nodebrew/current/bin $PATH
   case "*"
 end
 
@@ -21,4 +22,4 @@ switch $TERM
     set -x LANG ja_JP.UTF-8
 end
 
-set PATH $HOME/.nodebrew/current/bin $PATH
+set PATH $GOPATH/bin $PATH
