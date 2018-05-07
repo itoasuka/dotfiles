@@ -78,8 +78,12 @@ endif
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 
-if has('kaoriya') && (has('win32') || has('win64')) 
-  set ambiwidth=auto
+if has('kaoriya') 
+  if has('win32') || has('win64') 
+    set ambiwidth=auto
+  else
+    set ambiwidth=double
+  end
 else
   set ambiwidth=single
 endif
