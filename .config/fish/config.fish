@@ -15,7 +15,7 @@ switch (uname -s)
   case "*"
 end
 
-switch $TERM
+switch "$TERM"
   case linux
     set -x LANG en_US.UTF-8
   case "*"
