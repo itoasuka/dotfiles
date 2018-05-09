@@ -16,6 +16,12 @@ ln -sf $HOME/dotfiles/.config/fish/config.fish $HOME/.config/fish/config.fish
 if test ! -e $HOME/.config/nvim 
   mkdir -p $HOME/.config/nvim
 end
+if test ! -e $HOME/.config/peco 
+  mkdir -p $HOME/.config/peco
+end
+if test ! -e $HOME/.go/bin
+  mkdir -p $HOME/.go/bin
+end
 if test `uname` = 'Darwin'
   ln -sf $HOME/dotfiles/.gitconfig_mac $HOME/.gitconfig
 else
@@ -30,3 +36,4 @@ ln -sf $HOME/dotfiles/.vim/dein.toml $HOME/.config/nvim/
 ln -sf $HOME/dotfiles/.gvimrc $HOME/.gvimrc
 ln -sf $HOME/dotfiles/.gvimrc $HOME/.config/nvim/ginit.vim
 ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
+ls -sf $HOME/dotfiles/.config/peco/config.json $HOME/.config/peco/config.json
