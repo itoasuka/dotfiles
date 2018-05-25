@@ -5,13 +5,6 @@ git submodule update
 
 cd $HOME
 
-curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-fisher install omf/theme-bobthefish
-fisher install z
-fisher install 0rax/fish-bd
-fisher oh-my-fish/plugin-peco
-fisher install tuvistavie/fish-ssh-agent
-
 mkdir -p $HOME/.config/fish
 ln -sf $HOME/dotfiles/.config/fish/config.fish $HOME/.config/fish/config.fish
 
