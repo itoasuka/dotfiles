@@ -39,7 +39,8 @@ zstyle ':prezto:load' pmodule \
   'homebrew' \
   'syntax-highlighting' \
   'ssh' \
-  'prompt'
+  'prompt' \
+  'autosuggestions'
 
 #
 # Autosuggestions
